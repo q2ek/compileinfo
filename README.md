@@ -17,7 +17,7 @@ In a Maven project, one would include the `net.q2ek:compileinfo` artifact as a "
 <dependency>
 	<groupId>net.q2ek</groupId>
 	<artifactId>compileinfo</artifactId>
-	<version>0.10.0</version>
+	<version>0.11.0</version>
 	<scope>compile</scope>
 </dependency>
 ```
@@ -55,7 +55,7 @@ I use [SemVer](http://semver.org/) for versioning.
 
 ### Releases
 
-* 0.10.0 is available at Maven Central
+* 0.11.0 is available at Maven Central
 
 ## Authors
 
