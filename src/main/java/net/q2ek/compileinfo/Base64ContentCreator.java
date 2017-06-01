@@ -53,7 +53,6 @@ public class Base64ContentCreator implements ContentCreator {
 		imports();
 		classJavaDoc();
 		classDeclaration(name);
-		decoder();
 		isoDateTimeConstant();
 		zonedDateTimeConstant();
 		writeLocalDateTime();
@@ -92,11 +91,6 @@ public class Base64ContentCreator implements ContentCreator {
 
 	private void classEnd() {
 		append("}\n");
-	}
-
-	private void decoder() {
-		append("    private final Decoder decoder = Base64.getDecoder();\n");
-		append("    \n");
 	}
 
 	private void isoDateTimeConstant() {
