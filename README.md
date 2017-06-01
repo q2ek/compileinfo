@@ -57,6 +57,10 @@ I use [SemVer](http://semver.org/) for versioning.
 
 * 0.11.0 is available at Maven Central
 
+### Planned releases
+
+* 0.12.0-SNAPSHOT Work is done on using base64 encoding to prevent code injection. 
+
 ## Authors
 
 * [EdzeKruizinga](https://github.com/EdzeKruizinga) - *Initial work*
