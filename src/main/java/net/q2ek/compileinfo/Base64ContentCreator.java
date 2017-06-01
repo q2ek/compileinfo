@@ -63,6 +63,7 @@ public class Base64ContentCreator implements ContentCreator {
 		writeKeySetMethod();
 		writePropertiesMapCreater();
 		putMethodCreater();
+		mapBuilder();
 		classEnd();
 	}
 
@@ -126,26 +127,25 @@ public class Base64ContentCreator implements ContentCreator {
 	}
 
 	private void writePropertiesMap() {
-		append("    private static final Map<String, String> properties = createMap();\n\n");
+		append("    static final Map<String, String> PROPERTIES = createMap();\n\n");
 	}
 
 	private void writePropertiesMapCreater() {
 		append("    private static Map<String, String> createMap() {\n");
-		append("    	Decoder decoder = Base64.getDecoder();\n");
-		append("        Map<String, String> result = new HashMap<>();\n");
+		append("    	MapBuilder builder = MapBuilder.builder();\n");
 		List<String> keys = sortedKeys(this.properties);
 		for (String key : keys) {
 			putKeyValue(key);
 		}
-		append("        return result;\n");
+		append("        return builder.build();\n");
 		methodEnd();
 	}
 
 	private void putKeyValue(String key) {
 		String value = this.properties.get(key).toString();
-		String putStatementFormat = "        put(result, decoder, \"%s\", \"%s\");\n";
-		String mapPutCommand = String.format(putStatementFormat, base64(key), base64(value));
-		append(mapPutCommand);
+		String putFormat = "        builder.put(\"%s\",\n                    \"%s\");\n";
+		String putCommand = String.format(putFormat, base64(key), base64(value));
+		append(putCommand);
 	}
 
 	private void putMethodCreater() {
@@ -153,6 +153,25 @@ public class Base64ContentCreator implements ContentCreator {
 		append("    	result.put(new String(decoder.decode(key)), new String(decoder.decode(value)));\n");
 		append("    }\n");
 		append("    \n");
+	}
+
+	private void mapBuilder() {
+		append("    private static class MapBuilder {\n");
+		append("    	private final Decoder decoder = Base64.getDecoder();\n");
+		append("    	private final Map<String, String> result = new HashMap<>();\n");
+		append("    	\n");
+		append("    	static MapBuilder builder() {\n");
+		append("    		return new MapBuilder();\n");
+		append("    	}\n");
+		append("    	\n");
+		append("    	private void put(String key, String value) {\n");
+		append("    		result.put(new String(decoder.decode(key)), new String(decoder.decode(value)));\n");
+		append("    	}\n");
+		append("    	\n");
+		append("    	Map<String, String> build() {\n");
+		append("    		return result;\n");
+		append("    	};\n");
+		append("    }\n");
 	}
 
 	private String base64(String value) {
@@ -169,13 +188,13 @@ public class Base64ContentCreator implements ContentCreator {
 
 	private void writeProperties() {
 		append("    static String get(String key) {\n");
-		append("        return properties.get(key);\n");
+		append("        return PROPERTIES.get(key);\n");
 		methodEnd();
 	}
 
 	private void writeKeySetMethod() {
 		append("    static Set<String> keySet() {\n");
-		append("        return properties.keySet();\n");
+		append("        return PROPERTIES.keySet();\n");
 		methodEnd();
 	}
 
