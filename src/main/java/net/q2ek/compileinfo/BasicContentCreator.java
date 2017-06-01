@@ -1,8 +1,6 @@
 package net.q2ek.compileinfo;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,35 +13,23 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import javax.tools.FileObject;
-
 /**
  * This class generates a java class source code file. It is used by
  * {@link CompileInfoAnnotationProcessor}
  *
  * @author Edze Kruizinga
  */
-public class CompileInfoWriter {
+public class BasicContentCreator implements ContentCreator {
 	private final Writer writer;
 	private final Properties properties;
 
-	CompileInfoWriter(Writer writer, Properties properties) {
-		this.writer = writer;
-		this.properties = properties;
+	BasicContentCreator(Input input) {
+		this(input.writer(), input.properties());
 	}
 
-	/**
-	 * @throws IOException
-	 *             when FileObject cannot be used.
-	 * @throws IOProblem
-	 *             when {@link IOException} happens
-	 */
-	static void writeFile(String packageName, String name, FileObject resource) throws IOException {
-		try (OutputStream stream = resource.openOutputStream();
-				OutputStreamWriter writer = new OutputStreamWriter(stream)) {
-			new CompileInfoWriter(writer, System.getProperties()).write(packageName, name);
-			writer.flush();
-		}
+	BasicContentCreator(Writer writer, Properties properties) {
+		this.writer = writer;
+		this.properties = properties;
 	}
 
 	/**
@@ -58,7 +44,8 @@ public class CompileInfoWriter {
 		}
 	}
 
-	void write(String packageName, String name) {
+	@Override
+	public void write(String packageName, String name) {
 		append("package " + packageName + ";\n\n");
 		imports();
 		classJavaDoc();

@@ -30,6 +30,7 @@ import com.google.auto.service.AutoService;
 public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 	private Filer filer;
 	private Messager messager;
+	private final FileWriter writer = FileWriter.base64();
 
 	public CompileInfoAnnotationProcessor() {
 		super();
@@ -77,6 +78,6 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 		String name = simpleName + "CompileInfo";
 		FileObject resource = this.filer.createResource(StandardLocation.SOURCE_OUTPUT, packageName, name + ".java");
 		this.messager.printMessage(Kind.NOTE, "resource:\t " + resource.getName());
-		CompileInfoWriter.writeFile(packageName.toString(), name, resource);
+		this.writer.writeFile(packageName.toString(), name, resource);
 	}
 }
