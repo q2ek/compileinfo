@@ -2,9 +2,7 @@ package net.q2ek.compileinfo;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -57,12 +55,10 @@ public class Base64ContentCreator implements ContentCreator {
 		zonedDateTimeConstant();
 		writeLocalDateTime();
 		writeZonedDateTime();
-		writeTime();
 		writePropertiesMap();
 		writeProperties();
 		writeKeySetMethod();
 		writePropertiesMapCreater();
-		putMethodCreater();
 		mapBuilder();
 		classEnd();
 	}
@@ -120,12 +116,6 @@ public class Base64ContentCreator implements ContentCreator {
 		methodEnd();
 	}
 
-	private void writeTime() {
-		append("    static String time() {\n");
-		append("        return \"" + LocalDate.now() + " " + LocalTime.now() + "\";\n");
-		methodEnd();
-	}
-
 	private void writePropertiesMap() {
 		append("    static final Map<String, String> PROPERTIES = createMap();\n\n");
 	}
@@ -146,13 +136,6 @@ public class Base64ContentCreator implements ContentCreator {
 		String putFormat = "        builder.put(\"%s\",\n                    \"%s\");\n";
 		String putCommand = String.format(putFormat, base64(key), base64(value));
 		append(putCommand);
-	}
-
-	private void putMethodCreater() {
-		append("    private static void put(Map<String, String> result, Decoder decoder, String key, String value) {\n");
-		append("    	result.put(new String(decoder.decode(key)), new String(decoder.decode(value)));\n");
-		append("    }\n");
-		append("    \n");
 	}
 
 	private void mapBuilder() {
