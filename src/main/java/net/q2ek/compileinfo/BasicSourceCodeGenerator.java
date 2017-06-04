@@ -2,35 +2,34 @@ package net.q2ek.compileinfo;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Base64.Encoder;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
 /**
- * This class generates the source code for a java class. It uses base64
- * encoding to store data.
+ * Generates the java class source code using {@link String}s or char[]s to
+ * store data.
  *
- * @see {@link ContentCreator}
+ * @see SourceCodeGenerator
  *
  * @author Edze Kruizinga
  */
-public class Base64ContentCreator implements ContentCreator {
+public class BasicSourceCodeGenerator implements SourceCodeGenerator {
 	private final Writer writer;
 	private final Properties properties;
-	private final Encoder encoder = Base64.getEncoder();
 
-	Base64ContentCreator(Input input) {
+	BasicSourceCodeGenerator(Input input) {
 		this(input.writer(), input.properties());
 	}
 
-	Base64ContentCreator(Writer writer, Properties properties) {
+	BasicSourceCodeGenerator(Writer writer, Properties properties) {
 		this.writer = writer;
 		this.properties = properties;
 	}
@@ -57,11 +56,11 @@ public class Base64ContentCreator implements ContentCreator {
 		zonedDateTimeConstant();
 		writeLocalDateTime();
 		writeZonedDateTime();
+		writeTime();
 		writePropertiesMap();
 		writeProperties();
 		writeKeySetMethod();
 		writePropertiesMapCreater();
-		mapBuilder();
 		classEnd();
 	}
 
@@ -71,8 +70,6 @@ public class Base64ContentCreator implements ContentCreator {
 		append("import java.util.Set;\n");
 		append("import java.time.LocalDateTime;\n");
 		append("import java.time.ZonedDateTime;\n");
-		append("import java.util.Base64;\n");
-		append("import java.util.Base64.Decoder;\n");
 		append("\n");
 	}
 
@@ -118,49 +115,39 @@ public class Base64ContentCreator implements ContentCreator {
 		methodEnd();
 	}
 
+	private void writeTime() {
+		append("    static String time() {\n");
+		append("        return \"" + LocalDate.now() + " " + LocalTime.now() + "\";\n");
+		methodEnd();
+	}
+
 	private void writePropertiesMap() {
-		append("    static final Map<String, String> PROPERTIES = createMap();\n\n");
+		append("    private static final Map<String, String> properties = createMap();\n\n");
 	}
 
 	private void writePropertiesMapCreater() {
 		append("    private static Map<String, String> createMap() {\n");
-		append("    	MapBuilder builder = MapBuilder.builder();\n");
+		append("        Map<String, String> result = new HashMap<>();\n");
 		List<String> keys = sortedKeys(this.properties);
 		for (String key : keys) {
 			putKeyValue(key);
 		}
-		append("        return builder.build();\n");
+		append("        return result;\n");
 		methodEnd();
 	}
 
 	private void putKeyValue(String key) {
 		String value = this.properties.get(key).toString();
-		String putFormat = "        builder.put(\"%s\",\n                    \"%s\");\n";
-		String putCommand = String.format(putFormat, base64(key), base64(value));
-		append(putCommand);
-	}
-
-	private void mapBuilder() {
-		append("    private static class MapBuilder {\n");
-		append("    	private final Decoder decoder = Base64.getDecoder();\n");
-		append("    	private final Map<String, String> result = new HashMap<>();\n");
-		append("    	\n");
-		append("    	static MapBuilder builder() {\n");
-		append("    		return new MapBuilder();\n");
-		append("    	}\n");
-		append("    	\n");
-		append("    	private void put(String key, String value) {\n");
-		append("    		result.put(new String(decoder.decode(key)), new String(decoder.decode(value)));\n");
-		append("    	}\n");
-		append("    	\n");
-		append("    	Map<String, String> build() {\n");
-		append("    		return result;\n");
-		append("    	};\n");
-		append("    }\n");
-	}
-
-	private String base64(String value) {
-		return this.encoder.encodeToString(value.getBytes());
+		String filteredKey = filter(key);
+		String filteredValue = filter(value);
+		if (filteredKey.contains("\\\"")) {
+			filteredKey = fixDoubleQuotes(filteredKey);
+		}
+		if (filteredValue.contains("\\\"")) {
+			filteredValue = fixDoubleQuotes(filteredValue);
+		}
+		String mapPutCommand = String.format("        result.put(%s, %s);\n", filteredKey, filteredValue);
+		append(mapPutCommand);
 	}
 
 	private static List<String> sortedKeys(Properties properties) {
@@ -173,17 +160,51 @@ public class Base64ContentCreator implements ContentCreator {
 
 	private void writeProperties() {
 		append("    static String get(String key) {\n");
-		append("        return PROPERTIES.get(key);\n");
+		append("        return properties.get(key);\n");
 		methodEnd();
 	}
 
 	private void writeKeySetMethod() {
+		addJavaDocToKeySetMethod();
 		append("    static Set<String> keySet() {\n");
-		append("        return PROPERTIES.keySet();\n");
+		append("        return properties.keySet();\n");
 		methodEnd();
 	}
 
 	private void methodEnd() {
 		append("    }\n\n");
+	}
+
+	private void addJavaDocToKeySetMethod() {
+		append("    /**\n");
+		append("     * @returns<br/>\n");
+		List<String> keys = sortedKeys(this.properties);
+		keys.forEach(key -> append("     * " + key + "<br/>\n"));
+		append("     */\n");
+	}
+
+	private static String filter(String value) {
+		return "\"" + filterDoubleQuotes(filterLineSeperators(value)) + "\"";
+	}
+
+	private static String filterLineSeperators(String value) {
+		return value.replaceAll("\n", "\\\\n").replaceAll("\r", "\\\\r");
+	}
+
+	private static String filterDoubleQuotes(String value) {
+		return value.replace("\"", "\\\"");
+	}
+
+	private static String fixDoubleQuotes(String value) {
+		String result = "new String(new char[]{";
+		char[] charArray = value.toCharArray();
+		for (char c : charArray) {
+			if (c == '\\')
+				result = result + "'\\\\', ";
+			else
+				result = result + "'" + c + "', ";
+		}
+		result = result + "})";
+		return result;
 	}
 }

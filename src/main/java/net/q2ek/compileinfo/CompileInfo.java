@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
  * {@literal @}CompileInfo
  * class MyClass {
  * 	public String compileTime() {
- * 		return MyClassCompileInfo.time();
+ * 		return MyClassCompileInfo.localDateTime().toString();
  * 	}
  *
  * 	public String jenkinsBuildUrl() {

@@ -9,40 +9,46 @@ import java.util.function.Function;
 
 import javax.tools.FileObject;
 
+/**
+ * Takes a {@link SourceCodeGenerator} and writes the output to a file. It also has
+ * some factory methods.
+ *
+ * @author Edze Kruizinga
+ */
 public class FileWriter {
 	private final Properties systemProperties = System.getProperties();
-	private final Function<ContentCreator.Input, ContentCreator> factory;
+	private final Function<SourceCodeGenerator.Input, SourceCodeGenerator> factory;
 
 	/**
 	 * Factory method
 	 *
-	 * @return a {@link FileWriter} using a {@link BasicContentCreator}
+	 * @return a {@link FileWriter} using a {@link BasicSourceCodeGenerator}
 	 */
 	static FileWriter basic() {
-		return new FileWriter(input -> new BasicContentCreator(input));
+		return new FileWriter(input -> new BasicSourceCodeGenerator(input));
 	}
 
 	/**
 	 * Factory method
 	 *
-	 * @return a {@link FileWriter} using a {@link Base64ContentCreator}
+	 * @return a {@link FileWriter} using a {@link Base64SourceCodeGenerator}
 	 */
 	static FileWriter base64() {
-		return new FileWriter(input -> new Base64ContentCreator(input));
+		return new FileWriter(input -> new Base64SourceCodeGenerator(input));
 	}
 
-	private FileWriter(Function<ContentCreator.Input, ContentCreator> factory) {
+	private FileWriter(Function<SourceCodeGenerator.Input, SourceCodeGenerator> factory) {
 		this.factory = factory;
 	}
 
 	/**
 	 * Factory method
 	 *
-	 * @return a {@link ContentCreator.Input} using the given {@link Writer} and
+	 * @return a {@link SourceCodeGenerator.Input} using the given {@link Writer} and
 	 *         {@link Properties}
 	 */
-	public static ContentCreator.Input inputOf(Writer writer, Properties properties) {
-		return new ContentCreator.Input() {
+	public static SourceCodeGenerator.Input inputOf(Writer writer, Properties properties) {
+		return new SourceCodeGenerator.Input() {
 			@Override
 			public Writer writer() {
 				return writer;
@@ -55,7 +61,7 @@ public class FileWriter {
 		};
 	}
 
-	private ContentCreator contentCreator(Writer writer, Properties properties) {
+	private SourceCodeGenerator contentCreator(Writer writer, Properties properties) {
 		return this.factory.apply(inputOf(writer, properties));
 	}
 

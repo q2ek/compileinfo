@@ -1,7 +1,7 @@
 package net.q2ek.compileinfo;
 
 import java.io.IOException;
-import java.util.LinkedHashSet;
+import java.util.Collections;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -45,9 +45,7 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 
 	@Override
 	public Set<String> getSupportedAnnotationTypes() {
-		Set<String> annotataions = new LinkedHashSet<>();
-		annotataions.add(CompileInfo.class.getCanonicalName());
-		return annotataions;
+		return Collections.singleton(CompileInfo.class.getCanonicalName());
 	}
 
 	@Override
@@ -74,10 +72,13 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 
 	private void processUnsafe(TypeElement value) throws IOException {
 		Name packageName = ((PackageElement) value.getEnclosingElement()).getQualifiedName();
-		Name simpleName = value.getSimpleName();
-		String name = simpleName + "CompileInfo";
+		String name = generatedClassName(value);
 		FileObject resource = this.filer.createResource(StandardLocation.SOURCE_OUTPUT, packageName, name + ".java");
 		this.messager.printMessage(Kind.NOTE, "resource:\t " + resource.getName());
 		this.writer.writeFile(packageName.toString(), name, resource);
+	}
+
+	private String generatedClassName(TypeElement value) {
+		return value.getSimpleName() + "CompileInfo";
 	}
 }

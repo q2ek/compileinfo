@@ -42,6 +42,19 @@ class MyClass {
 }
 ```
 
+### API
+
+Classes:
+```java
+net.q2ek.compileinfo.CompileInfo;
+
+static LocalDateTime xCompileInfo.localDateTime();
+static ZonedDateTime xCompileInfo.zonedDateTime();
+
+static Set<String> xCompileInfo.keySet();
+static String xCompileInfo.get(String key);
+```
+
 ## Built With
 
 * [AutoService](https://github.com/google/auto/tree/master/service) - Google Auto Service

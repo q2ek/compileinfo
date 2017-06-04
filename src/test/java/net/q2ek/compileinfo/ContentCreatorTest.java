@@ -24,7 +24,7 @@ public class ContentCreatorTest {
 	private static final String TEST_CLASS_NAME = "CompileInfoTestOutput";
 	private static final String TEST_PACKAGE_NAME = "test.package";
 
-	private void write_resultContainsPackageAndClass(Function<ContentCreator.Input, ContentCreator> factory) {
+	private void write_resultContainsPackageAndClass(Function<SourceCodeGenerator.Input, SourceCodeGenerator> factory) {
 		CharArrayWriter writer = new CharArrayWriter();
 		factory.apply(FileWriter.inputOf(writer, PROPERTIES)).write(TEST_PACKAGE_NAME, TEST_CLASS_NAME);
 		String actual = String.valueOf(writer.toCharArray());
@@ -38,7 +38,7 @@ public class ContentCreatorTest {
 		assertThat(actual).contains("LocalDateTime localDateTime()");
 	}
 
-	private void resultLooksNice(Function<ContentCreator.Input, ContentCreator> factory) {
+	private void resultLooksNice(Function<SourceCodeGenerator.Input, SourceCodeGenerator> factory) {
 		CharArrayWriter writer = new CharArrayWriter();
 		factory.apply(FileWriter.inputOf(writer, PROPERTIES)).write(TEST_PACKAGE_NAME, TEST_CLASS_NAME);
 		String result = String.valueOf(writer.toCharArray());
@@ -46,18 +46,22 @@ public class ContentCreatorTest {
 	}
 
 	@Test
-	public void write_resultContainsPackageAndClass() {
-		write_resultContainsPackageAndClass(input -> new BasicContentCreator(input));
+	public void basic_write_resultContainsPackageAndClass() {
+		write_resultContainsPackageAndClass(input -> new BasicSourceCodeGenerator(input));
 	}
 
-	// @Ignore
+	@Test
+	public void base64_write_resultContainsPackageAndClass() {
+		write_resultContainsPackageAndClass(input -> new Base64SourceCodeGenerator(input));
+	}
+
 	@Test
 	public void base64_resultLooksNice() {
-		resultLooksNice(input -> new Base64ContentCreator(input));
+		resultLooksNice(input -> new Base64SourceCodeGenerator(input));
 	}
 
 	@Test
-	public void resultLooksNice() {
-		resultLooksNice(input -> new BasicContentCreator(input));
+	public void basic_resultLooksNice() {
+		resultLooksNice(input -> new BasicSourceCodeGenerator(input));
 	}
 }

@@ -5,20 +5,21 @@ import java.io.Writer;
 import java.util.Properties;
 
 /**
- * Any class implementing this interface generates a java class source code
- * content. This would them presumably be put into a file. It is used by the
- * {@link FileWriter} which is in turn used by
- * {@link CompileInfoAnnotationProcessor}
+ * Any class implementing this interface generates java class source code
+ * content. This would then presumably be put into a file.
  *
  * @author Edze Kruizinga
  */
-public interface ContentCreator {
+public interface SourceCodeGenerator {
 	/**
 	 * @throws IOProblem
 	 *             when {@link IOException} happens
 	 */
 	void write(String packageName, String name);
 
+	/**
+	 * Constructor parameter for classes that implement a ContentCreator.
+	 */
 	public interface Input {
 		Writer writer();
 

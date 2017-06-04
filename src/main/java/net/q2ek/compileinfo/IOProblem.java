@@ -3,7 +3,7 @@ package net.q2ek.compileinfo;
 import java.io.IOException;
 
 /**
- * Simple exception to create a RuntimeException IOException wrapper
+ * Wraps an {@link IOException} in a {@link RuntimeException}
  *
  * @author Edze Kruizinga
  */
@@ -13,5 +13,4 @@ public class IOProblem extends RuntimeException {
 	public IOProblem(String message, IOException cause) {
 		super(message, cause);
 	}
-
 }
