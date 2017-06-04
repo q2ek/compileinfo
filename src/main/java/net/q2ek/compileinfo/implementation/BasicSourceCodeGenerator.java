@@ -1,4 +1,4 @@
-package net.q2ek.compileinfo;
+package net.q2ek.compileinfo.implementation;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -12,6 +12,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+
+import net.q2ek.compileinfo.CompileInfo;
+import net.q2ek.compileinfo.CompileInfoAnnotationProcessor;
+import net.q2ek.compileinfo.implementation.SourceCodeGenerator.Input;
 
 /**
  * Generates the java class source code using {@link String}s or char[]s to

@@ -1,4 +1,4 @@
-package net.q2ek.compileinfo;
+package net.q2ek.compileinfo.implementation;
 
 import java.io.IOException;
 import java.io.Writer;

@@ -1,4 +1,4 @@
-package net.q2ek.compileinfo;
+package net.q2ek.compileinfo.implementation;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -8,6 +8,8 @@ import java.util.Properties;
 import java.util.function.Function;
 
 import javax.tools.FileObject;
+
+import net.q2ek.compileinfo.implementation.SourceCodeGenerator.Input;
 
 /**
  * Takes a {@link SourceCodeGenerator} and writes the output to a file. It also has
@@ -24,7 +26,7 @@ public class FileWriter {
 	 *
 	 * @return a {@link FileWriter} using a {@link BasicSourceCodeGenerator}
 	 */
-	static FileWriter basic() {
+	public static FileWriter basic() {
 		return new FileWriter(input -> new BasicSourceCodeGenerator(input));
 	}
 
@@ -33,7 +35,7 @@ public class FileWriter {
 	 *
 	 * @return a {@link FileWriter} using a {@link Base64SourceCodeGenerator}
 	 */
-	static FileWriter base64() {
+	public static FileWriter base64() {
 		return new FileWriter(input -> new Base64SourceCodeGenerator(input));
 	}
 
@@ -44,7 +46,7 @@ public class FileWriter {
 	/**
 	 * Factory method
 	 *
-	 * @return a {@link SourceCodeGenerator.Input} using the given {@link Writer} and
+	 * @return a {@link Input} using the given {@link Writer} and
 	 *         {@link Properties}
 	 */
 	public static SourceCodeGenerator.Input inputOf(Writer writer, Properties properties) {

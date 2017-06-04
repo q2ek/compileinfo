@@ -21,6 +21,9 @@ import javax.tools.StandardLocation;
 
 import com.google.auto.service.AutoService;
 
+import net.q2ek.compileinfo.implementation.FileWriter;
+import net.q2ek.compileinfo.implementation.IOProblem;
+
 /**
  * This is the annotation processor for the {@link CompileInfo} annotation.
  *

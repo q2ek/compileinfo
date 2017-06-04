@@ -7,7 +7,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Annotate a class to generate xCompileInfo.java <br/>
+ * Annotate a class to generate {@code <AnnotatedClassNamex>CompileInfo.java}
+ * <br/>
  *
  * Example: <br/>
  *

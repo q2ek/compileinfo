@@ -1,4 +1,4 @@
-package net.q2ek.compileinfo;
+package net.q2ek.compileinfo.implementation;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -8,6 +8,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Base64.Encoder;
+
+import net.q2ek.compileinfo.CompileInfo;
+import net.q2ek.compileinfo.CompileInfoAnnotationProcessor;
+import net.q2ek.compileinfo.implementation.SourceCodeGenerator.Input;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;

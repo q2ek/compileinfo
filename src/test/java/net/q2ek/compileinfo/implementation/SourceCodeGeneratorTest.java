@@ -1,4 +1,4 @@
-package net.q2ek.compileinfo;
+package net.q2ek.compileinfo.implementation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,13 +8,13 @@ import java.util.function.Function;
 
 import org.junit.Test;
 
-@SuppressWarnings("static-method")
-public class ContentCreatorTest {
+//@SuppressWarnings("static-method")
+public class SourceCodeGeneratorTest {
 	private static final Properties PROPERTIES = testProperties();
 
 	private static Properties testProperties() {
 		Properties result = new Properties();
-		result.put("user.name", ContentCreatorTest.class.getSimpleName());
+		result.put("user.name", SourceCodeGeneratorTest.class.getSimpleName());
 		result.put("hack", "\\\"hack");
 		result.put("double\"hack", "hack\\\"hack");
 		result.put("javadoc hack */ explosions", "nothing really");
