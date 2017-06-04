@@ -23,10 +23,13 @@ public class SourceCodeGeneratorTest {
 
 	private static final String TEST_CLASS_NAME = "CompileInfoTestOutput";
 	private static final String TEST_PACKAGE_NAME = "test.package";
+	private static final PackageAndClassName PACKAGE_AND_CLASSNAME = PackageAndClassName.of(
+			TEST_PACKAGE_NAME,
+			TEST_CLASS_NAME);
 
-	private void write_resultContainsPackageAndClass(Function<SourceCodeGenerator.Input, SourceCodeGenerator> factory) {
+	private void write_resultContainsPackageAndClass(Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory) {
 		CharArrayWriter writer = new CharArrayWriter();
-		factory.apply(FileWriter.inputOf(writer, PROPERTIES)).write(TEST_PACKAGE_NAME, TEST_CLASS_NAME);
+		factory.apply(FileWriter.constructorParametersOf(writer, PROPERTIES)).write(PACKAGE_AND_CLASSNAME);
 		String actual = String.valueOf(writer.toCharArray());
 		assertThat(actual).contains("package " + TEST_PACKAGE_NAME);
 		assertThat(actual).contains("import java.util.HashMap;");
@@ -38,9 +41,9 @@ public class SourceCodeGeneratorTest {
 		assertThat(actual).contains("LocalDateTime localDateTime()");
 	}
 
-	private void resultLooksNice(Function<SourceCodeGenerator.Input, SourceCodeGenerator> factory) {
+	private void resultLooksNice(Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory) {
 		CharArrayWriter writer = new CharArrayWriter();
-		factory.apply(FileWriter.inputOf(writer, PROPERTIES)).write(TEST_PACKAGE_NAME, TEST_CLASS_NAME);
+		factory.apply(FileWriter.constructorParametersOf(writer, PROPERTIES)).write(PACKAGE_AND_CLASSNAME);
 		String result = String.valueOf(writer.toCharArray());
 		System.out.println(result);
 	}

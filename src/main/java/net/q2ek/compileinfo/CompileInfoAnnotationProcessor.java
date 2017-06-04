@@ -23,6 +23,7 @@ import com.google.auto.service.AutoService;
 
 import net.q2ek.compileinfo.implementation.FileWriter;
 import net.q2ek.compileinfo.implementation.IOProblem;
+import net.q2ek.compileinfo.implementation.PackageAndClassName;
 
 /**
  * This is the annotation processor for the {@link CompileInfo} annotation.
@@ -78,7 +79,7 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 		String name = generatedClassName(value);
 		FileObject resource = this.filer.createResource(StandardLocation.SOURCE_OUTPUT, packageName, name + ".java");
 		this.messager.printMessage(Kind.NOTE, "resource:\t " + resource.getName());
-		this.writer.writeFile(packageName.toString(), name, resource);
+		this.writer.writeFile(PackageAndClassName.of(packageName.toString(), name), resource);
 	}
 
 	private String generatedClassName(TypeElement value) {

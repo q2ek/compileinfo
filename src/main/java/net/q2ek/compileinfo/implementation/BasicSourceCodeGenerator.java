@@ -15,7 +15,6 @@ import java.util.Set;
 
 import net.q2ek.compileinfo.CompileInfo;
 import net.q2ek.compileinfo.CompileInfoAnnotationProcessor;
-import net.q2ek.compileinfo.implementation.SourceCodeGenerator.Input;
 
 /**
  * Generates the java class source code using {@link String}s or char[]s to
@@ -29,7 +28,7 @@ public class BasicSourceCodeGenerator implements SourceCodeGenerator {
 	private final Writer writer;
 	private final Properties properties;
 
-	BasicSourceCodeGenerator(Input input) {
+	BasicSourceCodeGenerator(ConstructorParameters input) {
 		this(input.writer(), input.properties());
 	}
 
@@ -51,11 +50,11 @@ public class BasicSourceCodeGenerator implements SourceCodeGenerator {
 	}
 
 	@Override
-	public void write(String packageName, String name) {
-		append("package " + packageName + ";\n\n");
+	public void write(PackageAndClassName parameters) {
+		append("package " + parameters.packagename() + ";\n\n");
 		imports();
 		classJavaDoc();
-		classDeclaration(name);
+		classDeclaration(parameters.classname());
 		isoDateTimeConstant();
 		zonedDateTimeConstant();
 		writeLocalDateTime();

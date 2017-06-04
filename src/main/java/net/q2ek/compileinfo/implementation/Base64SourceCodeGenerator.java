@@ -8,15 +8,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Base64.Encoder;
-
-import net.q2ek.compileinfo.CompileInfo;
-import net.q2ek.compileinfo.CompileInfoAnnotationProcessor;
-import net.q2ek.compileinfo.implementation.SourceCodeGenerator.Input;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+
+import net.q2ek.compileinfo.CompileInfo;
+import net.q2ek.compileinfo.CompileInfoAnnotationProcessor;
 
 /**
  * Generates the java class source code using {@link Base64} encoding to store
@@ -31,7 +29,7 @@ public class Base64SourceCodeGenerator implements SourceCodeGenerator {
 	private final Properties properties;
 	private final Encoder encoder = Base64.getEncoder();
 
-	Base64SourceCodeGenerator(Input input) {
+	Base64SourceCodeGenerator(ConstructorParameters input) {
 		this(input.writer(), input.properties());
 	}
 
@@ -53,11 +51,11 @@ public class Base64SourceCodeGenerator implements SourceCodeGenerator {
 	}
 
 	@Override
-	public void write(String packageName, String name) {
-		append("package " + packageName + ";\n\n");
+	public void write(PackageAndClassName parameters) {
+		packageDeclaration(parameters.packagename());
 		imports();
 		classJavaDoc();
-		classDeclaration(name);
+		classDeclaration(parameters.classname());
 		isoDateTimeConstant();
 		zonedDateTimeConstant();
 		writeLocalDateTime();
@@ -68,6 +66,10 @@ public class Base64SourceCodeGenerator implements SourceCodeGenerator {
 		writePropertiesMapCreater();
 		mapBuilder();
 		classEnd();
+	}
+
+	private void packageDeclaration(String packagename) {
+		append("package " + packagename + ";\n\n");
 	}
 
 	private void imports() {
@@ -88,8 +90,8 @@ public class Base64SourceCodeGenerator implements SourceCodeGenerator {
 		append(" */\n");
 	}
 
-	private void classDeclaration(String name) {
-		append("public class " + name + "\n");
+	private void classDeclaration(String classname) {
+		append("public class " + classname + "\n");
 		append("{\n");
 	}
 

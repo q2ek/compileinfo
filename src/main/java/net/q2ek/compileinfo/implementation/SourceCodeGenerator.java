@@ -15,12 +15,12 @@ public interface SourceCodeGenerator {
 	 * @throws IOProblem
 	 *             when {@link IOException} happens
 	 */
-	void write(String packageName, String name);
+	void write(PackageAndClassName parameters);
 
 	/**
 	 * Constructor parameter for classes that implement a ContentCreator.
 	 */
-	public interface Input {
+	public interface ConstructorParameters {
 		Writer writer();
 
 		Properties properties();
