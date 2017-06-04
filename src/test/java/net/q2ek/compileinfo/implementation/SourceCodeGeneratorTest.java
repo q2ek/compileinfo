@@ -1,7 +1,5 @@
 package net.q2ek.compileinfo.implementation;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.CharArrayWriter;
 import java.util.Properties;
 import java.util.function.Function;
@@ -10,7 +8,6 @@ import org.junit.Test;
 
 import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
 
-//@SuppressWarnings("static-method")
 public class SourceCodeGeneratorTest {
 	private static final Properties PROPERTIES = testProperties();
 
@@ -35,14 +32,7 @@ public class SourceCodeGeneratorTest {
 		WriteParameters writeParameters = WriteParameters.of(PACKAGE_AND_CLASSNAME, true);
 		factory.apply(SourceCodeGenerator.ConstructorParameters.of(writer, PROPERTIES)).write(writeParameters);
 		String actual = String.valueOf(writer.toCharArray());
-		assertThat(actual).contains("package " + TEST_PACKAGE_NAME);
-		assertThat(actual).contains("import java.util.Map;");
-		assertThat(actual).contains("import java.util.Set;");
-		assertThat(actual).contains("import java.time.LocalDateTime;");
-		assertThat(actual).contains("@author");
-		assertThat(actual).contains("class " + TEST_CLASS_NAME);
-		assertThat(actual).contains("LocalDateTime localDateTime()");
-		assertThat(actual).contains("ZonedDateTime zonedDateTime()");
+		SourceCodeAsserter.assertContent(actual, PACKAGE_AND_CLASSNAME);
 	}
 
 	private void resultLooksNice(
@@ -55,11 +45,6 @@ public class SourceCodeGeneratorTest {
 	}
 
 	@Test
-	public void basic_write_resultContainsPackageAndClass() {
-		write_resultContainsPackageAndClass(input -> new BasicSourceCodeGenerator(input));
-	}
-
-	@Test
 	public void base64_write_resultContainsPackageAndClass() {
 		write_resultContainsPackageAndClass(input -> new Base64SourceCodeGenerator(input));
 	}
@@ -67,10 +52,5 @@ public class SourceCodeGeneratorTest {
 	@Test
 	public void base64_resultLooksNice() {
 		resultLooksNice(input -> new Base64SourceCodeGenerator(input));
-	}
-
-	@Test
-	public void basic_resultLooksNice() {
-		resultLooksNice(input -> new BasicSourceCodeGenerator(input));
 	}
 }

@@ -18,23 +18,19 @@ import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
  *
  * @author Edze Kruizinga
  */
-public class FileWriter {
+public class FileObjectWriter {
 	private final Properties properties;
 	private final Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory;
 
-	public static FileWriter basic() {
-		return new FileWriter(input -> new BasicSourceCodeGenerator(input));
+	public static FileObjectWriter base64() {
+		return new FileObjectWriter(input -> new Base64SourceCodeGenerator(input));
 	}
 
-	public static FileWriter base64() {
-		return new FileWriter(input -> new Base64SourceCodeGenerator(input));
-	}
-
-	private FileWriter(Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory) {
+	private FileObjectWriter(Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory) {
 		this(System.getProperties(), factory);
 	}
 
-	private FileWriter(
+	private FileObjectWriter(
 		Properties properties,
 		Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory) {
 		this.properties = properties;

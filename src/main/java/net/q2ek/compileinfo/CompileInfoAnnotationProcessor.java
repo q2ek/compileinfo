@@ -21,7 +21,7 @@ import javax.tools.StandardLocation;
 
 import com.google.auto.service.AutoService;
 
-import net.q2ek.compileinfo.implementation.FileWriter;
+import net.q2ek.compileinfo.implementation.FileObjectWriter;
 import net.q2ek.compileinfo.implementation.IOProblem;
 import net.q2ek.compileinfo.implementation.PackageAndClassName;
 import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
@@ -35,7 +35,7 @@ import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
 public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 	private Filer filer;
 	private Messager messager;
-	private final FileWriter writer = FileWriter.base64();
+	private final FileObjectWriter writer = FileObjectWriter.base64();
 
 	public CompileInfoAnnotationProcessor() {
 		super();
