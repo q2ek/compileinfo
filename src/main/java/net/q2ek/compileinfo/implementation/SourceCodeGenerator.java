@@ -15,7 +15,7 @@ public interface SourceCodeGenerator {
 	 * @throws IOProblem
 	 *             when {@link IOException} happens
 	 */
-	void write(PackageAndClassName parameters);
+	void write(WriteParameters parameters);
 
 	/**
 	 * Constructor parameter for classes that implement a ContentCreator.
@@ -24,5 +24,44 @@ public interface SourceCodeGenerator {
 		Writer writer();
 
 		Properties properties();
+
+		public static SourceCodeGenerator.ConstructorParameters of(
+				Writer writer, Properties properties) {
+			return new SourceCodeGenerator.ConstructorParameters() {
+				@Override
+				public Writer writer() {
+					return writer;
+				}
+
+				@Override
+				public Properties properties() {
+					return properties;
+				}
+			};
+		}
+	}
+
+	/**
+	 * Constructor parameter for classes that implement a ContentCreator.
+	 */
+	public interface WriteParameters {
+		PackageAndClassName packageAndClassName();
+
+		boolean addProperties();
+
+		public static WriteParameters of(
+				PackageAndClassName packageAndClassName, boolean addProperties) {
+			return new WriteParameters() {
+				@Override
+				public PackageAndClassName packageAndClassName() {
+					return packageAndClassName;
+				}
+
+				@Override
+				public boolean addProperties() {
+					return addProperties;
+				}
+			};
+		}
 	}
 }

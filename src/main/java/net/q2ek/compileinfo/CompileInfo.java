@@ -34,4 +34,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface CompileInfo {
 	// nothing needed
+
+	/**
+	 * If set to false the generated class will not process any system
+	 * properties.
+	 */
+	boolean properties() default true;
 }

@@ -50,21 +50,25 @@ public class BasicSourceCodeGenerator implements SourceCodeGenerator {
 	}
 
 	@Override
-	public void write(PackageAndClassName parameters) {
-		append("package " + parameters.packagename() + ";\n\n");
+	public void write(WriteParameters parameters) {
+		append("package " + parameters.packageAndClassName().packagename() + ";\n\n");
 		imports();
 		classJavaDoc();
-		classDeclaration(parameters.classname());
+		classDeclaration(parameters.packageAndClassName().classname());
 		isoDateTimeConstant();
 		zonedDateTimeConstant();
 		writeLocalDateTime();
 		writeZonedDateTime();
 		writeTime();
-		writePropertiesMap();
 		writeProperties();
+		classEnd();
+	}
+
+	private void writeProperties() {
+		writePropertiesMap();
+		writeGetMethod();
 		writeKeySetMethod();
 		writePropertiesMapCreater();
-		classEnd();
 	}
 
 	private void imports() {
@@ -161,14 +165,13 @@ public class BasicSourceCodeGenerator implements SourceCodeGenerator {
 		return keys;
 	}
 
-	private void writeProperties() {
+	private void writeGetMethod() {
 		append("    static String get(String key) {\n");
 		append("        return properties.get(key);\n");
 		methodEnd();
 	}
 
 	private void writeKeySetMethod() {
-		addJavaDocToKeySetMethod();
 		append("    static Set<String> keySet() {\n");
 		append("        return properties.keySet();\n");
 		methodEnd();
@@ -176,14 +179,6 @@ public class BasicSourceCodeGenerator implements SourceCodeGenerator {
 
 	private void methodEnd() {
 		append("    }\n\n");
-	}
-
-	private void addJavaDocToKeySetMethod() {
-		append("    /**\n");
-		append("     * @returns<br/>\n");
-		List<String> keys = sortedKeys(this.properties);
-		keys.forEach(key -> append("     * " + key + "<br/>\n"));
-		append("     */\n");
 	}
 
 	private static String filter(String value) {

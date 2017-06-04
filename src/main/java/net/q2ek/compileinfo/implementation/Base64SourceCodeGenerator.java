@@ -51,21 +51,27 @@ public class Base64SourceCodeGenerator implements SourceCodeGenerator {
 	}
 
 	@Override
-	public void write(PackageAndClassName parameters) {
-		packageDeclaration(parameters.packagename());
+	public void write(WriteParameters parameters) {
+		packageDeclaration(parameters.packageAndClassName().packagename());
 		imports();
 		classJavaDoc();
-		classDeclaration(parameters.classname());
+		classDeclaration(parameters.packageAndClassName().classname());
 		isoDateTimeConstant();
 		zonedDateTimeConstant();
 		writeLocalDateTime();
 		writeZonedDateTime();
+		if (parameters.addProperties()) {
+			writeProperties();
+		}
+		classEnd();
+	}
+
+	private void writeProperties() {
 		writePropertiesMap();
-		writeProperties();
+		writeGetMethod();
 		writeKeySetMethod();
 		writePropertiesMapCreater();
 		mapBuilder();
-		classEnd();
 	}
 
 	private void packageDeclaration(String packagename) {
@@ -73,13 +79,10 @@ public class Base64SourceCodeGenerator implements SourceCodeGenerator {
 	}
 
 	private void imports() {
-		append("import java.util.HashMap;\n");
 		append("import java.util.Map;\n");
 		append("import java.util.Set;\n");
 		append("import java.time.LocalDateTime;\n");
 		append("import java.time.ZonedDateTime;\n");
-		append("import java.util.Base64;\n");
-		append("import java.util.Base64.Decoder;\n");
 		append("\n");
 	}
 
@@ -149,8 +152,8 @@ public class Base64SourceCodeGenerator implements SourceCodeGenerator {
 
 	private void mapBuilder() {
 		append("    private static class MapBuilder {\n");
-		append("    	private final Decoder decoder = Base64.getDecoder();\n");
-		append("    	private final Map<String, String> result = new HashMap<>();\n");
+		append("    	private final java.util.Base64.Decoder decoder = java.util.Base64.getDecoder();\n");
+		append("    	private final Map<String, String> result = new java.util.HashMap<>();\n");
 		append("    	\n");
 		append("    	static MapBuilder builder() {\n");
 		append("    		return new MapBuilder();\n");
@@ -178,7 +181,7 @@ public class Base64SourceCodeGenerator implements SourceCodeGenerator {
 		return keys;
 	}
 
-	private void writeProperties() {
+	private void writeGetMethod() {
 		append("    static String get(String key) {\n");
 		append("        return PROPERTIES.get(key);\n");
 		methodEnd();

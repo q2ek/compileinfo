@@ -10,6 +10,7 @@ import java.util.function.Function;
 import javax.tools.FileObject;
 
 import net.q2ek.compileinfo.implementation.SourceCodeGenerator.ConstructorParameters;
+import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
 
 /**
  * Takes a {@link SourceCodeGenerator} and writes the output to a file. It also has
@@ -18,66 +19,43 @@ import net.q2ek.compileinfo.implementation.SourceCodeGenerator.ConstructorParame
  * @author Edze Kruizinga
  */
 public class FileWriter {
-	private final Properties systemProperties = System.getProperties();
+	private final Properties properties;
 	private final Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory;
 
-	/**
-	 * Factory method
-	 *
-	 * @return a {@link FileWriter} using a {@link BasicSourceCodeGenerator}
-	 */
 	public static FileWriter basic() {
 		return new FileWriter(input -> new BasicSourceCodeGenerator(input));
 	}
 
-	/**
-	 * Factory method
-	 *
-	 * @return a {@link FileWriter} using a {@link Base64SourceCodeGenerator}
-	 */
 	public static FileWriter base64() {
 		return new FileWriter(input -> new Base64SourceCodeGenerator(input));
 	}
 
 	private FileWriter(Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory) {
+		this(System.getProperties(), factory);
+	}
+
+	private FileWriter(
+		Properties properties,
+		Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory) {
+		this.properties = properties;
 		this.factory = factory;
 	}
 
-	/**
-	 * Factory method
-	 *
-	 * @return a {@link ConstructorParameters} using the given {@link Writer} and
-	 *         {@link Properties}
-	 */
-	public static SourceCodeGenerator.ConstructorParameters constructorParametersOf(Writer writer, Properties properties) {
-		return new SourceCodeGenerator.ConstructorParameters() {
-			@Override
-			public Writer writer() {
-				return writer;
-			}
-
-			@Override
-			public Properties properties() {
-				return properties;
-			}
-		};
-	}
-
 	private SourceCodeGenerator sourceCodeGenerator(Writer writer, Properties properties) {
-		return this.factory.apply(constructorParametersOf(writer, properties));
+		return this.factory.apply(ConstructorParameters.of(writer, properties));
 	}
 
 	/**
 	 * @throws IOProblem
 	 *             when an {@link IOException} happens
 	 */
-	public void writeFile(PackageAndClassName packageAndClassname, FileObject resource) {
+	public void writeFile(FileObject resource, WriteParameters writeParameters) {
 		try (OutputStream stream = resource.openOutputStream();
 				OutputStreamWriter writer = new OutputStreamWriter(stream)) {
-			sourceCodeGenerator(writer, this.systemProperties).write(packageAndClassname);
+			sourceCodeGenerator(writer, this.properties).write(writeParameters);
 			writer.flush();
 		} catch (IOException e) {
-			throw new IOProblem("Could not write: " + packageAndClassname, e);
+			throw new IOProblem("Could not write: " + writeParameters.packageAndClassName(), e);
 		}
 	}
 }

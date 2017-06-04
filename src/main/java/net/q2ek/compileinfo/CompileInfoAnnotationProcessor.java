@@ -24,6 +24,7 @@ import com.google.auto.service.AutoService;
 import net.q2ek.compileinfo.implementation.FileWriter;
 import net.q2ek.compileinfo.implementation.IOProblem;
 import net.q2ek.compileinfo.implementation.PackageAndClassName;
+import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
 
 /**
  * This is the annotation processor for the {@link CompileInfo} annotation.
@@ -59,7 +60,7 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-		this.messager.printMessage(Kind.NOTE, "Annotated:\t " + roundEnv.getElementsAnnotatedWith(CompileInfo.class));
+		messagerNote("Annotated:\t " + roundEnv.getElementsAnnotatedWith(CompileInfo.class));
 		for (Element element : roundEnv.getElementsAnnotatedWith(CompileInfo.class)) {
 			process((TypeElement) element);
 		}
@@ -75,14 +76,29 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 	}
 
 	private void processUnsafe(TypeElement value) throws IOException {
-		Name packageName = ((PackageElement) value.getEnclosingElement()).getQualifiedName();
-		String name = generatedClassName(value);
-		FileObject resource = this.filer.createResource(StandardLocation.SOURCE_OUTPUT, packageName, name + ".java");
-		this.messager.printMessage(Kind.NOTE, "resource:\t " + resource.getName());
-		this.writer.writeFile(PackageAndClassName.of(packageName.toString(), name), resource);
+		WriteParameters parameters = parametersFor(value);
+		FileObject resource = resourceFor(parameters.packageAndClassName());
+		this.writer.writeFile(resource, parameters);
 	}
 
-	private String generatedClassName(TypeElement value) {
-		return value.getSimpleName() + "CompileInfo";
+	private void messagerNote(String message) {
+		this.messager.printMessage(Kind.NOTE, message);
+	}
+
+	private FileObject resourceFor(PackageAndClassName packageAndClassName) throws IOException {
+		FileObject resource = this.filer.createResource(
+				StandardLocation.SOURCE_OUTPUT,
+				packageAndClassName.packagename(),
+				packageAndClassName.classname() + ".java");
+		messagerNote("resource:\t " + resource.getName());
+		return resource;
+	}
+
+	private WriteParameters parametersFor(TypeElement value) {
+		Name packageName = ((PackageElement) value.getEnclosingElement()).getQualifiedName();
+		String classname = value.getSimpleName() + "CompileInfo";
+		PackageAndClassName packageAndClassName = PackageAndClassName.of(packageName.toString(), classname);
+		boolean generateProperties = value.getAnnotation(CompileInfo.class).properties();
+		return WriteParameters.of(packageAndClassName, generateProperties);
 	}
 }

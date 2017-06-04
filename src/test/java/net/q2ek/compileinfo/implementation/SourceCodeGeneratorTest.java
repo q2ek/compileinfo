@@ -8,6 +8,8 @@ import java.util.function.Function;
 
 import org.junit.Test;
 
+import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
+
 //@SuppressWarnings("static-method")
 public class SourceCodeGeneratorTest {
 	private static final Properties PROPERTIES = testProperties();
@@ -27,23 +29,27 @@ public class SourceCodeGeneratorTest {
 			TEST_PACKAGE_NAME,
 			TEST_CLASS_NAME);
 
-	private void write_resultContainsPackageAndClass(Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory) {
+	private void write_resultContainsPackageAndClass(
+			Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory) {
 		CharArrayWriter writer = new CharArrayWriter();
-		factory.apply(FileWriter.constructorParametersOf(writer, PROPERTIES)).write(PACKAGE_AND_CLASSNAME);
+		WriteParameters writeParameters = WriteParameters.of(PACKAGE_AND_CLASSNAME, true);
+		factory.apply(SourceCodeGenerator.ConstructorParameters.of(writer, PROPERTIES)).write(writeParameters);
 		String actual = String.valueOf(writer.toCharArray());
 		assertThat(actual).contains("package " + TEST_PACKAGE_NAME);
-		assertThat(actual).contains("import java.util.HashMap;");
 		assertThat(actual).contains("import java.util.Map;");
 		assertThat(actual).contains("import java.util.Set;");
 		assertThat(actual).contains("import java.time.LocalDateTime;");
 		assertThat(actual).contains("@author");
 		assertThat(actual).contains("class " + TEST_CLASS_NAME);
 		assertThat(actual).contains("LocalDateTime localDateTime()");
+		assertThat(actual).contains("ZonedDateTime zonedDateTime()");
 	}
 
-	private void resultLooksNice(Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory) {
+	private void resultLooksNice(
+			Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory) {
 		CharArrayWriter writer = new CharArrayWriter();
-		factory.apply(FileWriter.constructorParametersOf(writer, PROPERTIES)).write(PACKAGE_AND_CLASSNAME);
+		WriteParameters writeParameters = WriteParameters.of(PACKAGE_AND_CLASSNAME, true);
+		factory.apply(SourceCodeGenerator.ConstructorParameters.of(writer, PROPERTIES)).write(writeParameters);
 		String result = String.valueOf(writer.toCharArray());
 		System.out.println(result);
 	}
