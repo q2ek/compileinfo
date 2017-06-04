@@ -47,12 +47,14 @@ class MyClass {
 Classes:
 ```java
 net.q2ek.compileinfo.CompileInfo;
+```
+A class is generated named \<AnnotatedClassName\>CompileInfo, it has:
+```java
+static LocalDateTime localDateTime();
+static ZonedDateTime zonedDateTime();
 
-static LocalDateTime xCompileInfo.localDateTime();
-static ZonedDateTime xCompileInfo.zonedDateTime();
-
-static Set<String> xCompileInfo.keySet();
-static String xCompileInfo.get(String key);
+static Set<String> keySet();
+static String get(String key);
 ```
 
 ## Built With
