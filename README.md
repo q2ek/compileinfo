@@ -51,12 +51,17 @@ The project is a standard Maven project.
 
 ## Versioning
 
-I use [SemVer](http://semver.org/) for versioning.
+This project uses [SemVer](http://semver.org/) for versioning.
 
 ### Releases
 
 * 0.11.0 is available at Maven Central
 * 0.12.0 is available at Maven Central and uses base64 encoding to prevent code injection
+
+### Planned work
+
+* Describe the API either in Java or in a document form.
+* Add options to the annotation to enable system property choices. So that not all properties are stored.
 
 ## Authors
 
