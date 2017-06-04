@@ -13,10 +13,20 @@ public class FileWriter {
 	private final Properties systemProperties = System.getProperties();
 	private final Function<ContentCreator.Input, ContentCreator> factory;
 
+	/**
+	 * Factory method
+	 *
+	 * @return a {@link FileWriter} using a {@link BasicContentCreator}
+	 */
 	static FileWriter basic() {
 		return new FileWriter(input -> new BasicContentCreator(input));
 	}
 
+	/**
+	 * Factory method
+	 *
+	 * @return a {@link FileWriter} using a {@link Base64ContentCreator}
+	 */
 	static FileWriter base64() {
 		return new FileWriter(input -> new Base64ContentCreator(input));
 	}
@@ -25,6 +35,12 @@ public class FileWriter {
 		this.factory = factory;
 	}
 
+	/**
+	 * Factory method
+	 *
+	 * @return a {@link ContentCreator.Input} using the given {@link Writer} and
+	 *         {@link Properties}
+	 */
 	public static ContentCreator.Input inputOf(Writer writer, Properties properties) {
 		return new ContentCreator.Input() {
 			@Override

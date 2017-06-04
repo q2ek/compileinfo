@@ -1,4 +1,4 @@
-package net.q2ek.compileinfo;
+package net.q2ek.compileinfo.example;
 
 import java.util.regex.Pattern;
 

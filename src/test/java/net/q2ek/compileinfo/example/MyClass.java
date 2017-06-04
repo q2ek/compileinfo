@@ -1,4 +1,6 @@
-package net.q2ek.compileinfo;
+package net.q2ek.compileinfo.example;
+
+import net.q2ek.compileinfo.CompileInfo;
 
 @CompileInfo
 class MyClass {

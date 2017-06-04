@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * Annotate a class to generate xCompileInfo.java <br/>
  *
  * Example: <br/>
- * 
+ *
  * <pre>
  * <code>import net.q2ek.compileinfo.CompileInfo;
  *

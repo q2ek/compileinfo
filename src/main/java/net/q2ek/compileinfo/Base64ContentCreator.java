@@ -14,8 +14,10 @@ import java.util.Properties;
 import java.util.Set;
 
 /**
- * This class generates a java class source code file. It is used by
- * {@link CompileInfoAnnotationProcessor}
+ * This class generates the source code for a java class. It uses base64
+ * encoding to store data.
+ *
+ * @see {@link ContentCreator}
  *
  * @author Edze Kruizinga
  */
