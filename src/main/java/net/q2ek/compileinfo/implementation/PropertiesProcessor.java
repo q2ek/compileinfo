@@ -38,7 +38,8 @@ class PropertiesProcessor {
 		return result;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static Map<String, String> convert(Properties properties) {
-		return new HashMap<>((Map) properties);
+		return new HashMap<String, String>((Map) properties);
 	}
 }
