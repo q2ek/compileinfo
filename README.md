@@ -75,7 +75,6 @@ This project uses [SemVer](http://semver.org/) for versioning.
 
 ### Planned work
 
-* Describe the API either in Java or in a document form.
 * Add options to the annotation to enable system property choices. So that not all properties are stored.
 
 ## Authors
