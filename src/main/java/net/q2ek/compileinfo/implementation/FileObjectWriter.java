@@ -8,7 +8,6 @@ import java.util.function.Function;
 
 import javax.tools.FileObject;
 
-import net.q2ek.compileinfo.implementation.SourceCodeGenerator.ConstructorParameters;
 import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
 
 /**
@@ -18,19 +17,19 @@ import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
  * @author Edze Kruizinga
  */
 public class FileObjectWriter {
-	private final Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory;
+	private final Function<Writer, SourceCodeGenerator> factory;
 
 	public static FileObjectWriter base64() {
-		return new FileObjectWriter(input -> new Base64SourceCodeGenerator(input));
+		return new FileObjectWriter(writer -> new Base64SourceCodeGenerator(writer));
 	}
 
 	private FileObjectWriter(
-		Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory) {
+		Function<Writer, SourceCodeGenerator> factory) {
 		this.factory = factory;
 	}
 
 	private SourceCodeGenerator sourceCodeGenerator(Writer writer) {
-		return this.factory.apply(ConstructorParameters.of(writer));
+		return this.factory.apply(writer);
 	}
 
 	/**

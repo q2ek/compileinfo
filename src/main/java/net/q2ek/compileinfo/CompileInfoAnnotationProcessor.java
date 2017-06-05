@@ -116,7 +116,7 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 	private Map<String, String> filter(Map<String, String> properties, String[] includeProperties) {
 		Map<String, String> result = new HashMap<>();
 		for (String key : includeProperties) {
-			result.put(key, this.properties.get(key));
+			result.put(key, properties.get(key));
 		}
 		return result;
 	}

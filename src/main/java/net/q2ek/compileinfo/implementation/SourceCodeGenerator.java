@@ -1,7 +1,6 @@
 package net.q2ek.compileinfo.implementation;
 
 import java.io.IOException;
-import java.io.Writer;
 import java.util.Map;
 
 /**
@@ -16,23 +15,6 @@ public interface SourceCodeGenerator {
 	 *             when {@link IOException} happens
 	 */
 	void write(WriteParameters parameters);
-
-	/**
-	 * Constructor parameter for classes that implement a ContentCreator.
-	 */
-	public interface ConstructorParameters {
-		Writer writer();
-
-		public static SourceCodeGenerator.ConstructorParameters of(
-				Writer writer) {
-			return new SourceCodeGenerator.ConstructorParameters() {
-				@Override
-				public Writer writer() {
-					return writer;
-				}
-			};
-		}
-	}
 
 	/**
 	 * Constructor parameter for classes that implement a ContentCreator.

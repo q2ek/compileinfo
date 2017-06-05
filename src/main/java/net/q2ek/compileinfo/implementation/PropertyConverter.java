@@ -10,4 +10,11 @@ public class PropertyConverter {
 		return new HashMap<>((Map) properties);
 	}
 
+	static Map<String, String> filter(Map<String, String> properties, String[] includeProperties) {
+		Map<String, String> result = new HashMap<>();
+		for (String key : includeProperties) {
+			result.put(key, properties.get(key));
+		}
+		return result;
+	}
 }

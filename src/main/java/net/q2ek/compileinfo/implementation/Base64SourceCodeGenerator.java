@@ -24,14 +24,9 @@ import net.q2ek.compileinfo.CompileInfoAnnotationProcessor;
  *
  * @author Edze Kruizinga
  */
-public class Base64SourceCodeGenerator implements SourceCodeGenerator {
+class Base64SourceCodeGenerator implements SourceCodeGenerator {
 	private final Writer writer;
 	private final Encoder encoder = Base64.getEncoder();
-
-	@Deprecated
-	Base64SourceCodeGenerator(ConstructorParameters input) {
-		this(input.writer());
-	}
 
 	Base64SourceCodeGenerator(Writer writer) {
 		this.writer = writer;
