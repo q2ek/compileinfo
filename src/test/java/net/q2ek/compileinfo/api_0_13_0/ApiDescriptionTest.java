@@ -35,12 +35,8 @@ public class ApiDescriptionTest {
 
 	@Test
 	public void static_get_method_returns_String() {
-		String actual = ApiDescriptionTestCompileInfo.get(firstKey());
+		String actual = ApiDescriptionTestCompileInfo.get("java.version");
 
 		assertThat(actual).isNotNull();
-	}
-
-	private String firstKey() {
-		return ApiDescriptionTestCompileInfo.keySet().iterator().next();
 	}
 }

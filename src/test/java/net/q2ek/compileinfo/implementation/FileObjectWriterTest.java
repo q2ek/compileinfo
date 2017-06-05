@@ -12,9 +12,9 @@ import org.junit.Test;
 import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
 
 public class FileObjectWriterTest {
-	private static final String TEST_CLASS_NAME = "CompileInfoTestOutput";
-	private static final String TEST_PACKAGE_NAME = "test.package";
-	private static final PackageAndClassName PACKAGE_AND_CLASSNAME = PackageAndClassName.of(
+	static final String TEST_CLASS_NAME = "CompileInfoTestOutput";
+	static final String TEST_PACKAGE_NAME = "test.package";
+	static final PackageAndClassName PACKAGE_AND_CLASSNAME = PackageAndClassName.of(
 			TEST_PACKAGE_NAME,
 			TEST_CLASS_NAME);
 
@@ -23,11 +23,25 @@ public class FileObjectWriterTest {
 	@Test
 	public void write_writes() {
 		TestFileObject resource = new TestFileObject();
-		WriteParameters writeParameters = WriteParameters.of(PACKAGE_AND_CLASSNAME, true);
+		WriteParameters writeParameters = WriteParameters.of(
+				SourceCodeTestHelper.properties(),
+				PACKAGE_AND_CLASSNAME, true);
 		this.fileWriter.writeFile(resource, writeParameters);
 
 		String actual = resource.bytesAsString();
-		SourceCodeAsserter.assertContent(actual, PACKAGE_AND_CLASSNAME);
+		SourceCodeTestHelper.assertContent(actual, PACKAGE_AND_CLASSNAME);
+	}
+
+	@Test
+	public void write_looksGood() {
+		TestFileObject resource = new TestFileObject();
+		WriteParameters writeParameters = WriteParameters.of(
+				SourceCodeTestHelper.properties(),
+				PACKAGE_AND_CLASSNAME, true);
+		this.fileWriter.writeFile(resource, writeParameters);
+
+		String actual = resource.bytesAsString();
+		System.out.println(actual);
 	}
 
 	private class TestFileObject extends SimpleJavaFileObject {
@@ -40,10 +54,6 @@ public class FileObjectWriterTest {
 		@Override
 		public OutputStream openOutputStream() throws IOException {
 			return this.baos;
-		}
-
-		byte[] bytes() {
-			return this.baos.toByteArray();
 		}
 
 		String bytesAsString() {

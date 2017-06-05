@@ -33,11 +33,15 @@ import java.lang.annotation.Target;
 @Retention(CLASS)
 @Target(ElementType.TYPE)
 public @interface CompileInfo {
-	// nothing needed
-
 	/**
 	 * If set to false the generated class will not process any system
 	 * properties.
 	 */
-	boolean properties() default true;
+	boolean generateProperties() default true;
+
+	/**
+	 * If any are given then only these system properties will be read and
+	 * included in the generated class.
+	 */
+	String[] includeProperties() default {};
 }

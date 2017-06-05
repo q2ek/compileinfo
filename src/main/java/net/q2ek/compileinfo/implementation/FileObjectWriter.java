@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.Properties;
 import java.util.function.Function;
 
 import javax.tools.FileObject;
@@ -19,26 +18,19 @@ import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
  * @author Edze Kruizinga
  */
 public class FileObjectWriter {
-	private final Properties properties;
 	private final Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory;
 
 	public static FileObjectWriter base64() {
 		return new FileObjectWriter(input -> new Base64SourceCodeGenerator(input));
 	}
 
-	private FileObjectWriter(Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory) {
-		this(System.getProperties(), factory);
-	}
-
 	private FileObjectWriter(
-		Properties properties,
 		Function<SourceCodeGenerator.ConstructorParameters, SourceCodeGenerator> factory) {
-		this.properties = properties;
 		this.factory = factory;
 	}
 
-	private SourceCodeGenerator sourceCodeGenerator(Writer writer, Properties properties) {
-		return this.factory.apply(ConstructorParameters.of(writer, properties));
+	private SourceCodeGenerator sourceCodeGenerator(Writer writer) {
+		return this.factory.apply(ConstructorParameters.of(writer));
 	}
 
 	/**
@@ -48,7 +40,7 @@ public class FileObjectWriter {
 	public void writeFile(FileObject resource, WriteParameters writeParameters) {
 		try (OutputStream stream = resource.openOutputStream();
 				OutputStreamWriter writer = new OutputStreamWriter(stream)) {
-			sourceCodeGenerator(writer, this.properties).write(writeParameters);
+			sourceCodeGenerator(writer).write(writeParameters);
 			writer.flush();
 		} catch (IOException e) {
 			throw new IOProblem("Could not write: " + writeParameters.packageAndClassName(), e);

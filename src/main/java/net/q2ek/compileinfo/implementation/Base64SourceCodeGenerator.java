@@ -10,7 +10,7 @@ import java.util.Base64;
 import java.util.Base64.Encoder;
 import java.util.Collections;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
 import java.util.Set;
 
 import net.q2ek.compileinfo.CompileInfo;
@@ -26,16 +26,15 @@ import net.q2ek.compileinfo.CompileInfoAnnotationProcessor;
  */
 public class Base64SourceCodeGenerator implements SourceCodeGenerator {
 	private final Writer writer;
-	private final Properties properties;
 	private final Encoder encoder = Base64.getEncoder();
 
+	@Deprecated
 	Base64SourceCodeGenerator(ConstructorParameters input) {
-		this(input.writer(), input.properties());
+		this(input.writer());
 	}
 
-	Base64SourceCodeGenerator(Writer writer, Properties properties) {
+	Base64SourceCodeGenerator(Writer writer) {
 		this.writer = writer;
-		this.properties = properties;
 	}
 
 	/**
@@ -61,16 +60,16 @@ public class Base64SourceCodeGenerator implements SourceCodeGenerator {
 		writeLocalDateTime();
 		writeZonedDateTime();
 		if (parameters.addProperties()) {
-			writeProperties();
+			writeProperties(parameters.properties());
 		}
 		classEnd();
 	}
 
-	private void writeProperties() {
+	private void writeProperties(Map<String, String> properties) {
 		writePropertiesMap();
 		writeGetMethod();
 		writeKeySetMethod();
-		writePropertiesMapCreater();
+		writePropertiesMapCreater(properties);
 		mapBuilder();
 	}
 
@@ -132,19 +131,19 @@ public class Base64SourceCodeGenerator implements SourceCodeGenerator {
 		append("    static final Map<String, String> PROPERTIES = createMap();\n\n");
 	}
 
-	private void writePropertiesMapCreater() {
+	private void writePropertiesMapCreater(Map<String, String> properties) {
 		append("    private static Map<String, String> createMap() {\n");
 		append("    	MapBuilder builder = MapBuilder.builder();\n");
-		List<String> keys = sortedKeys(this.properties);
+		List<String> keys = sortedKeys(properties);
 		for (String key : keys) {
-			putKeyValue(key);
+			putKeyValue(properties, key);
 		}
 		append("        return builder.build();\n");
 		methodEnd();
 	}
 
-	private void putKeyValue(String key) {
-		String value = this.properties.get(key).toString();
+	private void putKeyValue(Map<String, String> properties, String key) {
+		String value = properties.get(key);
 		String putFormat = "        builder.put(\"%s\",\n                    \"%s\");\n";
 		String putCommand = String.format(putFormat, base64(key), base64(value));
 		append(putCommand);
@@ -173,8 +172,8 @@ public class Base64SourceCodeGenerator implements SourceCodeGenerator {
 		return this.encoder.encodeToString(value.getBytes());
 	}
 
-	private static List<String> sortedKeys(Properties properties) {
-		Set<Object> keySet = properties.keySet();
+	private static List<String> sortedKeys(Map<String, String> properties) {
+		Set<String> keySet = properties.keySet();
 		List<String> keys = new ArrayList<>(keySet.size());
 		keySet.forEach(key -> keys.add(key.toString()));
 		Collections.sort(keys);

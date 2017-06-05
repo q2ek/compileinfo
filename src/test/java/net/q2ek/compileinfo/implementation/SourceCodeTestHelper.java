@@ -2,9 +2,25 @@ package net.q2ek.compileinfo.implementation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SourceCodeAsserter {
+import java.util.Map;
+import java.util.Properties;
 
-	public static void assertContent(String actual, PackageAndClassName packageAndClassname) {
+public class SourceCodeTestHelper {
+
+	static Properties testSystemProperties() {
+		Properties result = new Properties();
+		result.put("user.name", SourceCodeGeneratorTest.class.getSimpleName());
+		result.put("hack", "\\\"hack");
+		result.put("double\"hack", "hack\\\"hack");
+		result.put("javadoc hack */ explosions", "nothing really");
+		return result;
+	}
+
+	static Map<String, String> properties() {
+		return PropertyConverter.convert(testSystemProperties());
+	}
+
+	static void assertContent(String actual, PackageAndClassName packageAndClassname) {
 		assertThat(actual).contains("package " + packageAndClassname.packagename());
 		assertThat(actual).contains("import java.util.Map;");
 		assertThat(actual).contains("import java.util.Set;");

@@ -2,7 +2,7 @@ package net.q2ek.compileinfo.implementation;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Properties;
+import java.util.Map;
 
 /**
  * Any class implementing this interface generates java class source code
@@ -23,19 +23,12 @@ public interface SourceCodeGenerator {
 	public interface ConstructorParameters {
 		Writer writer();
 
-		Properties properties();
-
 		public static SourceCodeGenerator.ConstructorParameters of(
-				Writer writer, Properties properties) {
+				Writer writer) {
 			return new SourceCodeGenerator.ConstructorParameters() {
 				@Override
 				public Writer writer() {
 					return writer;
-				}
-
-				@Override
-				public Properties properties() {
-					return properties;
 				}
 			};
 		}
@@ -49,8 +42,12 @@ public interface SourceCodeGenerator {
 
 		boolean addProperties();
 
+		Map<String, String> properties();
+
 		public static WriteParameters of(
-				PackageAndClassName packageAndClassName, boolean addProperties) {
+				Map<String, String> properties,
+				PackageAndClassName packageAndClassName,
+				boolean addProperties) {
 			return new WriteParameters() {
 				@Override
 				public PackageAndClassName packageAndClassName() {
@@ -60,6 +57,11 @@ public interface SourceCodeGenerator {
 				@Override
 				public boolean addProperties() {
 					return addProperties;
+				}
+
+				@Override
+				public Map<String, String> properties() {
+					return properties;
 				}
 			};
 		}

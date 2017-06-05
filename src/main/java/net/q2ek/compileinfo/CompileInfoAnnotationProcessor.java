@@ -2,6 +2,8 @@ package net.q2ek.compileinfo;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -24,6 +26,7 @@ import com.google.auto.service.AutoService;
 import net.q2ek.compileinfo.implementation.FileObjectWriter;
 import net.q2ek.compileinfo.implementation.IOProblem;
 import net.q2ek.compileinfo.implementation.PackageAndClassName;
+import net.q2ek.compileinfo.implementation.PropertyConverter;
 import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
 
 /**
@@ -36,6 +39,7 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 	private Filer filer;
 	private Messager messager;
 	private final FileObjectWriter writer = FileObjectWriter.base64();
+	private final Map<String, String> properties = PropertyConverter.convert(System.getProperties());
 
 	public CompileInfoAnnotationProcessor() {
 		super();
@@ -95,10 +99,32 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 	}
 
 	private WriteParameters parametersFor(TypeElement value) {
+		PackageAndClassName packageAndClassName = packageAndClassNameOf(value);
+		boolean generateProperties = value.getAnnotation(CompileInfo.class).generateProperties();
+		Map<String, String> properties = useProperties(value);
+		return WriteParameters.of(properties, packageAndClassName, generateProperties);
+	}
+
+	private Map<String, String> useProperties(TypeElement value) {
+		String[] includeProperties = value.getAnnotation(CompileInfo.class).includeProperties();
+		if (includeProperties.length == 0) {
+			return this.properties;
+		}
+		return filter(this.properties, includeProperties);
+	}
+
+	private Map<String, String> filter(Map<String, String> properties, String[] includeProperties) {
+		Map<String, String> result = new HashMap<>();
+		for (String key : includeProperties) {
+			result.put(key, this.properties.get(key));
+		}
+		return result;
+	}
+
+	private PackageAndClassName packageAndClassNameOf(TypeElement value) {
 		Name packageName = ((PackageElement) value.getEnclosingElement()).getQualifiedName();
 		String classname = value.getSimpleName() + "CompileInfo";
-		PackageAndClassName packageAndClassName = PackageAndClassName.of(packageName.toString(), classname);
-		boolean generateProperties = value.getAnnotation(CompileInfo.class).properties();
-		return WriteParameters.of(packageAndClassName, generateProperties);
+		return PackageAndClassName.of(packageName.toString(), classname);
 	}
+
 }
