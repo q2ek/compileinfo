@@ -34,14 +34,14 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface CompileInfo {
 	/**
-	 * If set to false the generated class will not process any system
+	 * If set to false the generated class will not contain a map of system
 	 * properties.
 	 */
 	boolean generateProperties() default true;
 
 	/**
-	 * If any are given then only these system properties will be read and
-	 * included in the generated class.
+	 * If any are given then only these system properties will be included in
+	 * the generated class.
 	 */
 	String[] includeProperties() default {};
 
