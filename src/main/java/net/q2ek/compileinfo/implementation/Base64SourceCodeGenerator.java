@@ -46,7 +46,7 @@ class Base64SourceCodeGenerator implements SourceCodeGenerator {
 	@Override
 	public void write(WriteParameters parameters) {
 		packageDeclaration(parameters.packageAndClassName().packagename());
-		imports();
+		imports(parameters.addProperties());
 		classJavaDoc();
 		classDeclaration(parameters.packageAndClassName().classname());
 		isoDateTimeConstant();
@@ -71,11 +71,12 @@ class Base64SourceCodeGenerator implements SourceCodeGenerator {
 		append("package " + packagename + ";\n\n");
 	}
 
-	private void imports() {
-		append("import java.util.Map;\n");
-		append("import java.util.Set;\n");
+	private void imports(boolean propertiesMap) {
 		append("import java.time.LocalDateTime;\n");
 		append("import java.time.ZonedDateTime;\n");
+		if (propertiesMap) {
+			append("import java.util.Map;\n");
+		}
 		append("\n");
 	}
 
@@ -181,7 +182,7 @@ class Base64SourceCodeGenerator implements SourceCodeGenerator {
 	}
 
 	private void writeKeySetMethod() {
-		append("    static Set<String> keySet() {\n");
+		append("    static java.util.Set<String> keySet() {\n");
 		append("        return PROPERTIES.keySet();\n");
 		methodEnd();
 	}

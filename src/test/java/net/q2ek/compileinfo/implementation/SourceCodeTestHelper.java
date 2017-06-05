@@ -23,7 +23,7 @@ public class SourceCodeTestHelper {
 	static void assertContent(String actual, ClassAttributes packageAndClassname) {
 		assertThat(actual).contains("package " + packageAndClassname.packagename());
 		assertThat(actual).contains("import java.util.Map;");
-		assertThat(actual).contains("import java.util.Set;");
+		assertThat(actual).contains("import java.time.ZonedDateTime;");
 		assertThat(actual).contains("import java.time.LocalDateTime;");
 		assertThat(actual).contains("@author");
 		assertThat(actual).contains("class " + packageAndClassname.classname());
