@@ -2,7 +2,6 @@ package net.q2ek.compileinfo.implementation;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -13,8 +12,6 @@ import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.Name;
-import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.FileObject;
@@ -35,7 +32,6 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 	private Filer filer;
 	private Messager messager;
 	private final FileObjectWriter writer = FileObjectWriter.base64();
-	private final PropertiesProcessor properties = PropertiesProcessor.of(System.getProperties());
 
 	public CompileInfoAnnotationProcessor() {
 		super();
@@ -60,7 +56,6 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-		messagerNote("Annotated:\t " + roundEnv.getElementsAnnotatedWith(CompileInfo.class));
 		for (Element element : roundEnv.getElementsAnnotatedWith(CompileInfo.class)) {
 			process((TypeElement) element);
 		}
@@ -76,13 +71,9 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 	}
 
 	private void processUnsafe(TypeElement value) throws IOException {
-		WriteParameters parameters = parametersFor(value);
+		WriteParameters parameters = TypeElementProcessor.parametersFor(value);
 		FileObject resource = resourceFor(parameters.packageAndClassName());
 		this.writer.writeFile(resource, parameters);
-	}
-
-	private void messagerNote(String message) {
-		this.messager.printMessage(Kind.NOTE, message);
 	}
 
 	private FileObject resourceFor(ClassAttributes packageAndClassName) throws IOException {
@@ -90,34 +81,7 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 				StandardLocation.SOURCE_OUTPUT,
 				packageAndClassName.packagename(),
 				packageAndClassName.classname() + ".java");
-		messagerNote("resource:\t " + resource.getName());
 		return resource;
-	}
-
-	private WriteParameters parametersFor(TypeElement value) {
-		ClassAttributes packageAndClassName = packageAndClassNameOf(value);
-		boolean generateProperties = value.getAnnotation(CompileInfo.class).generateProperties();
-		Map<String, String> properties = useProperties(value);
-		return WriteParameters.of(properties, packageAndClassName, generateProperties);
-	}
-
-	private Map<String, String> useProperties(TypeElement value) {
-		String[] includeProperties = value.getAnnotation(CompileInfo.class).includeProperties();
-		return this.properties.filtered(includeProperties);
-	}
-
-	private ClassAttributes packageAndClassNameOf(TypeElement value) {
-		Name packageName = ((PackageElement) value.getEnclosingElement()).getQualifiedName();
-		String classname = classnameFor(value, value.getAnnotation(CompileInfo.class).classname());
-		return ClassAttributes.of(packageName, classname);
-	}
-
-	private String classnameFor(TypeElement value, String classname) {
-		if (classname.isEmpty()) {
-			return value.getSimpleName() + value.getAnnotation(CompileInfo.class).extension();
-		} else {
-			return classname;
-		}
 	}
 
 }
