@@ -20,7 +20,7 @@ public class SourceCodeTestHelper {
 		return PropertiesProcessor.of(testSystemProperties()).properties();
 	}
 
-	static void assertContent(String actual, PackageAndClassName packageAndClassname) {
+	static void assertContent(String actual, ClassAttributes packageAndClassname) {
 		assertThat(actual).contains("package " + packageAndClassname.packagename());
 		assertThat(actual).contains("import java.util.Map;");
 		assertThat(actual).contains("import java.util.Set;");

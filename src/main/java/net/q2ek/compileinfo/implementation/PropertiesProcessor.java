@@ -20,6 +20,13 @@ public class PropertiesProcessor {
 	}
 
 	public Map<String, String> filtered(String[] includeProperties) {
+		if (includeProperties.length == 0) {
+			return properties();
+		}
+		return filter(includeProperties);
+	}
+
+	private Map<String, String> filter(String[] includeProperties) {
 		Map<String, String> result = new HashMap<>();
 		for (String key : includeProperties) {
 			result.put(key, this.properties.get(key));

@@ -14,7 +14,7 @@ import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
 public class FileObjectWriterTest {
 	static final String TEST_CLASS_NAME = "CompileInfoTestOutput";
 	static final String TEST_PACKAGE_NAME = "test.package";
-	static final PackageAndClassName PACKAGE_AND_CLASSNAME = PackageAndClassName.of(
+	static final ClassAttributes PACKAGE_AND_CLASSNAME = ClassAttributes.of(
 			TEST_PACKAGE_NAME,
 			TEST_CLASS_NAME);
 

@@ -22,9 +22,9 @@ import javax.tools.StandardLocation;
 
 import com.google.auto.service.AutoService;
 
+import net.q2ek.compileinfo.implementation.ClassAttributes;
 import net.q2ek.compileinfo.implementation.FileObjectWriter;
 import net.q2ek.compileinfo.implementation.IOProblem;
-import net.q2ek.compileinfo.implementation.PackageAndClassName;
 import net.q2ek.compileinfo.implementation.PropertiesProcessor;
 import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
 
@@ -88,7 +88,7 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 		this.messager.printMessage(Kind.NOTE, message);
 	}
 
-	private FileObject resourceFor(PackageAndClassName packageAndClassName) throws IOException {
+	private FileObject resourceFor(ClassAttributes packageAndClassName) throws IOException {
 		FileObject resource = this.filer.createResource(
 				StandardLocation.SOURCE_OUTPUT,
 				packageAndClassName.packagename(),
@@ -98,7 +98,7 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 	}
 
 	private WriteParameters parametersFor(TypeElement value) {
-		PackageAndClassName packageAndClassName = packageAndClassNameOf(value);
+		ClassAttributes packageAndClassName = packageAndClassNameOf(value);
 		boolean generateProperties = value.getAnnotation(CompileInfo.class).generateProperties();
 		Map<String, String> properties = useProperties(value);
 		return WriteParameters.of(properties, packageAndClassName, generateProperties);
@@ -106,16 +106,13 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 
 	private Map<String, String> useProperties(TypeElement value) {
 		String[] includeProperties = value.getAnnotation(CompileInfo.class).includeProperties();
-		if (includeProperties.length == 0) {
-			return this.properties.properties();
-		}
 		return this.properties.filtered(includeProperties);
 	}
 
-	private PackageAndClassName packageAndClassNameOf(TypeElement value) {
+	private ClassAttributes packageAndClassNameOf(TypeElement value) {
 		Name packageName = ((PackageElement) value.getEnclosingElement()).getQualifiedName();
 		String classname = value.getSimpleName() + "CompileInfo";
-		return PackageAndClassName.of(packageName.toString(), classname);
+		return ClassAttributes.of(packageName, classname);
 	}
 
 }

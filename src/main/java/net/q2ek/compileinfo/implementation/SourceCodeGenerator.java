@@ -20,7 +20,7 @@ public interface SourceCodeGenerator {
 	 * Constructor parameter for classes that implement a ContentCreator.
 	 */
 	public interface WriteParameters {
-		PackageAndClassName packageAndClassName();
+		ClassAttributes packageAndClassName();
 
 		boolean addProperties();
 
@@ -28,11 +28,11 @@ public interface SourceCodeGenerator {
 
 		public static WriteParameters of(
 				Map<String, String> properties,
-				PackageAndClassName packageAndClassName,
+				ClassAttributes packageAndClassName,
 				boolean addProperties) {
 			return new WriteParameters() {
 				@Override
-				public PackageAndClassName packageAndClassName() {
+				public ClassAttributes packageAndClassName() {
 					return packageAndClassName;
 				}
 

@@ -68,7 +68,7 @@ class Base64SourceCodeGenerator implements SourceCodeGenerator {
 		mapBuilder();
 	}
 
-	private void packageDeclaration(String packagename) {
+	private void packageDeclaration(CharSequence packagename) {
 		append("package " + packagename + ";\n\n");
 	}
 
@@ -87,7 +87,7 @@ class Base64SourceCodeGenerator implements SourceCodeGenerator {
 		append(" */\n");
 	}
 
-	private void classDeclaration(String classname) {
+	private void classDeclaration(CharSequence classname) {
 		append("public class " + classname + "\n");
 		append("{\n");
 	}

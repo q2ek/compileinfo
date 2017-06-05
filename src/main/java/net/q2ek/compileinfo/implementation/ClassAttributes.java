@@ -3,21 +3,22 @@ package net.q2ek.compileinfo.implementation;
 /**
  * Constructor parameter for classes that implement a ContentCreator.
  */
-public interface PackageAndClassName {
-	String packagename();
+public interface ClassAttributes {
+	CharSequence packagename();
 
-	String classname();
+	CharSequence classname();
 
-	public static PackageAndClassName of(String packagename,
-			String classname) {
-		return new PackageAndClassName() {
+	public static ClassAttributes of(
+			CharSequence packagename,
+			CharSequence classname) {
+		return new ClassAttributes() {
 			@Override
-			public String packagename() {
+			public CharSequence packagename() {
 				return packagename;
 			}
 
 			@Override
-			public String classname() {
+			public CharSequence classname() {
 				return classname;
 			}
 

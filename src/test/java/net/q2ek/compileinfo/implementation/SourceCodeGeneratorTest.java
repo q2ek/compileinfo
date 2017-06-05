@@ -11,7 +11,7 @@ import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
 public class SourceCodeGeneratorTest {
 	private static final String TEST_CLASS_NAME = "CompileInfoTestOutput";
 	private static final String TEST_PACKAGE_NAME = "test.package";
-	private static final PackageAndClassName PACKAGE_AND_CLASSNAME = PackageAndClassName.of(
+	private static final ClassAttributes PACKAGE_AND_CLASSNAME = ClassAttributes.of(
 			TEST_PACKAGE_NAME,
 			TEST_CLASS_NAME);
 
