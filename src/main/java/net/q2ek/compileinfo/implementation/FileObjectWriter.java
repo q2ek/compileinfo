@@ -16,10 +16,10 @@ import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
  *
  * @author Edze Kruizinga
  */
-public class FileObjectWriter {
+class FileObjectWriter {
 	private final Function<Writer, SourceCodeGenerator> factory;
 
-	public static FileObjectWriter base64() {
+	static FileObjectWriter base64() {
 		return new FileObjectWriter(writer -> new Base64SourceCodeGenerator(writer));
 	}
 
@@ -36,7 +36,7 @@ public class FileObjectWriter {
 	 * @throws IOProblem
 	 *             when an {@link IOException} happens
 	 */
-	public void writeFile(FileObject resource, WriteParameters writeParameters) {
+	void writeFile(FileObject resource, WriteParameters writeParameters) {
 		try (OutputStream stream = resource.openOutputStream();
 				OutputStreamWriter writer = new OutputStreamWriter(stream)) {
 			sourceCodeGenerator(writer).write(writeParameters);

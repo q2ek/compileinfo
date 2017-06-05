@@ -3,12 +3,12 @@ package net.q2ek.compileinfo.implementation;
 /**
  * Constructor parameter for classes that implement a ContentCreator.
  */
-public interface ClassAttributes {
+interface ClassAttributes {
 	CharSequence packagename();
 
 	CharSequence classname();
 
-	public static ClassAttributes of(
+	static ClassAttributes of(
 			CharSequence packagename,
 			CharSequence classname) {
 		return new ClassAttributes() {

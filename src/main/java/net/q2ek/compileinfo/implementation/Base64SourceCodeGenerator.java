@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.Set;
 
 import net.q2ek.compileinfo.CompileInfo;
-import net.q2ek.compileinfo.CompileInfoAnnotationProcessor;
 
 /**
  * Generates the java class source code using {@link Base64} encoding to store

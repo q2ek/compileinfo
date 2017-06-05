@@ -1,4 +1,4 @@
-package net.q2ek.compileinfo;
+package net.q2ek.compileinfo.implementation;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -22,10 +22,7 @@ import javax.tools.StandardLocation;
 
 import com.google.auto.service.AutoService;
 
-import net.q2ek.compileinfo.implementation.ClassAttributes;
-import net.q2ek.compileinfo.implementation.FileObjectWriter;
-import net.q2ek.compileinfo.implementation.IOProblem;
-import net.q2ek.compileinfo.implementation.PropertiesProcessor;
+import net.q2ek.compileinfo.CompileInfo;
 import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
 
 /**

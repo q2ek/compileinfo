@@ -10,7 +10,7 @@ import java.io.IOException;
 public class IOProblem extends RuntimeException {
 	private static final long serialVersionUID = -5518438508622155938L;
 
-	public IOProblem(String message, IOException cause) {
+	IOProblem(String message, IOException cause) {
 		super(message, cause);
 	}
 }

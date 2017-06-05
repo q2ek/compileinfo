@@ -4,22 +4,26 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class PropertiesProcessor {
+class PropertiesProcessor {
 	private final Map<String, String> properties;
 
-	PropertiesProcessor(Map<String, String> properties) {
+	static PropertiesProcessor of(Properties properties) {
+		return new PropertiesProcessor(convert(properties));
+	}
+
+	static PropertiesProcessor of(Map<String, String> properties) {
+		return new PropertiesProcessor(properties);
+	}
+
+	private PropertiesProcessor(Map<String, String> properties) {
 		this.properties = properties;
 	}
 
-	public Map<String, String> properties() {
+	Map<String, String> properties() {
 		return this.properties;
 	}
 
-	private static Map<String, String> convert(Properties properties) {
-		return new HashMap<>((Map) properties);
-	}
-
-	public Map<String, String> filtered(String[] includeProperties) {
+	Map<String, String> filtered(String[] includeProperties) {
 		if (includeProperties.length == 0) {
 			return properties();
 		}
@@ -34,11 +38,7 @@ public class PropertiesProcessor {
 		return result;
 	}
 
-	public static PropertiesProcessor of(Properties properties) {
-		return new PropertiesProcessor(convert(properties));
-	}
-
-	public static PropertiesProcessor of(Map<String, String> properties) {
-		return new PropertiesProcessor(properties);
+	private static Map<String, String> convert(Properties properties) {
+		return new HashMap<>((Map) properties);
 	}
 }

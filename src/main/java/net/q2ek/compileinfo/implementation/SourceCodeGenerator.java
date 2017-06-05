@@ -9,7 +9,7 @@ import java.util.Map;
  *
  * @author Edze Kruizinga
  */
-public interface SourceCodeGenerator {
+interface SourceCodeGenerator {
 	/**
 	 * @throws IOProblem
 	 *             when {@link IOException} happens
@@ -19,14 +19,14 @@ public interface SourceCodeGenerator {
 	/**
 	 * Constructor parameter for classes that implement a ContentCreator.
 	 */
-	public interface WriteParameters {
+	interface WriteParameters {
 		ClassAttributes packageAndClassName();
 
 		boolean addProperties();
 
 		Map<String, String> properties();
 
-		public static WriteParameters of(
+		static WriteParameters of(
 				Map<String, String> properties,
 				ClassAttributes packageAndClassName,
 				boolean addProperties) {
