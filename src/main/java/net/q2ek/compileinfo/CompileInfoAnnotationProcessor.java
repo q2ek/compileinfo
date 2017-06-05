@@ -111,8 +111,16 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 
 	private ClassAttributes packageAndClassNameOf(TypeElement value) {
 		Name packageName = ((PackageElement) value.getEnclosingElement()).getQualifiedName();
-		String classname = value.getSimpleName() + "CompileInfo";
+		String classname = classnameFor(value, value.getAnnotation(CompileInfo.class).classname());
 		return ClassAttributes.of(packageName, classname);
+	}
+
+	private String classnameFor(TypeElement value, String classname) {
+		if (classname.isEmpty()) {
+			return value.getSimpleName() + value.getAnnotation(CompileInfo.class).extension();
+		} else {
+			return classname;
+		}
 	}
 
 }

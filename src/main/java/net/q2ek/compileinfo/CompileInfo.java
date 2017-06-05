@@ -44,4 +44,15 @@ public @interface CompileInfo {
 	 * included in the generated class.
 	 */
 	String[] includeProperties() default {};
+
+	/**
+	 * Add something other than "CompileInfo" to the generated classname
+	 */
+	String extension() default "CompileInfo";
+
+	/**
+	 * If given this will be used as the generated classname instead of
+	 * [classname] + "CompileInfo"
+	 */
+	String classname() default "";
 }
