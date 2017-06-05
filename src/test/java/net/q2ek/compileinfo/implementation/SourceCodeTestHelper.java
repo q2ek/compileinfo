@@ -17,7 +17,7 @@ public class SourceCodeTestHelper {
 	}
 
 	static Map<String, String> properties() {
-		return PropertyConverter.convert(testSystemProperties());
+		return PropertiesProcessor.of(testSystemProperties()).properties();
 	}
 
 	static void assertContent(String actual, PackageAndClassName packageAndClassname) {
