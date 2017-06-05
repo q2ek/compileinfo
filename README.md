@@ -17,7 +17,7 @@ In a Maven project, one would include the `net.q2ek:compileinfo` artifact as a "
 <dependency>
 	<groupId>net.q2ek</groupId>
 	<artifactId>compileinfo</artifactId>
-	<version>0.12.0</version>
+	<version>0.13.0</version>
 	<scope>compile</scope>
 </dependency>
 ```
@@ -25,8 +25,9 @@ In a Maven project, one would include the `net.q2ek:compileinfo` artifact as a "
 To support annotation processing in your IDE see:
 https://immutables.github.io/apt.html
 
-### Example
+### Examples
 
+Example of typical basic usage:
 ```java
 import net.q2ek.compileinfo.CompileInfo;
 
@@ -38,6 +39,22 @@ class MyClass {
 
 	public String jenkinsBuildUrl() {
 		return MyClassCompileInfo.get("env.BUILD_URL");
+	}
+}
+```
+
+Example of use of options for the CompileInfo annotation:
+```java
+import net.q2ek.compileinfo.CompileInfo;
+
+@CompileInfo(classname = "DevOpsData", includeProperties = { "env.BUILD_URL" }) 
+class MyClass {
+	public String compileDateTime() {
+		return DevOpsData.localDateTime().toString();
+	}
+
+	public String jenkinsBuildUrl() {
+		return DevOpsData.get("env.BUILD_URL");
 	}
 }
 ```
@@ -70,8 +87,10 @@ This project uses [SemVer](http://semver.org/) for versioning.
 
 ### Releases
 
+Available at Maven Central:
 * 0.11.0 is available at Maven Central
-* 0.12.0 is available at Maven Central and uses base64 encoding to prevent code injection
+* 0.12.0 Uses base64 encoding to prevent code injection
+* 0.13.0 Adds some options to the CompileInfo annotation
 
 ### Planned work
 
