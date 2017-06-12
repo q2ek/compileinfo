@@ -7,8 +7,15 @@ import java.util.SortedMap;
 
 import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
 import net.q2ek.compileinfo.implementation.basics.PropertyWriterFactory;
+import net.q2ek.compileinfo.implementation.basics.SourceCodeGeneratorFactory;
 
 public class SourceCodeTestHelper {
+
+	private final ClassAttributes classAttributes;
+
+	SourceCodeTestHelper(ClassAttributes classAttributes) {
+		this.classAttributes = classAttributes;
+	}
 
 	static Properties testSystemProperties() {
 		Properties result = new Properties();
@@ -23,20 +30,27 @@ public class SourceCodeTestHelper {
 		return PropertiesProcessor.of(testSystemProperties()).unfiltered();
 	}
 
-	static void assertContent(String actual, ClassAttributes packageAndClassname) {
-		assertThat(actual).contains("package " + packageAndClassname.packagename());
+	void assertContent(String actual) {
+		assertThat(actual).contains("package " + this.classAttributes.packagename());
 		assertThat(actual).contains("import java.util.Map;");
 		assertThat(actual).contains("import java.time.ZonedDateTime;");
 		assertThat(actual).contains("import java.time.LocalDateTime;");
 		assertThat(actual).contains("@author");
-		assertThat(actual).contains("class " + packageAndClassname.classname());
+		assertThat(actual).contains("class " + this.classAttributes.classname());
 		assertThat(actual).contains("LocalDateTime localDateTime()");
 		assertThat(actual).contains("ZonedDateTime zonedDateTime()");
 	}
 
-	public static PropertyWriterFactory propertyWriterFactory() {
-		return appender -> new Base64PropertyWriter(
-				appender, SourceCodeTestHelper.properties());
+	static PropertyWriterFactory propertyWriterFactory() {
+		return appender -> new Base64PropertyWriter(appender, SourceCodeTestHelper.properties());
 	}
 
+	SourceCodeGeneratorFactory scgFactory() {
+		return scgFactory(propertyWriterFactory());
+	}
+
+	SourceCodeGeneratorFactory scgFactory(PropertyWriterFactory propertyWriterFactory) {
+		return appender -> new ClassSourceCodeGenerator(
+				this.classAttributes, appender, propertyWriterFactory);
+	}
 }

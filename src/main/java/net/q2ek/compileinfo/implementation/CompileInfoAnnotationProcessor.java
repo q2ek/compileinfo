@@ -64,8 +64,10 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 	private void process(TypeElement value) {
 		try {
 			processUnsafe(value);
-		} catch (IOException | IOProblem e) {
-			this.messager.printMessage(Kind.ERROR, e.getLocalizedMessage(), value);
+		} catch (IOException | RuntimeException e) { // One of wich is IOProblem
+			String message = "CompileInfo processing failed due to: "
+					+ e.getClass().getCanonicalName() + ": " + e.getLocalizedMessage();
+			this.messager.printMessage(Kind.ERROR, message, value);
 		}
 	}
 

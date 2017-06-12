@@ -18,12 +18,12 @@ import net.q2ek.compileinfo.implementation.basics.SourceCodeGenerator;
  *
  * @author Edze Kruizinga
  */
-class Base64SourceCodeGenerator implements SourceCodeGenerator {
+class ClassSourceCodeGenerator implements SourceCodeGenerator {
 	private final Appender appender;
 	private final ClassAttributes attributes;
 	private final PropertyWriter propertyWriter;
 
-	Base64SourceCodeGenerator(ClassAttributes attributes, Appender appender, PropertyWriterFactory factory) {
+	ClassSourceCodeGenerator(ClassAttributes attributes, Appender appender, PropertyWriterFactory factory) {
 		this.attributes = attributes;
 		this.appender = appender;
 		this.propertyWriter = factory.apply(appender);

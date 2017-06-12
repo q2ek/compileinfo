@@ -36,7 +36,7 @@ class TypeElementProcessor {
 	public SourceCodeGeneratorFactory sourceCodeGeneratorFactory() {
 		if (this.sourceCodeGeneratorFactory == null) {
 			PropertyWriterFactory propertyWriterFactory = propertyWriterFactory();
-			this.sourceCodeGeneratorFactory = appender -> new Base64SourceCodeGenerator(
+			this.sourceCodeGeneratorFactory = appender -> new ClassSourceCodeGenerator(
 					this.classAttributes,
 					appender,
 					propertyWriterFactory);
