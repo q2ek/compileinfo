@@ -3,12 +3,12 @@ package net.q2ek.compileinfo.example;
 import net.q2ek.compileinfo.CompileInfo;
 
 @CompileInfo
-class MyClass {
+class FirstExample {
 	public String compileDateTime() {
-		return MyClassCompileInfo.localDateTime().toString();
+		return FirstExampleCompileInfo.localDateTime().toString();
 	}
 
 	public String jenkinsBuildUrl() {
-		return MyClassCompileInfo.get("env.BUILD_URL");
+		return FirstExampleCompileInfo.get("env.BUILD_URL");
 	}
 }

@@ -29,26 +29,28 @@ https://immutables.github.io/apt.html
 
 Example of typical basic usage:
 ```java
+
 import net.q2ek.compileinfo.CompileInfo;
 
 @CompileInfo
-class MyClass {
+class FirstExample {
 	public String compileDateTime() {
-		return MyClassCompileInfo.localDateTime().toString();
+		return FirstExampleCompileInfo.localDateTime().toString();
 	}
 
 	public String jenkinsBuildUrl() {
-		return MyClassCompileInfo.get("env.BUILD_URL");
+		return FirstExampleCompileInfo.get("env.BUILD_URL");
 	}
 }
 ```
 
 Example of use of options for the CompileInfo annotation:
 ```java
+
 import net.q2ek.compileinfo.CompileInfo;
 
-@CompileInfo(classname = "DevOpsData", includeProperties = { "env.BUILD_URL" }) 
-class MyClass {
+@CompileInfo(classname = "DevOpsData", includeProperties = { "env.BUILD_URL" })
+public class SecondExample {
 	public String compileDateTime() {
 		return DevOpsData.localDateTime().toString();
 	}
@@ -61,18 +63,7 @@ class MyClass {
 
 ### API
 
-Classes:
-```java
-net.q2ek.compileinfo.CompileInfo;
-```
-A class is generated named \<AnnotatedClassName\>CompileInfo, it has:
-```java
-static LocalDateTime localDateTime();
-static ZonedDateTime zonedDateTime();
-
-static Set<String> keySet();
-static String get(String key);
-```
+See [API](API.md)
 
 ## Built With
 
@@ -80,10 +71,6 @@ static String get(String key);
 * [Maven](https://maven.apache.org/) - Dependency Management
 
 The project is a standard Maven project.
-
-## Versioning
-
-This project uses [SemVer](http://semver.org/) for versioning.
 
 ### Releases
 
@@ -94,7 +81,8 @@ Available at Maven Central:
 
 ### Planned work
 
-* Add options to the annotation to enable system property choices. So that not all properties are stored.
+* Maybe release 1.0.0 or 1.0.0-rc1
+ThirdExample_Gen
 
 ## Authors
 
