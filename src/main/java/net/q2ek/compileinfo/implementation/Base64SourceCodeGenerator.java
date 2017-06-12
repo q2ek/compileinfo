@@ -7,6 +7,8 @@ import java.time.format.DateTimeFormatter;
 import net.q2ek.compileinfo.CompileInfo;
 import net.q2ek.compileinfo.implementation.basics.Appender;
 import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
+import net.q2ek.compileinfo.implementation.basics.PropertyWriter;
+import net.q2ek.compileinfo.implementation.basics.PropertyWriterFactory;
 import net.q2ek.compileinfo.implementation.basics.SourceCodeGenerator;
 
 /**

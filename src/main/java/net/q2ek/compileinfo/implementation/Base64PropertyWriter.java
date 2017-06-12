@@ -5,6 +5,7 @@ import java.util.Base64;
 import java.util.Base64.Encoder;
 
 import net.q2ek.compileinfo.implementation.basics.Appender;
+import net.q2ek.compileinfo.implementation.basics.PropertyWriter;
 
 import java.util.Collections;
 import java.util.List;

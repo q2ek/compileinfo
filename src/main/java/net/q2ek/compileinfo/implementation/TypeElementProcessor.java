@@ -8,6 +8,7 @@ import javax.lang.model.element.TypeElement;
 
 import net.q2ek.compileinfo.CompileInfo;
 import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
+import net.q2ek.compileinfo.implementation.basics.PropertyWriterFactory;
 import net.q2ek.compileinfo.implementation.basics.SourceCodeGeneratorFactory;
 
 class TypeElementProcessor {
