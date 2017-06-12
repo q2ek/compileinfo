@@ -20,18 +20,15 @@ class PropertiesProcessor {
 		this.properties = properties;
 	}
 
-	SortedMap<String, String> properties() {
+	SortedMap<String, String> unfiltered() {
 		return this.properties;
 	}
 
-	SortedMap<String, String> filtered(String[] includeProperties) {
-		if (includeProperties.length == 0) {
-			return properties();
-		}
+	SortedMap<String, String> filtered(Iterable<String> includeProperties) {
 		return filter(includeProperties);
 	}
 
-	private SortedMap<String, String> filter(String[] includeProperties) {
+	private SortedMap<String, String> filter(Iterable<String> includeProperties) {
 		SortedMap<String, String> result = new TreeMap<>();
 		for (String key : includeProperties) {
 			result.put(key, this.properties.get(key));

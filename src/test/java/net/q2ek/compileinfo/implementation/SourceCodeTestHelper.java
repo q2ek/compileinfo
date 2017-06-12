@@ -20,7 +20,7 @@ public class SourceCodeTestHelper {
 	}
 
 	static SortedMap<String, String> properties() {
-		return PropertiesProcessor.of(testSystemProperties()).properties();
+		return PropertiesProcessor.of(testSystemProperties()).unfiltered();
 	}
 
 	static void assertContent(String actual, ClassAttributes packageAndClassname) {

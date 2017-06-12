@@ -62,6 +62,9 @@ class Base64PropertyWriter implements PropertyWriter {
 	private void put(String key, String value) {
 		String putFormat = "        builder.put(\"%s\",\n                    \"%s\");\n";
 		String putCommand = String.format(putFormat, base64(key), base64(value));
+		if (value == null) {
+			System.out.println("Key with null: " + key);
+		}
 		append(putCommand);
 	}
 
@@ -97,6 +100,9 @@ class Base64PropertyWriter implements PropertyWriter {
 	}
 
 	private String base64(String value) {
+		if (value == null) {
+			return this.encoder.encodeToString(new byte[0]);
+		}
 		return this.encoder.encodeToString(value.getBytes());
 	}
 }

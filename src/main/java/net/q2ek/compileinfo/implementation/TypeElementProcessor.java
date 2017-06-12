@@ -1,8 +1,8 @@
 package net.q2ek.compileinfo.implementation;
 
+import java.util.Arrays;
 import java.util.SortedMap;
 
-import javax.lang.model.element.Name;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 
@@ -12,7 +12,6 @@ import net.q2ek.compileinfo.implementation.basics.PropertyWriterFactory;
 import net.q2ek.compileinfo.implementation.basics.SourceCodeGeneratorFactory;
 
 class TypeElementProcessor {
-	private final PropertiesProcessor properties = PropertiesProcessor.of(System.getProperties());
 	private final TypeElement value;
 	private final CompileInfo annotation;
 	private ClassAttributes classAttributes;
@@ -29,7 +28,7 @@ class TypeElementProcessor {
 
 	public ClassAttributes classAttributes() {
 		if (this.classAttributes == null) {
-			this.classAttributes = findClassAttributes();
+			this.classAttributes = ClassAttributes.of(packagename(), classname());
 		}
 		return this.classAttributes;
 	}
@@ -46,29 +45,28 @@ class TypeElementProcessor {
 	}
 
 	private PropertyWriterFactory propertyWriterFactory() {
-		if (generateProperties()) {
-			return appender -> new Base64PropertyWriter(appender, filterProperties());
+		if (this.annotation.generateProperties()) {
+			return appender -> new Base64PropertyWriter(appender, properties());
 		} else {
 			return unused -> new NoopPropertyWriter();
 		}
 	}
 
-	private SortedMap<String, String> filterProperties() {
+	private SortedMap<String, String> properties() {
+		PropertiesProcessor properties = PropertiesProcessor.of(System.getProperties());
 		String[] includeProperties = this.annotation.includeProperties();
-		return this.properties.filtered(includeProperties);
+		if (includeProperties.length == 0) {
+			return properties.unfiltered();
+		}
+		return properties.filtered(Arrays.asList(includeProperties));
 	}
 
-	private ClassAttributes findClassAttributes() {
-		Name packageName = ((PackageElement) this.value.getEnclosingElement()).getQualifiedName();
-		String classname = classnameFor(this.annotation.classname());
-		return ClassAttributes.of(packageName, classname);
+	private CharSequence packagename() {
+		return ((PackageElement) this.value.getEnclosingElement()).getQualifiedName();
 	}
 
-	private boolean generateProperties() {
-		return this.annotation.generateProperties();
-	}
-
-	private String classnameFor(String classname) {
+	private CharSequence classname() {
+		String classname = this.annotation.classname();
 		if (classname.isEmpty()) {
 			return this.value.getSimpleName() + this.annotation.extension();
 		} else {
