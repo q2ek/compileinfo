@@ -6,6 +6,6 @@ package net.q2ek.compileinfo.implementation;
  *
  * @author Edze Kruizinga
  */
-interface SourceCodeGenerator {
+public interface SourceCodeGenerator {
 	void write();
 }

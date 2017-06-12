@@ -1,6 +1,6 @@
 package net.q2ek.compileinfo.implementation;
 
-interface ClassAttributes {
+public interface ClassAttributes {
 	CharSequence packagename();
 
 	CharSequence classname();
