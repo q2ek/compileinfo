@@ -49,7 +49,7 @@ Example of use of options for the CompileInfo annotation:
 
 import net.q2ek.compileinfo.CompileInfo;
 
-@CompileInfo(classname = "DevOpsData", includeProperties = { "env.BUILD_URL" })
+@CompileInfo(classname = "DevOpsData", filterKeys = { "env.BUILD_URL" })
 public class SecondExample {
 	public String compileDateTime() {
 		return DevOpsData.localDateTime().toString();
@@ -65,7 +65,7 @@ Example of some more options for the CompileInfo annotation:
 ```java
 import net.q2ek.compileinfo.CompileInfo;
 
-@CompileInfo(extension = "_Gen", generateProperties = false)
+@CompileInfo(extension = "_Gen", withPropertyMap = false)
 public class ThirdExample {
 	public String compileDateTime() {
 		return ThirdExample_Gen.localDateTime().toString();
