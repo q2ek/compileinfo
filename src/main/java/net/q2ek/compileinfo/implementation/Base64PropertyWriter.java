@@ -46,7 +46,7 @@ class Base64PropertyWriter implements PropertyWriter {
 	}
 
 	private void writePropertiesMap() {
-		append("    static final Map<String, String> PROPERTIES = createMap();\n\n");
+		append("    private static final Map<String, String> PROPERTIES = createMap();\n\n");
 	}
 
 	private void writePropertiesMapCreater() {
