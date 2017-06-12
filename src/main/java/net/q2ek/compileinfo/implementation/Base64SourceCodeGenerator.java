@@ -6,6 +6,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 
 import net.q2ek.compileinfo.CompileInfo;
+import net.q2ek.compileinfo.implementation.basics.Appender;
+import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
+import net.q2ek.compileinfo.implementation.basics.SourceCodeGenerator;
 
 /**
  * Generates the java class source code using {@link Base64} encoding to store

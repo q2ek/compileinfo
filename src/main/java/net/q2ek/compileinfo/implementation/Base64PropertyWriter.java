@@ -3,6 +3,9 @@ package net.q2ek.compileinfo.implementation;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Base64.Encoder;
+
+import net.q2ek.compileinfo.implementation.basics.Appender;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

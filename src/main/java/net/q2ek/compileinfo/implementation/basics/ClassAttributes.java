@@ -1,4 +1,4 @@
-package net.q2ek.compileinfo.implementation;
+package net.q2ek.compileinfo.implementation.basics;
 
 public interface ClassAttributes {
 	CharSequence packagename();

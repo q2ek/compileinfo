@@ -1,4 +1,4 @@
-package net.q2ek.compileinfo.implementation;
+package net.q2ek.compileinfo.implementation.basics;
 
 /**
  * Any class implementing this interface generates java class source code

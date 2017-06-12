@@ -7,6 +7,8 @@ import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 
 import net.q2ek.compileinfo.CompileInfo;
+import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
+import net.q2ek.compileinfo.implementation.basics.SourceCodeGeneratorFactory;
 
 class TypeElementProcessor {
 	private final PropertiesProcessor properties = PropertiesProcessor.of(System.getProperties());

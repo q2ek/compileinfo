@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Map;
 import java.util.Properties;
 
+import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
+
 public class SourceCodeTestHelper {
 
 	static Properties testSystemProperties() {

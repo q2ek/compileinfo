@@ -1,4 +1,4 @@
-package net.q2ek.compileinfo.implementation;
+package net.q2ek.compileinfo.implementation.basics;
 
 import java.util.function.Function;
 

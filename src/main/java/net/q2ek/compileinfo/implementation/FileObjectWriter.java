@@ -6,6 +6,9 @@ import java.io.OutputStreamWriter;
 
 import javax.tools.FileObject;
 
+import net.q2ek.compileinfo.implementation.basics.Appender;
+import net.q2ek.compileinfo.implementation.basics.SourceCodeGeneratorFactory;
+
 class FileObjectWriter {
 
 	/**

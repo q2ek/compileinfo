@@ -9,6 +9,9 @@ import javax.tools.SimpleJavaFileObject;
 
 import org.junit.Test;
 
+import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
+import net.q2ek.compileinfo.implementation.basics.SourceCodeGeneratorFactory;
+
 public class FileObjectWriterTest {
 	static final String TEST_CLASS_NAME = "CompileInfoTestOutput";
 	static final String TEST_PACKAGE_NAME = "test.package";

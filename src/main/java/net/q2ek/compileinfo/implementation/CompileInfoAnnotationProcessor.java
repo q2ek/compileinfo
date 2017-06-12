@@ -20,6 +20,7 @@ import javax.tools.StandardLocation;
 import com.google.auto.service.AutoService;
 
 import net.q2ek.compileinfo.CompileInfo;
+import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
 
 /**
  * This is the annotation processor for the {@link CompileInfo} annotation.
