@@ -61,9 +61,21 @@ public class SecondExample {
 }
 ```
 
+Example of some more options for the CompileInfo annotation:
+```java
+import net.q2ek.compileinfo.CompileInfo;
+
+@CompileInfo(extension = "_Gen", generateProperties = false)
+public class ThirdExample {
+	public String compileDateTime() {
+		return ThirdExample_Gen.localDateTime().toString();
+	}
+}
+```
+
 ### API
 
-See [API](API.md)
+See [API.md](API.md) for the API description.
 
 ## Built With
 
@@ -72,7 +84,7 @@ See [API](API.md)
 
 The project is a standard Maven project.
 
-### Releases
+## Releases
 
 Available at Maven Central:
 * 0.11.0 is available at Maven Central
@@ -82,7 +94,6 @@ Available at Maven Central:
 ### Planned work
 
 * Maybe release 1.0.0 or 1.0.0-rc1
-ThirdExample_Gen
 
 ## Authors
 

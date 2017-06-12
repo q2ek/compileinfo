@@ -31,7 +31,8 @@ class PropertiesProcessor {
 	private SortedMap<String, String> filter(Iterable<String> includeProperties) {
 		SortedMap<String, String> result = new TreeMap<>();
 		for (String key : includeProperties) {
-			result.put(key, this.properties.get(key));
+			String value = this.properties.get(key);
+			if (value != null) result.put(key, value);
 		}
 		return result;
 	}
