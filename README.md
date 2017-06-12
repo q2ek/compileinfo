@@ -17,7 +17,7 @@ In a Maven project, one would include the `net.q2ek:compileinfo` artifact as a "
 <dependency>
 	<groupId>net.q2ek</groupId>
 	<artifactId>compileinfo</artifactId>
-	<version>0.13.0</version>
+	<version>0.14.0</version>
 	<scope>compile</scope>
 </dependency>
 ```
@@ -90,6 +90,7 @@ Available at Maven Central:
 * 0.11.0 is available at Maven Central
 * 0.12.0 Uses base64 encoding to prevent code injection
 * 0.13.0 Adds some options to the CompileInfo annotation
+* 0.14.0 Renames most of the options for the CompileInfo annotation and system properties are only read when needed.
 
 ### Planned work
 

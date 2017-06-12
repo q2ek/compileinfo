@@ -4,11 +4,12 @@ See also the top-level: [readme](README.md)
 
 ## API
 
-Classes:
+The CompileInfo class defines part of the interface:
 ```java
 net.q2ek.compileinfo.CompileInfo;
 ```
-A class is generated named \<AnnotatedClassName\>CompileInfo, it has:
+
+A class which is generated has these methods:
 ```java
 static LocalDateTime localDateTime();
 static ZonedDateTime zonedDateTime();
