@@ -20,7 +20,6 @@ import javax.tools.StandardLocation;
 import com.google.auto.service.AutoService;
 
 import net.q2ek.compileinfo.CompileInfo;
-import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
 
 /**
  * This is the annotation processor for the {@link CompileInfo} annotation.
@@ -31,7 +30,6 @@ import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
 public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 	private Filer filer;
 	private Messager messager;
-	private final FileObjectWriter writer = FileObjectWriter.base64();
 
 	public CompileInfoAnnotationProcessor() {
 		super();
@@ -71,9 +69,9 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 	}
 
 	private void processUnsafe(TypeElement value) throws IOException {
-		WriteParameters parameters = TypeElementProcessor.parametersFor(value);
-		FileObject resource = resourceFor(parameters.packageAndClassName());
-		this.writer.writeFile(resource, parameters);
+		TypeElementProcessor processor = TypeElementProcessor.of(value);
+		FileObject resource = resourceFor(processor.classAttributes());
+		FileObjectWriter.writeFile(resource, processor.sourceCodeGeneratorFactory());
 	}
 
 	private FileObject resourceFor(ClassAttributes packageAndClassName) throws IOException {

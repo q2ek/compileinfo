@@ -1,12 +1,8 @@
 package net.q2ek.compileinfo.implementation;
 
 import java.io.CharArrayWriter;
-import java.io.Writer;
-import java.util.function.Function;
 
 import org.junit.Test;
-
-import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
 
 public class SourceCodeGeneratorTest {
 	private static final String TEST_CLASS_NAME = "CompileInfoTestOutput";
@@ -15,33 +11,41 @@ public class SourceCodeGeneratorTest {
 			TEST_PACKAGE_NAME,
 			TEST_CLASS_NAME);
 
-	private void write_resultContainsPackageAndClass(Function<Writer, SourceCodeGenerator> factory) {
+	private void write_resultContainsPackageAndClass(SourceCodeGeneratorFactory factory) {
 		CharArrayWriter writer = new CharArrayWriter();
-		WriteParameters writeParameters = WriteParameters.of(
-				SourceCodeTestHelper.properties(),
-				PACKAGE_AND_CLASSNAME, true);
-		factory.apply(writer).write(writeParameters);
+		Appender appender = new ProblemAppender(writer);
+		factory.apply(appender).write();
 		String actual = String.valueOf(writer.toCharArray());
 		SourceCodeTestHelper.assertContent(actual, PACKAGE_AND_CLASSNAME);
 	}
 
-	private void resultLooksNice(Function<Writer, SourceCodeGenerator> factory) {
+	private void resultLooksNice(SourceCodeGeneratorFactory factory) {
 		CharArrayWriter writer = new CharArrayWriter();
-		WriteParameters writeParameters = WriteParameters.of(
-				SourceCodeTestHelper.properties(),
-				PACKAGE_AND_CLASSNAME, true);
-		factory.apply(writer).write(writeParameters);
+		Appender appender = new ProblemAppender(writer);
+		factory.apply(appender).write();
 		String result = String.valueOf(writer.toCharArray());
 		System.out.println(result);
 	}
 
 	@Test
-	public void base64_write_resultContainsPackageAndClass() {
-		write_resultContainsPackageAndClass(input -> new Base64SourceCodeGenerator(input));
+	public void current_write_resultContainsPackageAndClass() {
+		PropertyWriterFactory factory = appender -> new Base64PropertyWriter(
+				appender, SourceCodeTestHelper.properties());
+		write_resultContainsPackageAndClass(
+				appender -> new Base64SourceCodeGenerator(
+						PACKAGE_AND_CLASSNAME,
+						appender,
+						factory));
 	}
 
 	@Test
-	public void base64_resultLooksNice() {
-		resultLooksNice(input -> new Base64SourceCodeGenerator(input));
+	public void current_resultLooksNice() {
+		PropertyWriterFactory factory = appender -> new Base64PropertyWriter(
+				appender, SourceCodeTestHelper.properties());
+		resultLooksNice(
+				appender -> new Base64SourceCodeGenerator(
+						PACKAGE_AND_CLASSNAME,
+						appender,
+						factory));
 	}
 }

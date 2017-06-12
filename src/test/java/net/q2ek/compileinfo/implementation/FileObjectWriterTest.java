@@ -9,8 +9,6 @@ import javax.tools.SimpleJavaFileObject;
 
 import org.junit.Test;
 
-import net.q2ek.compileinfo.implementation.SourceCodeGenerator.WriteParameters;
-
 public class FileObjectWriterTest {
 	static final String TEST_CLASS_NAME = "CompileInfoTestOutput";
 	static final String TEST_PACKAGE_NAME = "test.package";
@@ -18,15 +16,14 @@ public class FileObjectWriterTest {
 			TEST_PACKAGE_NAME,
 			TEST_CLASS_NAME);
 
-	FileObjectWriter fileWriter = FileObjectWriter.base64();
-
 	@Test
 	public void write_writes() {
 		TestFileObject resource = new TestFileObject();
-		WriteParameters writeParameters = WriteParameters.of(
-				SourceCodeTestHelper.properties(),
-				PACKAGE_AND_CLASSNAME, true);
-		this.fileWriter.writeFile(resource, writeParameters);
+		PropertyWriterFactory pwFactory = appender -> new Base64PropertyWriter(
+				appender, SourceCodeTestHelper.properties());
+		SourceCodeGeneratorFactory factory = appender -> new Base64SourceCodeGenerator(
+				PACKAGE_AND_CLASSNAME, appender, pwFactory);
+		FileObjectWriter.writeFile(resource, factory);
 
 		String actual = resource.bytesAsString();
 		SourceCodeTestHelper.assertContent(actual, PACKAGE_AND_CLASSNAME);
@@ -35,10 +32,11 @@ public class FileObjectWriterTest {
 	@Test
 	public void write_looksGood() {
 		TestFileObject resource = new TestFileObject();
-		WriteParameters writeParameters = WriteParameters.of(
-				SourceCodeTestHelper.properties(),
-				PACKAGE_AND_CLASSNAME, true);
-		this.fileWriter.writeFile(resource, writeParameters);
+		PropertyWriterFactory pwFactory = appender -> new Base64PropertyWriter(
+				appender, SourceCodeTestHelper.properties());
+		SourceCodeGeneratorFactory factory = appender -> new Base64SourceCodeGenerator(
+				PACKAGE_AND_CLASSNAME, appender, pwFactory);
+		FileObjectWriter.writeFile(resource, factory);
 
 		String actual = resource.bytesAsString();
 		System.out.println(actual);

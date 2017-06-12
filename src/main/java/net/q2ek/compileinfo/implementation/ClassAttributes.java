@@ -1,8 +1,5 @@
 package net.q2ek.compileinfo.implementation;
 
-/**
- * Constructor parameter for classes that implement a ContentCreator.
- */
 interface ClassAttributes {
 	CharSequence packagename();
 
