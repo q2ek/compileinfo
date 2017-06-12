@@ -1,37 +1,38 @@
 package net.q2ek.compileinfo.implementation;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 class PropertiesProcessor {
-	private final Map<String, String> properties;
+	private final SortedMap<String, String> properties;
 
 	static PropertiesProcessor of(Properties properties) {
 		return new PropertiesProcessor(convert(properties));
 	}
 
-	static PropertiesProcessor of(Map<String, String> properties) {
+	static PropertiesProcessor of(SortedMap<String, String> properties) {
 		return new PropertiesProcessor(properties);
 	}
 
-	private PropertiesProcessor(Map<String, String> properties) {
+	private PropertiesProcessor(SortedMap<String, String> properties) {
 		this.properties = properties;
 	}
 
-	Map<String, String> properties() {
+	SortedMap<String, String> properties() {
 		return this.properties;
 	}
 
-	Map<String, String> filtered(String[] includeProperties) {
+	SortedMap<String, String> filtered(String[] includeProperties) {
 		if (includeProperties.length == 0) {
 			return properties();
 		}
 		return filter(includeProperties);
 	}
 
-	private Map<String, String> filter(String[] includeProperties) {
-		Map<String, String> result = new HashMap<>();
+	private SortedMap<String, String> filter(String[] includeProperties) {
+		SortedMap<String, String> result = new TreeMap<>();
 		for (String key : includeProperties) {
 			result.put(key, this.properties.get(key));
 		}
@@ -39,7 +40,7 @@ class PropertiesProcessor {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static Map<String, String> convert(Properties properties) {
-		return new HashMap<String, String>((Map) properties);
+	private static SortedMap<String, String> convert(Properties properties) {
+		return new TreeMap<String, String>((Map) properties);
 	}
 }

@@ -34,23 +34,17 @@ public class SourceCodeGeneratorTest {
 
 	@Test
 	public void current_write_resultContainsPackageAndClass() {
-		PropertyWriterFactory factory = appender -> new Base64PropertyWriter(
-				appender, SourceCodeTestHelper.properties());
+		PropertyWriterFactory factory = SourceCodeTestHelper.propertyWriterFactory();
 		write_resultContainsPackageAndClass(
 				appender -> new Base64SourceCodeGenerator(
-						PACKAGE_AND_CLASSNAME,
-						appender,
-						factory));
+						PACKAGE_AND_CLASSNAME, appender, factory));
 	}
 
 	@Test
 	public void current_resultLooksNice() {
-		PropertyWriterFactory factory = appender -> new Base64PropertyWriter(
-				appender, SourceCodeTestHelper.properties());
+		PropertyWriterFactory factory = SourceCodeTestHelper.propertyWriterFactory();
 		resultLooksNice(
 				appender -> new Base64SourceCodeGenerator(
-						PACKAGE_AND_CLASSNAME,
-						appender,
-						factory));
+						PACKAGE_AND_CLASSNAME, appender, factory));
 	}
 }

@@ -1,24 +1,20 @@
 package net.q2ek.compileinfo.implementation;
 
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Base64.Encoder;
+import java.util.Map.Entry;
+import java.util.SortedMap;
 
 import net.q2ek.compileinfo.implementation.basics.Appender;
 import net.q2ek.compileinfo.implementation.basics.PropertyWriter;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 class Base64PropertyWriter implements PropertyWriter {
 	private final Encoder encoder = Base64.getEncoder();
 
 	private final Appender appender;
-	private final Map<String, String> properties;
+	private final SortedMap<String, String> properties;
 
-	public Base64PropertyWriter(Appender appender, Map<String, String> properties) {
+	public Base64PropertyWriter(Appender appender, SortedMap<String, String> properties) {
 		this.appender = appender;
 		this.properties = properties;
 	}
@@ -30,7 +26,7 @@ class Base64PropertyWriter implements PropertyWriter {
 
 	@Override
 	public void write() {
-		writeProperties(this.properties);
+		writeProperties();
 	}
 
 	private void append(CharSequence value) {
@@ -41,11 +37,11 @@ class Base64PropertyWriter implements PropertyWriter {
 		append("    }\n\n");
 	}
 
-	private void writeProperties(Map<String, String> properties) {
+	private void writeProperties() {
 		writePropertiesMap();
 		writeGetMethod();
 		writeKeySetMethod();
-		writePropertiesMapCreater(properties);
+		writePropertiesMapCreater();
 		mapBuilder();
 	}
 
@@ -53,19 +49,17 @@ class Base64PropertyWriter implements PropertyWriter {
 		append("    static final Map<String, String> PROPERTIES = createMap();\n\n");
 	}
 
-	private void writePropertiesMapCreater(Map<String, String> properties) {
+	private void writePropertiesMapCreater() {
 		append("    private static Map<String, String> createMap() {\n");
 		append("    	MapBuilder builder = MapBuilder.builder();\n");
-		List<String> keys = sortedKeys(properties);
-		for (String key : keys) {
-			putKeyValue(properties, key);
+		for (Entry<String, String> entry : this.properties.entrySet()) {
+			put(entry.getKey(), entry.getValue());
 		}
 		append("        return builder.build();\n");
 		methodEnd();
 	}
 
-	private void putKeyValue(Map<String, String> properties, String key) {
-		String value = properties.get(key);
+	private void put(String key, String value) {
 		String putFormat = "        builder.put(\"%s\",\n                    \"%s\");\n";
 		String putCommand = String.format(putFormat, base64(key), base64(value));
 		append(putCommand);
@@ -105,13 +99,4 @@ class Base64PropertyWriter implements PropertyWriter {
 	private String base64(String value) {
 		return this.encoder.encodeToString(value.getBytes());
 	}
-
-	private static List<String> sortedKeys(Map<String, String> properties) {
-		Set<String> keySet = properties.keySet();
-		List<String> keys = new ArrayList<>(keySet.size());
-		keySet.forEach(key -> keys.add(key.toString()));
-		Collections.sort(keys);
-		return keys;
-	}
-
 }

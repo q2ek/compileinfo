@@ -2,10 +2,11 @@ package net.q2ek.compileinfo.implementation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Map;
 import java.util.Properties;
+import java.util.SortedMap;
 
 import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
+import net.q2ek.compileinfo.implementation.basics.PropertyWriterFactory;
 
 public class SourceCodeTestHelper {
 
@@ -18,7 +19,7 @@ public class SourceCodeTestHelper {
 		return result;
 	}
 
-	static Map<String, String> properties() {
+	static SortedMap<String, String> properties() {
 		return PropertiesProcessor.of(testSystemProperties()).properties();
 	}
 
@@ -31,6 +32,11 @@ public class SourceCodeTestHelper {
 		assertThat(actual).contains("class " + packageAndClassname.classname());
 		assertThat(actual).contains("LocalDateTime localDateTime()");
 		assertThat(actual).contains("ZonedDateTime zonedDateTime()");
+	}
+
+	public static PropertyWriterFactory propertyWriterFactory() {
+		return appender -> new Base64PropertyWriter(
+				appender, SourceCodeTestHelper.properties());
 	}
 
 }

@@ -1,6 +1,6 @@
 package net.q2ek.compileinfo.implementation;
 
-import java.util.Map;
+import java.util.SortedMap;
 
 import javax.lang.model.element.Name;
 import javax.lang.model.element.PackageElement;
@@ -53,7 +53,7 @@ class TypeElementProcessor {
 		}
 	}
 
-	private Map<String, String> filterProperties() {
+	private SortedMap<String, String> filterProperties() {
 		String[] includeProperties = this.annotation.includeProperties();
 		return this.properties.filtered(includeProperties);
 	}
