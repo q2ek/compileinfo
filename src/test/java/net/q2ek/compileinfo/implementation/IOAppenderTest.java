@@ -12,7 +12,7 @@ import org.junit.Test;
 import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
 import net.q2ek.compileinfo.implementation.basics.SourceCodeGeneratorFactory;
 
-public class FileObjectWriterTest {
+public class IOAppenderTest {
 	static final String TEST_CLASS_NAME = "CompileInfoTestOutput";
 	static final String TEST_PACKAGE_NAME = "test.package";
 	static final ClassAttributes PACKAGE_AND_CLASSNAME = ClassAttributes.of(
@@ -26,7 +26,7 @@ public class FileObjectWriterTest {
 				appender, SourceCodeTestHelper.properties());
 		SourceCodeGeneratorFactory factory = appender -> new Base64SourceCodeGenerator(
 				PACKAGE_AND_CLASSNAME, appender, pwFactory);
-		FileObjectWriter.writeFile(resource, factory);
+		IOAppender.writeFile(resource, factory);
 
 		String actual = resource.bytesAsString();
 		SourceCodeTestHelper.assertContent(actual, PACKAGE_AND_CLASSNAME);
@@ -39,7 +39,7 @@ public class FileObjectWriterTest {
 				appender, SourceCodeTestHelper.properties());
 		SourceCodeGeneratorFactory factory = appender -> new Base64SourceCodeGenerator(
 				PACKAGE_AND_CLASSNAME, appender, pwFactory);
-		FileObjectWriter.writeFile(resource, factory);
+		IOAppender.writeFile(resource, factory);
 
 		String actual = resource.bytesAsString();
 		System.out.println(actual);

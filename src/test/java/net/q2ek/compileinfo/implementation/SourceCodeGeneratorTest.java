@@ -17,7 +17,7 @@ public class SourceCodeGeneratorTest {
 
 	private void write_resultContainsPackageAndClass(SourceCodeGeneratorFactory factory) {
 		CharArrayWriter writer = new CharArrayWriter();
-		Appender appender = new ProblemAppender(writer);
+		Appender appender = new IOAppender(writer);
 		factory.apply(appender).write();
 		String actual = String.valueOf(writer.toCharArray());
 		SourceCodeTestHelper.assertContent(actual, PACKAGE_AND_CLASSNAME);
@@ -25,7 +25,7 @@ public class SourceCodeGeneratorTest {
 
 	private void resultLooksNice(SourceCodeGeneratorFactory factory) {
 		CharArrayWriter writer = new CharArrayWriter();
-		Appender appender = new ProblemAppender(writer);
+		Appender appender = new IOAppender(writer);
 		factory.apply(appender).write();
 		String result = String.valueOf(writer.toCharArray());
 		System.out.println(result);
