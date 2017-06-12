@@ -5,7 +5,7 @@ import java.util.Set;
 
 import net.q2ek.compileinfo.CompileInfo;
 
-@CompileInfo(includeProperties = { "java.version" })
+@CompileInfo(filterKeys = { "java.version" })
 class ClassWithOneProperty {
 	public LocalDateTime compileDateTime() {
 		return ClassWithOnePropertyCompileInfo.localDateTime();

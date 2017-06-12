@@ -45,7 +45,7 @@ class TypeElementProcessor {
 	}
 
 	private PropertyWriterFactory propertyWriterFactory() {
-		if (this.annotation.generateProperties()) {
+		if (this.annotation.withPropertyMap()) {
 			return appender -> new Base64PropertyWriter(appender, properties());
 		} else {
 			return unused -> new NoopPropertyWriter();
@@ -54,11 +54,11 @@ class TypeElementProcessor {
 
 	private SortedMap<String, String> properties() {
 		PropertiesProcessor properties = PropertiesProcessor.of(System.getProperties());
-		String[] includeProperties = this.annotation.includeProperties();
-		if (includeProperties.length == 0) {
+		String[] filterKeys = this.annotation.filterKeys();
+		if (filterKeys.length == 0) {
 			return properties.unfiltered();
 		}
-		return properties.filtered(Arrays.asList(includeProperties));
+		return properties.filtered(Arrays.asList(filterKeys));
 	}
 
 	private CharSequence packagename() {

@@ -2,7 +2,7 @@ package net.q2ek.compileinfo.example;
 
 import net.q2ek.compileinfo.CompileInfo;
 
-@CompileInfo(classname = "DevOpsData", includeProperties = { "env.BUILD_URL" })
+@CompileInfo(classname = "DevOpsData", filterKeys = { "env.BUILD_URL" })
 public class SecondExample {
 	public String compileDateTime() {
 		return DevOpsData.localDateTime().toString();

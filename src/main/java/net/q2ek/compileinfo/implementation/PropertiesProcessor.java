@@ -24,13 +24,13 @@ class PropertiesProcessor {
 		return this.properties;
 	}
 
-	SortedMap<String, String> filtered(Iterable<String> includeProperties) {
-		return filter(includeProperties);
+	SortedMap<String, String> filtered(Iterable<String> filterKeys) {
+		return filter(filterKeys);
 	}
 
-	private SortedMap<String, String> filter(Iterable<String> includeProperties) {
+	private SortedMap<String, String> filter(Iterable<String> filterKeys) {
 		SortedMap<String, String> result = new TreeMap<>();
-		for (String key : includeProperties) {
+		for (String key : filterKeys) {
 			String value = this.properties.get(key);
 			if (value != null) result.put(key, value);
 		}
