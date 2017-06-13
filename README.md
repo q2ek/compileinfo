@@ -96,6 +96,7 @@ Available at Maven Central:
 
 ### Planned work
 
+* 0.15.0-SNAPSHOT Add @Generated and add regex filtering of properties
 * Maybe release 1.0.0 or 1.0.0-rc1
 
 ## Authors
