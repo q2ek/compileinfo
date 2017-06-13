@@ -12,18 +12,20 @@ import net.q2ek.compileinfo.implementation.basics.PropertyWriterFactory;
 import net.q2ek.compileinfo.implementation.basics.SourceCodeGeneratorFactory;
 
 class TypeElementProcessor {
+	private final Class<?> annotationProcessorClass;
 	private final TypeElement value;
 	private final CompileInfo annotation;
 	private ClassAttributes classAttributes;
 	private SourceCodeGeneratorFactory sourceCodeGeneratorFactory;
 
-	private TypeElementProcessor(TypeElement value) {
+	private TypeElementProcessor(Class<?> annotationProcessorClass, TypeElement value) {
+		this.annotationProcessorClass = annotationProcessorClass;
 		this.value = value;
 		this.annotation = value.getAnnotation(CompileInfo.class);
 	}
 
-	static TypeElementProcessor of(TypeElement value) {
-		return new TypeElementProcessor(value);
+	static TypeElementProcessor of(Class<?> annotationProcessorClass, TypeElement value) {
+		return new TypeElementProcessor(annotationProcessorClass, value);
 	}
 
 	public ClassAttributes classAttributes() {
@@ -37,6 +39,7 @@ class TypeElementProcessor {
 		if (this.sourceCodeGeneratorFactory == null) {
 			PropertyWriterFactory propertyWriterFactory = propertyWriterFactory();
 			this.sourceCodeGeneratorFactory = appender -> new ClassSourceCodeGenerator(
+					this.annotationProcessorClass,
 					this.classAttributes,
 					appender,
 					propertyWriterFactory);

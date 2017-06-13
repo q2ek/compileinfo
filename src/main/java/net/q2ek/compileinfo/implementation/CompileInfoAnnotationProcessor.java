@@ -72,7 +72,7 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 	}
 
 	private void processUnsafe(TypeElement value) throws IOException {
-		TypeElementProcessor processor = TypeElementProcessor.of(value);
+		TypeElementProcessor processor = TypeElementProcessor.of(CompileInfoAnnotationProcessor.class, value);
 		FileObject resource = resourceFor(processor.classAttributes());
 		IOAppender.writeFile(resource, processor.sourceCodeGeneratorFactory());
 	}

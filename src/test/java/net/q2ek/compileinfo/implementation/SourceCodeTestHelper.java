@@ -10,10 +10,15 @@ import net.q2ek.compileinfo.implementation.basics.PropertyWriterFactory;
 import net.q2ek.compileinfo.implementation.basics.SourceCodeGeneratorFactory;
 
 public class SourceCodeTestHelper {
-
+	private final Class<?> annotationProcessor;
 	private final ClassAttributes classAttributes;
 
 	SourceCodeTestHelper(ClassAttributes classAttributes) {
+		this(SourceCodeTestHelper.class, classAttributes);
+	}
+
+	SourceCodeTestHelper(Class<?> annotationProcessor, ClassAttributes classAttributes) {
+		this.annotationProcessor = annotationProcessor;
 		this.classAttributes = classAttributes;
 	}
 
@@ -32,10 +37,12 @@ public class SourceCodeTestHelper {
 
 	void assertContent(String actual) {
 		assertThat(actual).contains("package " + this.classAttributes.packagename());
-		assertThat(actual).contains("import java.util.Map;");
-		assertThat(actual).contains("import java.time.ZonedDateTime;");
+		assertThat(actual).contains("import javax.annotation.Generated;");
 		assertThat(actual).contains("import java.time.LocalDateTime;");
-		assertThat(actual).contains("@author");
+		assertThat(actual).contains("import java.time.ZonedDateTime;");
+		assertThat(actual).contains("import java.util.Map;");
+		assertThat(actual).contains("@Generated");
+		assertThat(actual).contains(this.annotationProcessor.getCanonicalName());
 		assertThat(actual).contains("class " + this.classAttributes.classname());
 		assertThat(actual).contains("LocalDateTime localDateTime()");
 		assertThat(actual).contains("ZonedDateTime zonedDateTime()");
@@ -51,6 +58,6 @@ public class SourceCodeTestHelper {
 
 	SourceCodeGeneratorFactory scgFactory(PropertyWriterFactory propertyWriterFactory) {
 		return appender -> new ClassSourceCodeGenerator(
-				this.classAttributes, appender, propertyWriterFactory);
+				this.annotationProcessor, this.classAttributes, appender, propertyWriterFactory);
 	}
 }
