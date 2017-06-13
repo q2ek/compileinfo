@@ -1,6 +1,6 @@
 # CompileInfo
 
-See also the top-level: [readme](README.md)
+See also: [README.md](README.md)
 
 ## API
 

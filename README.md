@@ -73,6 +73,8 @@ public class ThirdExample {
 }
 ```
 
+See [example_output.md](example_output.md) for the generated class for these examples.
+
 ### API
 
 See [API.md](API.md) for the API description.
