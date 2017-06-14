@@ -33,6 +33,17 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface CompileInfo {
 	/**
+	 * If given this will be used as the generated classname instead of
+	 * [classname] + "CompileInfo"
+	 */
+	String classname() default "";
+
+	/**
+	 * Add something other than "CompileInfo" to the generated classname
+	 */
+	String extension() default "CompileInfo";
+
+	/**
 	 * If set to false the generated class will not contain a map of system
 	 * properties.
 	 */
@@ -42,15 +53,4 @@ public @interface CompileInfo {
 	 * System properties will be filtered using this regex.
 	 */
 	String regex() default ".*";
-
-	/**
-	 * Add something other than "CompileInfo" to the generated classname
-	 */
-	String extension() default "CompileInfo";
-
-	/**
-	 * If given this will be used as the generated classname instead of
-	 * [classname] + "CompileInfo"
-	 */
-	String classname() default "";
 }
