@@ -25,7 +25,7 @@ In a Maven project, one would include the `net.q2ek:compileinfo` artifact as a "
 To support annotation processing in your IDE see:
 https://immutables.github.io/apt.html
 
-### Examples
+### Examples for 0.15.0-SNAPSHOT
 
 Example of typical basic usage:
 ```java
@@ -49,7 +49,7 @@ Example of use of options for the CompileInfo annotation:
 
 import net.q2ek.compileinfo.CompileInfo;
 
-@CompileInfo(classname = "DevOpsData", filterKeys = { "env.BUILD_URL" })
+@CompileInfo(classname = "DevOpsData", regex = "env\\..*")
 public class SecondExample {
 	public String compileDateTime() {
 		return DevOpsData.localDateTime().toString();
@@ -65,7 +65,7 @@ Example of some more options for the CompileInfo annotation:
 ```java
 import net.q2ek.compileinfo.CompileInfo;
 
-@CompileInfo(extension = "_Gen", withPropertyMap = false)
+@CompileInfo(extension = "_Gen", includeSystemProperties = false)
 public class ThirdExample {
 	public String compileDateTime() {
 		return ThirdExample_Gen.localDateTime().toString();
@@ -96,7 +96,7 @@ Available at Maven Central:
 
 ### Planned work
 
-* 0.15.0-SNAPSHOT Add @Generated and add regex filtering of properties
+* 0.15.0-SNAPSHOT Add @Generated and regex filtering of properties
 * Maybe release 1.0.0 or 1.0.0-rc1
 
 ## Authors
