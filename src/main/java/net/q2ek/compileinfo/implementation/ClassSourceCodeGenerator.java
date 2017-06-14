@@ -1,6 +1,5 @@
 package net.q2ek.compileinfo.implementation;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -46,7 +45,6 @@ class ClassSourceCodeGenerator implements SourceCodeGenerator {
 		classJavaDoc();
 		classDeclaration(this.attributes.classname());
 		isoZonedDateTimeConstant();
-		writeLocalDateTime();
 		writeZonedDateTime();
 		this.propertyWriter.write();
 		classEnd();
@@ -58,7 +56,6 @@ class ClassSourceCodeGenerator implements SourceCodeGenerator {
 
 	private void imports(boolean propertiesMap) {
 		append("import javax.annotation.Generated;\n");
-		append("import java.time.LocalDateTime;\n");
 		append("import java.time.ZonedDateTime;\n");
 		if (propertiesMap) {
 			append("import java.util.Map;\n");
@@ -73,7 +70,7 @@ class ClassSourceCodeGenerator implements SourceCodeGenerator {
 	}
 
 	private void classDeclaration(CharSequence classname) {
-		String now = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
+		String now = ZonedDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 		append("@SuppressWarnings({ \"all\" })\n");
 		generatedAnnotation(now);
 		append("public class " + classname + "\n");
@@ -97,12 +94,6 @@ class ClassSourceCodeGenerator implements SourceCodeGenerator {
 		append(ZonedDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
 		append("\");\n");
 		append("    \n");
-	}
-
-	private void writeLocalDateTime() {
-		append("    static LocalDateTime localDateTime() {\n");
-		append("        return ZONED_DATE_TIME.toLocalDateTime();\n");
-		methodEnd();
 	}
 
 	private void writeZonedDateTime() {

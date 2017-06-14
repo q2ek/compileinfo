@@ -39,13 +39,11 @@ public class SourceCodeTestHelper {
 	void assertContent(String actual) {
 		assertThat(actual).contains("package " + this.classAttributes.packagename());
 		assertThat(actual).contains("import javax.annotation.Generated;");
-		assertThat(actual).contains("import java.time.LocalDateTime;");
 		assertThat(actual).contains("import java.time.ZonedDateTime;");
 		assertThat(actual).contains("import java.util.Map;");
 		assertThat(actual).contains("@Generated");
 		assertThat(actual).contains(this.annotationProcessor.getCanonicalName());
 		assertThat(actual).contains("class " + this.classAttributes.classname());
-		assertThat(actual).contains("LocalDateTime localDateTime()");
 		assertThat(actual).contains("ZonedDateTime zonedDateTime()");
 	}
 

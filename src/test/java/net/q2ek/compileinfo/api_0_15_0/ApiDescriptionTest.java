@@ -2,7 +2,6 @@ package net.q2ek.compileinfo.api_0_15_0;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Map;
 
@@ -12,13 +11,6 @@ import net.q2ek.compileinfo.CompileInfo;
 
 @CompileInfo(classname = "GeneratedApi", extension = "Unused", regex = "java\\.version", includeSystemProperties = true)
 public class ApiDescriptionTest {
-	@Test
-	public void localDateTime_returnsLocalDateTime() {
-		LocalDateTime actual = GeneratedApi.localDateTime();
-
-		assertThat(actual).isNotNull();
-	}
-
 	@Test
 	public void zonedDateTime_returnsZonedDateTime() {
 		ZonedDateTime actual = GeneratedApi.zonedDateTime();

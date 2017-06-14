@@ -7,6 +7,6 @@ import net.q2ek.compileinfo.CompileInfo;
 @CompileInfo(extension = "Plus")
 class ClassChoosesExtension {
 	public LocalDateTime compileDateTime() {
-		return ClassChoosesExtensionPlus.localDateTime();
+		return ClassChoosesExtensionPlus.zonedDateTime().toLocalDateTime();
 	}
 }

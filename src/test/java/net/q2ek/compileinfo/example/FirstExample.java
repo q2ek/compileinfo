@@ -5,10 +5,10 @@ import net.q2ek.compileinfo.CompileInfo;
 @CompileInfo
 class FirstExample {
 	public String compileDateTime() {
-		return FirstExampleCompileInfo.localDateTime().toString();
+		return FirstExampleCompileInfo.zonedDateTime().toString();
 	}
 
 	public String jenkinsBuildUrl() {
-		return FirstExampleCompileInfo.get("env.BUILD_URL");
+		return FirstExampleCompileInfo.properties().get("env.BUILD_URL");
 	}
 }

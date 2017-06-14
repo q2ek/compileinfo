@@ -8,11 +8,7 @@ import net.q2ek.compileinfo.CompileInfo;
 @CompileInfo(regex = "java\\.version")
 class ClassWithRegex {
 	public LocalDateTime compileDateTime() {
-		return ClassWithRegexCompileInfo.localDateTime();
-	}
-
-	public String get(String key) {
-		return ClassWithRegexCompileInfo.get(key);
+		return ClassWithRegexCompileInfo.zonedDateTime().toLocalDateTime();
 	}
 
 	public Map<String, String> properties() {

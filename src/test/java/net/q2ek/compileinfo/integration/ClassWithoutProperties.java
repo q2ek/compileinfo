@@ -7,6 +7,6 @@ import net.q2ek.compileinfo.CompileInfo;
 @CompileInfo(includeSystemProperties = false)
 class ClassWithoutProperties {
 	public LocalDateTime compileDateTime() {
-		return ClassWithoutPropertiesCompileInfo.localDateTime();
+		return ClassWithoutPropertiesCompileInfo.zonedDateTime().toLocalDateTime();
 	}
 }
