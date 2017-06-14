@@ -13,16 +13,15 @@ import java.lang.annotation.Target;
  * Example: <br/>
  *
  * <pre>
- * <code>import net.q2ek.compileinfo.CompileInfo;
- *
+ * <code>
  * {@literal @}CompileInfo
  * class MyClass {
  * 	public String compileTime() {
- * 		return MyClassCompileInfo.localDateTime().toString();
+ * 		return MyClassCompileInfo.zonedDateTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
  * 	}
  *
  * 	public String jenkinsBuildUrl() {
- * 		return MyClassCompileInfo.get("env.BUILD_URL");
+ * 		return MyClassCompileInfo.properties().get("env.BUILD_URL");
  * 	}
  * }
  * </code>

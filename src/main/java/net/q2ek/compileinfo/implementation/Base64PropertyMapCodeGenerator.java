@@ -39,8 +39,7 @@ class Base64PropertyMapCodeGenerator implements PropertyMapCodeGenerator {
 
 	private void writeProperties() {
 		writePropertiesMap();
-		writeGetMethod();
-		writeKeySetMethod();
+		writePropertiesMethod();
 		writePropertiesMapCreater();
 		mapBuilder();
 	}
@@ -49,13 +48,7 @@ class Base64PropertyMapCodeGenerator implements PropertyMapCodeGenerator {
 		append("    private static final Map<String, String> PROPERTIES = createMap();\n\n");
 	}
 
-	private void writeGetMethod() {
-		append("    static String get(String key) {\n");
-		append("        return PROPERTIES.get(key);\n");
-		methodEnd();
-	}
-
-	private void writeKeySetMethod() {
+	private void writePropertiesMethod() {
 		append("    static Map<String, String> properties() {\n");
 		append("        return PROPERTIES;\n");
 		methodEnd();
@@ -63,7 +56,7 @@ class Base64PropertyMapCodeGenerator implements PropertyMapCodeGenerator {
 
 	private void writePropertiesMapCreater() {
 		append("    private static Map<String, String> createMap() {\n");
-		append("        UnmodifiableMapBuilder builder = UnmodifiableMapBuilder.builder();\n");
+		append("        MapBuilder builder = MapBuilder.builder();\n");
 		for (Entry<String, String> entry : this.properties.entrySet()) {
 			put(entry.getKey(), entry.getValue());
 		}
@@ -78,12 +71,12 @@ class Base64PropertyMapCodeGenerator implements PropertyMapCodeGenerator {
 	}
 
 	private void mapBuilder() {
-		append("    private static class UnmodifiableMapBuilder {\n");
+		append("    private static class MapBuilder {\n");
 		append("        private final java.util.Base64.Decoder decoder = java.util.Base64.getDecoder();\n");
 		append("        private final Map<String, String> map = new java.util.HashMap<>();\n");
 		append("        \n");
-		append("        static UnmodifiableMapBuilder builder() {\n");
-		append("            return new UnmodifiableMapBuilder();\n");
+		append("        static MapBuilder builder() {\n");
+		append("            return new MapBuilder();\n");
 		append("        }\n");
 		append("        \n");
 		append("        private void put(String key, String value) {\n");

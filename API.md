@@ -14,7 +14,6 @@ A generated class has these methods:
 static ZonedDateTime zonedDateTime();
 
 static Map<String, String> properties();
-static String get(String key);
 ```
 
 ## Versioning

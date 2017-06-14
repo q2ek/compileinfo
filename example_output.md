@@ -17,22 +17,18 @@ import java.util.Map;
  */
 @SuppressWarnings({ "all" })
 @Generated(
-    value = {"net.q2ek.compileinfo.implementation.CompileInfoAnnotationProcessor"},
-    date = "2017-06-14T10:27:03.821+02:00")
+    value = { "net.q2ek.compileinfo.implementation.CompileInfoAnnotationProcessor" },
+    date = "2017-06-15T01:08:49.689+02:00")
 public class FirstExampleCompileInfo
 {
     private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse(
-            "2017-06-14T10:27:03.848+02:00[Europe/Amsterdam]");
+            "2017-06-15T01:08:49.737+02:00[Europe/Amsterdam]");
 
     static ZonedDateTime zonedDateTime() {
         return ZONED_DATE_TIME;
     }
 
     private static final Map<String, String> PROPERTIES = createMap();
-
-    static String get(String key) {
-        return PROPERTIES.get(key);
-    }
 
     static java.util.Set<String> keySet() {
         return PROPERTIES.keySet();
@@ -85,22 +81,18 @@ import java.util.Map;
  */
 @SuppressWarnings({ "all" })
 @Generated(
-    value = {"net.q2ek.compileinfo.implementation.CompileInfoAnnotationProcessor"},
-    date = "2017-06-14T10:27:04.102+02:00")
+    value = { "net.q2ek.compileinfo.implementation.CompileInfoAnnotationProcessor" },
+    date = "2017-06-15T01:08:50.022+02:00")
 public class DevOpsData
 {
     private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse(
-            "2017-06-14T10:27:04.102+02:00[Europe/Amsterdam]");
+            "2017-06-15T01:08:50.022+02:00[Europe/Amsterdam]");
 
     static ZonedDateTime zonedDateTime() {
         return ZONED_DATE_TIME;
     }
 
     private static final Map<String, String> PROPERTIES = createMap();
-
-    static String get(String key) {
-        return PROPERTIES.get(key);
-    }
 
     static java.util.Set<String> keySet() {
         return PROPERTIES.keySet();

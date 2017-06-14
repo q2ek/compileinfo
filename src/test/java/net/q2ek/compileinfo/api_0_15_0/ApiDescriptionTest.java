@@ -22,13 +22,6 @@ public class ApiDescriptionTest {
 	public void staticProperties_returnsMapStringString() {
 		Map<String, String> actual = GeneratedApi.properties();
 
-		assertThat(actual).isNotNull();
-	}
-
-	@Test
-	public void staticGet_returnsString() {
-		String actual = GeneratedApi.get("java.version");
-
-		assertThat(actual).isNotNull();
+		assertThat(actual).containsKey("java.version");
 	}
 }
