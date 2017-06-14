@@ -48,7 +48,7 @@ public class SourceCodeTestHelper {
 	}
 
 	static PropertyWriterFactory propertyWriterFactory() {
-		return appender -> new Base64PropertyWriter(appender, SourceCodeTestHelper.properties());
+		return appender -> new Base64PropertyMapCodeGenerator(appender, SourceCodeTestHelper.properties());
 	}
 
 	SourceCodeGeneratorFactory scgFactory() {

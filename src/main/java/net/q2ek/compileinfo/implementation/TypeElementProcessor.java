@@ -49,9 +49,9 @@ class TypeElementProcessor {
 
 	private PropertyWriterFactory propertyWriterFactory() {
 		if (this.annotation.includeSystemProperties()) {
-			return appender -> new Base64PropertyWriter(appender, properties());
+			return appender -> new Base64PropertyMapCodeGenerator(appender, properties());
 		} else {
-			return unused -> new NoopPropertyWriter();
+			return unused -> new NoopPropertyMapCodeGenerator();
 		}
 	}
 

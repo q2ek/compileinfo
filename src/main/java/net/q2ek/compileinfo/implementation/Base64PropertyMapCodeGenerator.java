@@ -8,13 +8,13 @@ import java.util.SortedMap;
 import net.q2ek.compileinfo.implementation.basics.Appender;
 import net.q2ek.compileinfo.implementation.basics.PropertyMapCodeGenerator;
 
-class Base64PropertyWriter implements PropertyMapCodeGenerator {
+class Base64PropertyMapCodeGenerator implements PropertyMapCodeGenerator {
 	private final Encoder encoder = Base64.getEncoder();
 
 	private final Appender appender;
 	private final SortedMap<String, String> properties;
 
-	public Base64PropertyWriter(Appender appender, SortedMap<String, String> properties) {
+	public Base64PropertyMapCodeGenerator(Appender appender, SortedMap<String, String> properties) {
 		this.appender = appender;
 		this.properties = properties;
 	}

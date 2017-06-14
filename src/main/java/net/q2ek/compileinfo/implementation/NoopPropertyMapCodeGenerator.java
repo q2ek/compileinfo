@@ -2,8 +2,8 @@ package net.q2ek.compileinfo.implementation;
 
 import net.q2ek.compileinfo.implementation.basics.PropertyMapCodeGenerator;
 
-class NoopPropertyWriter implements PropertyMapCodeGenerator {
-	public NoopPropertyWriter() {
+class NoopPropertyMapCodeGenerator implements PropertyMapCodeGenerator {
+	public NoopPropertyMapCodeGenerator() {
 	}
 
 	@Override
