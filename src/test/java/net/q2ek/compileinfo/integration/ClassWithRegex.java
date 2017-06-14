@@ -5,17 +5,17 @@ import java.util.Set;
 
 import net.q2ek.compileinfo.CompileInfo;
 
-@CompileInfo(filterKeys = { "java.version" })
-class ClassWithOneProperty {
+@CompileInfo(regex = "java\\.version")
+class ClassWithRegex {
 	public LocalDateTime compileDateTime() {
-		return ClassWithOnePropertyCompileInfo.localDateTime();
+		return ClassWithRegexCompileInfo.localDateTime();
 	}
 
 	public String get(String key) {
-		return ClassWithOnePropertyCompileInfo.get(key);
+		return ClassWithRegexCompileInfo.get(key);
 	}
 
 	public Set<String> keySet() {
-		return ClassWithOnePropertyCompileInfo.keySet();
+		return ClassWithRegexCompileInfo.keySet();
 	}
 }

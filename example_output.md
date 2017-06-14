@@ -18,12 +18,12 @@ import java.util.Map;
  */
 @Generated(
     value = {"net.q2ek.compileinfo.implementation.CompileInfoAnnotationProcessor"},
-    date = "2017-06-14T00:06:02.606")
+    date = "2017-06-14T10:27:03.821")
 public class FirstExampleCompileInfo
 {
-    private static final LocalDateTime LOCAL_DATE_TIME = LocalDateTime.parse("2017-06-14T00:06:02.607");
+    private static final LocalDateTime LOCAL_DATE_TIME = LocalDateTime.parse("2017-06-14T10:27:03.847");
     
-    private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse("2017-06-14T00:06:02.607+02:00[Europe/Amsterdam]");
+    private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse("2017-06-14T10:27:03.848+02:00[Europe/Amsterdam]");
     
     static LocalDateTime localDateTime() {
         return LOCAL_DATE_TIME;
@@ -44,10 +44,17 @@ public class FirstExampleCompileInfo
     }
 
     private static Map<String, String> createMap() {
-    	MapBuilder builder = MapBuilder.builder();
-    	    // removed some spam
-        builder.put("dXNlci50aW1lem9uZQ==",
-                    "RXVyb3BlL0Ftc3RlcmRhbQ==");
+        MapBuilder builder = MapBuilder.builder();
+        builder.put("ZG91YmxlImhhY2s=",
+                    "aGFja1wiaGFjaw==");
+        builder.put("aGFjaw==",
+                    "XCJoYWNr");
+        builder.put("amF2YS52ZXJzaW9u",
+                    "U291cmNlQ29kZUdlbmVyYXRvclRlc3Q=");
+        builder.put("amF2YWRvYyBoYWNrICovIGV4cGxvc2lvbnM=",
+                    "bm90aGluZyByZWFsbHk=");
+        builder.put("dXNlci5uYW1l",
+                    "U291cmNlQ29kZUdlbmVyYXRvclRlc3Q=");
         return builder.build();
     }
 
@@ -84,12 +91,12 @@ import java.util.Map;
  */
 @Generated(
     value = {"net.q2ek.compileinfo.implementation.CompileInfoAnnotationProcessor"},
-    date = "2017-06-14T00:06:02.857")
+    date = "2017-06-14T10:27:04.102")
 public class DevOpsData
 {
-    private static final LocalDateTime LOCAL_DATE_TIME = LocalDateTime.parse("2017-06-14T00:06:02.857");
+    private static final LocalDateTime LOCAL_DATE_TIME = LocalDateTime.parse("2017-06-14T10:27:04.102");
     
-    private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse("2017-06-14T00:06:02.857+02:00[Europe/Amsterdam]");
+    private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse("2017-06-14T10:27:04.102+02:00[Europe/Amsterdam]");
     
     static LocalDateTime localDateTime() {
         return LOCAL_DATE_TIME;
@@ -110,7 +117,17 @@ public class DevOpsData
     }
 
     private static Map<String, String> createMap() {
-    	MapBuilder builder = MapBuilder.builder();
+        MapBuilder builder = MapBuilder.builder();
+        builder.put("ZG91YmxlImhhY2s=",
+                    "aGFja1wiaGFjaw==");
+        builder.put("aGFjaw==",
+                    "XCJoYWNr");
+        builder.put("amF2YS52ZXJzaW9u",
+                    "U291cmNlQ29kZUdlbmVyYXRvclRlc3Q=");
+        builder.put("amF2YWRvYyBoYWNrICovIGV4cGxvc2lvbnM=",
+                    "bm90aGluZyByZWFsbHk=");
+        builder.put("dXNlci5uYW1l",
+                    "U291cmNlQ29kZUdlbmVyYXRvclRlc3Q=");
         return builder.build();
     }
 
@@ -137,29 +154,12 @@ Generated class for the third example:
 ```java
 package net.q2ek.compileinfo.example;
 
-import javax.annotation.Generated;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
+import net.q2ek.compileinfo.CompileInfo;
 
-/**
- * @see net.q2ek.compileinfo.CompileInfo
- */
-@Generated(
-    value = {"net.q2ek.compileinfo.implementation.CompileInfoAnnotationProcessor"},
-    date = "2017-06-14T00:06:03.063")
-public class ThirdExample_Gen
-{
-    private static final LocalDateTime LOCAL_DATE_TIME = LocalDateTime.parse("2017-06-14T00:06:03.063");
-    
-    private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse("2017-06-14T00:06:03.063+02:00[Europe/Amsterdam]");
-    
-    static LocalDateTime localDateTime() {
-        return LOCAL_DATE_TIME;
-    }
-
-    static ZonedDateTime zonedDateTime() {
-        return ZONED_DATE_TIME;
-    }
-
+@CompileInfo(extension = "_Gen", includeSystemProperties = false)
+public class ThirdExample {
+	public String compileDateTime() {
+		return ThirdExample_Gen.localDateTime().toString();
+	}
 }
 ```

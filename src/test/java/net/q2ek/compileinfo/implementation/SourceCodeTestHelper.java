@@ -25,6 +25,7 @@ public class SourceCodeTestHelper {
 	static Properties testSystemProperties() {
 		Properties result = new Properties();
 		result.put("user.name", SourceCodeGeneratorTest.class.getSimpleName());
+		result.put("java.version", SourceCodeGeneratorTest.class.getSimpleName());
 		result.put("hack", "\\\"hack");
 		result.put("double\"hack", "hack\\\"hack");
 		result.put("javadoc hack */ explosions", "nothing really");

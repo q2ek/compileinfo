@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class Integration_DefaultTest {
 	private final ClassWithoutProperties withoutProperties = new ClassWithoutProperties();
-	private final ClassWithOneProperty withOneProperty = new ClassWithOneProperty();
+	private final ClassWithRegex withRegex = new ClassWithRegex();
 
 	@Test
 	public void compileDateTime_containsSomething() {
@@ -18,8 +18,8 @@ public class Integration_DefaultTest {
 	}
 
 	@Test
-	public void classWithOneProperty_containsOnlyOneProperty() {
-		Set<String> keySet = this.withOneProperty.keySet();
+	public void classWithRegex_containsOnlyOneProperty() {
+		Set<String> keySet = this.withRegex.keySet();
 
 		Assertions.assertThat(keySet).hasSize(1);
 	}

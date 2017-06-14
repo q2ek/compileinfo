@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import net.q2ek.compileinfo.CompileInfo;
 
-@CompileInfo(withPropertyMap = false)
+@CompileInfo(includeSystemProperties = false)
 class ClassWithoutProperties {
 	public LocalDateTime compileDateTime() {
 		return ClassWithoutPropertiesCompileInfo.localDateTime();

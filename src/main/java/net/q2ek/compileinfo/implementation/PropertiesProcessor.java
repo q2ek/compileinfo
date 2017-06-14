@@ -1,9 +1,11 @@
 package net.q2ek.compileinfo.implementation;
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.function.Predicate;
 
 class PropertiesProcessor {
 	private final SortedMap<String, String> properties;
@@ -24,15 +26,11 @@ class PropertiesProcessor {
 		return this.properties;
 	}
 
-	SortedMap<String, String> filtered(Iterable<String> filterKeys) {
-		return filter(filterKeys);
-	}
-
-	private SortedMap<String, String> filter(Iterable<String> filterKeys) {
+	public SortedMap<String, String> filtered(Predicate<String> predicate) {
 		SortedMap<String, String> result = new TreeMap<>();
-		for (String key : filterKeys) {
-			String value = this.properties.get(key);
-			if (value != null) result.put(key, value);
+		for (Entry<String, String> entry : this.properties.entrySet()) {
+			if (predicate.test(entry.getKey()))
+				result.put(entry.getKey(), entry.getValue());
 		}
 		return result;
 	}

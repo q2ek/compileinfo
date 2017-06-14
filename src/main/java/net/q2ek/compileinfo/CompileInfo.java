@@ -34,21 +34,17 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface CompileInfo {
 	/**
-	 * <b>Beta version</b><br/>
 	 * If set to false the generated class will not contain a map of system
 	 * properties.
 	 */
-	boolean withPropertyMap() default true;
+	boolean includeSystemProperties() default true;
 
 	/**
-	 * <b>Beta version</b><br/>
-	 * If any are given then only these system properties will be included in
-	 * the generated class.
+	 * System properties will be filtered using this regex.
 	 */
-	String[] filterKeys() default {};
+	String regex() default ".*";
 
 	/**
-	 * <b>Beta version</b><br/>
 	 * Add something other than "CompileInfo" to the generated classname
 	 */
 	String extension() default "CompileInfo";

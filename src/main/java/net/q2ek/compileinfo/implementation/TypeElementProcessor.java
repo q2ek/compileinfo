@@ -1,7 +1,7 @@
 package net.q2ek.compileinfo.implementation;
 
-import java.util.Arrays;
 import java.util.SortedMap;
+import java.util.regex.Pattern;
 
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
@@ -48,7 +48,7 @@ class TypeElementProcessor {
 	}
 
 	private PropertyWriterFactory propertyWriterFactory() {
-		if (this.annotation.withPropertyMap()) {
+		if (this.annotation.includeSystemProperties()) {
 			return appender -> new Base64PropertyWriter(appender, properties());
 		} else {
 			return unused -> new NoopPropertyWriter();
@@ -57,11 +57,8 @@ class TypeElementProcessor {
 
 	private SortedMap<String, String> properties() {
 		PropertiesProcessor properties = PropertiesProcessor.of(System.getProperties());
-		String[] filterKeys = this.annotation.filterKeys();
-		if (filterKeys.length == 0) {
-			return properties.unfiltered();
-		}
-		return properties.filtered(Arrays.asList(filterKeys));
+		Pattern pattern = Pattern.compile(this.annotation.regex());
+		return properties.filtered(pattern.asPredicate());
 	}
 
 	private CharSequence packagename() {

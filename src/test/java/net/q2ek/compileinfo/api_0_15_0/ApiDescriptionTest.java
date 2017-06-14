@@ -1,4 +1,4 @@
-package net.q2ek.compileinfo.api_0_14_0;
+package net.q2ek.compileinfo.api_0_15_0;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import net.q2ek.compileinfo.CompileInfo;
 
-@CompileInfo(classname = "ApiClassname", extension = "Unused", filterKeys = { "java.version" }, withPropertyMap = true)
+@CompileInfo(classname = "ApiClassname", extension = "Unused", regex = "java\\.version", includeSystemProperties = true)
 public class ApiDescriptionTest {
 	@Test
 	public void localDateTime_method_returns_LocalDateTime() {
