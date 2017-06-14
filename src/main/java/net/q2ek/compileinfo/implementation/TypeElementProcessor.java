@@ -66,11 +66,6 @@ class TypeElementProcessor {
 	}
 
 	private CharSequence classname() {
-		String classname = this.annotation.classname();
-		if (classname.isEmpty()) {
-			return this.value.getSimpleName() + this.annotation.extension();
-		} else {
-			return classname;
-		}
+		return String.format(this.annotation.classname(), this.value.getSimpleName());
 	}
 }
