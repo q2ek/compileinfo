@@ -11,7 +11,6 @@ net.q2ek.compileinfo.CompileInfo;
 
 A generated class has these methods:
 ```java
-static LocalDateTime localDateTime();
 static ZonedDateTime zonedDateTime();
 
 static Map<String, String> properties();

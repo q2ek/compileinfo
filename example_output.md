@@ -9,25 +9,20 @@ Generated class for the first example:
 package net.q2ek.compileinfo.example;
 
 import javax.annotation.Generated;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Map;
 
 /**
  * @see net.q2ek.compileinfo.CompileInfo
  */
+@SuppressWarnings({ "all" })
 @Generated(
     value = {"net.q2ek.compileinfo.implementation.CompileInfoAnnotationProcessor"},
-    date = "2017-06-14T10:27:03.821")
+    date = "2017-06-14T10:27:03.821+02:00")
 public class FirstExampleCompileInfo
 {
-    private static final LocalDateTime LOCAL_DATE_TIME = LocalDateTime.parse("2017-06-14T10:27:03.847");
-    
-    private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse("2017-06-14T10:27:03.848+02:00[Europe/Amsterdam]");
-    
-    static LocalDateTime localDateTime() {
-        return LOCAL_DATE_TIME;
-    }
+    private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse(
+            "2017-06-14T10:27:03.848+02:00[Europe/Amsterdam]");
 
     static ZonedDateTime zonedDateTime() {
         return ZONED_DATE_TIME;
@@ -82,25 +77,20 @@ Generated class for the second example:
 package net.q2ek.compileinfo.example;
 
 import javax.annotation.Generated;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Map;
 
 /**
  * @see net.q2ek.compileinfo.CompileInfo
  */
+@SuppressWarnings({ "all" })
 @Generated(
     value = {"net.q2ek.compileinfo.implementation.CompileInfoAnnotationProcessor"},
-    date = "2017-06-14T10:27:04.102")
+    date = "2017-06-14T10:27:04.102+02:00")
 public class DevOpsData
 {
-    private static final LocalDateTime LOCAL_DATE_TIME = LocalDateTime.parse("2017-06-14T10:27:04.102");
-    
-    private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse("2017-06-14T10:27:04.102+02:00[Europe/Amsterdam]");
-    
-    static LocalDateTime localDateTime() {
-        return LOCAL_DATE_TIME;
-    }
+    private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse(
+            "2017-06-14T10:27:04.102+02:00[Europe/Amsterdam]");
 
     static ZonedDateTime zonedDateTime() {
         return ZONED_DATE_TIME;
@@ -154,12 +144,24 @@ Generated class for the third example:
 ```java
 package net.q2ek.compileinfo.example;
 
-import net.q2ek.compileinfo.CompileInfo;
+import javax.annotation.Generated;
+import java.time.ZonedDateTime;
 
-@CompileInfo(extension = "_Gen", includeSystemProperties = false)
-public class ThirdExample {
-	public String compileDateTime() {
-		return ThirdExample_Gen.localDateTime().toString();
-	}
+/**
+ * @see net.q2ek.compileinfo.CompileInfo
+ */
+@SuppressWarnings({ "all" })
+@Generated(
+    value = { "net.q2ek.compileinfo.implementation.CompileInfoAnnotationProcessor" },
+    date = "2017-06-15T00:51:09.177+02:00")
+public class ThirdExample_Gen
+{
+    private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse(
+            "2017-06-15T00:51:09.177+02:00[Europe/Amsterdam]");
+    
+    static ZonedDateTime zonedDateTime() {
+        return ZONED_DATE_TIME;
+    }
+
 }
 ```
