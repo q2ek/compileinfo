@@ -75,8 +75,9 @@ class ClassSourceCodeGenerator implements SourceCodeGenerator {
 
 	private void classDeclaration(CharSequence classname) {
 		String canonicalName = this.annotationProcessorClass.getCanonicalName();
+		append("@SuppressWarnings({ \"all\" })\n");
 		append("@Generated(\n");
-		append("    value = {\"" + canonicalName + "\"},\n");
+		append("    value = { \"" + canonicalName + "\" },\n");
 		String now = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
 		append("    date = \"" + now + "\")\n");
 		append("public class " + classname + "\n");
