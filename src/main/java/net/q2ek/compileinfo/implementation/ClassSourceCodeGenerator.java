@@ -73,14 +73,18 @@ class ClassSourceCodeGenerator implements SourceCodeGenerator {
 	}
 
 	private void classDeclaration(CharSequence classname) {
-		String canonicalName = this.annotationProcessorClass.getCanonicalName();
-		append("@SuppressWarnings({ \"all\" })\n");
-		append("@Generated(\n");
-		append("    value = { \"" + canonicalName + "\" },\n");
 		String now = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
-		append("    date = \"" + now + "\")\n");
+		append("@SuppressWarnings({ \"all\" })\n");
+		generatedAnnotation(now);
 		append("public class " + classname + "\n");
 		append("{\n");
+	}
+
+	private void generatedAnnotation(String now) {
+		String canonicalName = this.annotationProcessorClass.getCanonicalName();
+		append("@Generated(\n");
+		append("    value = { \"" + canonicalName + "\" },\n");
+		append("    date = \"" + now + "\")\n");
 	}
 
 	private void classEnd() {
@@ -89,7 +93,7 @@ class ClassSourceCodeGenerator implements SourceCodeGenerator {
 
 	private void isoZonedDateTimeConstant() {
 		append("    private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse(\n");
-		append("\"");
+		append("            \"");
 		append(ZonedDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
 		append("\");\n");
 		append("    \n");

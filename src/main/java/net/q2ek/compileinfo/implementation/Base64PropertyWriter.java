@@ -57,13 +57,13 @@ class Base64PropertyWriter implements PropertyWriter {
 
 	private void writeKeySetMethod() {
 		append("    static Map<String, String> properties() {\n");
-		append("    	return PROPERTIES;\n");
+		append("        return PROPERTIES;\n");
 		methodEnd();
 	}
 
 	private void writePropertiesMapCreater() {
 		append("    private static Map<String, String> createMap() {\n");
-		append("    	UnmodifiableMapBuilder builder = UnmodifiableMapBuilder.builder();\n");
+		append("        UnmodifiableMapBuilder builder = UnmodifiableMapBuilder.builder();\n");
 		for (Entry<String, String> entry : this.properties.entrySet()) {
 			put(entry.getKey(), entry.getValue());
 		}
@@ -79,20 +79,20 @@ class Base64PropertyWriter implements PropertyWriter {
 
 	private void mapBuilder() {
 		append("    private static class UnmodifiableMapBuilder {\n");
-		append("    	private final java.util.Base64.Decoder decoder = java.util.Base64.getDecoder();\n");
-		append("    	private final Map<String, String> map = new java.util.HashMap<>();\n");
-		append("    	\n");
-		append("    	static UnmodifiableMapBuilder builder() {\n");
-		append("    		return new UnmodifiableMapBuilder();\n");
-		append("    	}\n");
-		append("    	\n");
-		append("    	private void put(String key, String value) {\n");
-		append("    		map.put(new String(decoder.decode(key)), new String(decoder.decode(value)));\n");
-		append("    	}\n");
-		append("    	\n");
-		append("    	Map<String, String> build() {\n");
-		append("    		return java.util.Collections.unmodifiableMap(map);\n");
-		append("    	};\n");
+		append("        private final java.util.Base64.Decoder decoder = java.util.Base64.getDecoder();\n");
+		append("        private final Map<String, String> map = new java.util.HashMap<>();\n");
+		append("        \n");
+		append("        static UnmodifiableMapBuilder builder() {\n");
+		append("            return new UnmodifiableMapBuilder();\n");
+		append("        }\n");
+		append("        \n");
+		append("        private void put(String key, String value) {\n");
+		append("            map.put(new String(decoder.decode(key)), new String(decoder.decode(value)));\n");
+		append("        }\n");
+		append("        \n");
+		append("        Map<String, String> build() {\n");
+		append("            return java.util.Collections.unmodifiableMap(map);\n");
+		append("        };\n");
 		append("    }\n");
 	}
 
