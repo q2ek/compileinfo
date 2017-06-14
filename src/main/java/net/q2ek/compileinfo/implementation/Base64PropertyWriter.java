@@ -6,9 +6,9 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 
 import net.q2ek.compileinfo.implementation.basics.Appender;
-import net.q2ek.compileinfo.implementation.basics.PropertyWriter;
+import net.q2ek.compileinfo.implementation.basics.PropertyMapCodeGenerator;
 
-class Base64PropertyWriter implements PropertyWriter {
+class Base64PropertyWriter implements PropertyMapCodeGenerator {
 	private final Encoder encoder = Base64.getEncoder();
 
 	private final Appender appender;

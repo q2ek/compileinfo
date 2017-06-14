@@ -1,8 +1,8 @@
 package net.q2ek.compileinfo.implementation;
 
-import net.q2ek.compileinfo.implementation.basics.PropertyWriter;
+import net.q2ek.compileinfo.implementation.basics.PropertyMapCodeGenerator;
 
-class NoopPropertyWriter implements PropertyWriter {
+class NoopPropertyWriter implements PropertyMapCodeGenerator {
 	public NoopPropertyWriter() {
 	}
 
