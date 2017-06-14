@@ -4,38 +4,38 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.Set;
+import java.util.Map;
 
 import org.junit.Test;
 
 import net.q2ek.compileinfo.CompileInfo;
 
-@CompileInfo(classname = "ApiClassname", extension = "Unused", regex = "java\\.version", includeSystemProperties = true)
+@CompileInfo(classname = "GeneratedApi", extension = "Unused", regex = "java\\.version", includeSystemProperties = true)
 public class ApiDescriptionTest {
 	@Test
-	public void localDateTime_method_returns_LocalDateTime() {
-		LocalDateTime actual = ApiClassname.localDateTime();
+	public void localDateTime_returnsLocalDateTime() {
+		LocalDateTime actual = GeneratedApi.localDateTime();
 
 		assertThat(actual).isNotNull();
 	}
 
 	@Test
-	public void zonedDateTime_method_returns_ZonedDateTime() {
-		ZonedDateTime actual = ApiClassname.zonedDateTime();
+	public void zonedDateTime_returnsZonedDateTime() {
+		ZonedDateTime actual = GeneratedApi.zonedDateTime();
 
 		assertThat(actual).isNotNull();
 	}
 
 	@Test
-	public void static_keySet_method_returns_Set_of_String() {
-		Set<String> actual = ApiClassname.keySet();
+	public void staticProperties_returnsMapStringString() {
+		Map<String, String> actual = GeneratedApi.properties();
 
 		assertThat(actual).isNotNull();
 	}
 
 	@Test
-	public void static_get_method_returns_String() {
-		String actual = ApiClassname.get("java.version");
+	public void staticGet_returnsString() {
+		String actual = GeneratedApi.get("java.version");
 
 		assertThat(actual).isNotNull();
 	}

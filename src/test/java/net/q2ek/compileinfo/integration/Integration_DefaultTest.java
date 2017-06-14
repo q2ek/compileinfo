@@ -1,7 +1,7 @@
 package net.q2ek.compileinfo.integration;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.Map;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -19,8 +19,8 @@ public class Integration_DefaultTest {
 
 	@Test
 	public void classWithRegex_containsOnlyOneProperty() {
-		Set<String> keySet = this.withRegex.keySet();
+		Map<String, String> actual = this.withRegex.properties();
 
-		Assertions.assertThat(keySet).hasSize(1);
+		Assertions.assertThat(actual).hasSize(1);
 	}
 }

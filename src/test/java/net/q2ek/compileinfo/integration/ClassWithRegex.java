@@ -1,7 +1,7 @@
 package net.q2ek.compileinfo.integration;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.Map;
 
 import net.q2ek.compileinfo.CompileInfo;
 
@@ -15,7 +15,7 @@ class ClassWithRegex {
 		return ClassWithRegexCompileInfo.get(key);
 	}
 
-	public Set<String> keySet() {
-		return ClassWithRegexCompileInfo.keySet();
+	public Map<String, String> properties() {
+		return ClassWithRegexCompileInfo.properties();
 	}
 }

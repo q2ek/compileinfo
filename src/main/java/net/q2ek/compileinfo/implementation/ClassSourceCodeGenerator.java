@@ -45,8 +45,7 @@ class ClassSourceCodeGenerator implements SourceCodeGenerator {
 		imports(this.propertyWriter.needsMapImport());
 		classJavaDoc();
 		classDeclaration(this.attributes.classname());
-		isoDateTimeConstant();
-		zonedDateTimeConstant();
+		isoZonedDateTimeConstant();
 		writeLocalDateTime();
 		writeZonedDateTime();
 		this.propertyWriter.write();
@@ -88,15 +87,9 @@ class ClassSourceCodeGenerator implements SourceCodeGenerator {
 		append("}\n");
 	}
 
-	private void isoDateTimeConstant() {
-		append("    private static final LocalDateTime LOCAL_DATE_TIME = LocalDateTime.parse(\"");
-		append(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
-		append("\");\n");
-		append("    \n");
-	}
-
-	private void zonedDateTimeConstant() {
-		append("    private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse(\"");
+	private void isoZonedDateTimeConstant() {
+		append("    private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse(\n");
+		append("\"");
 		append(ZonedDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
 		append("\");\n");
 		append("    \n");
@@ -104,7 +97,7 @@ class ClassSourceCodeGenerator implements SourceCodeGenerator {
 
 	private void writeLocalDateTime() {
 		append("    static LocalDateTime localDateTime() {\n");
-		append("        return LOCAL_DATE_TIME;\n");
+		append("        return ZONED_DATE_TIME.toLocalDateTime();\n");
 		methodEnd();
 	}
 

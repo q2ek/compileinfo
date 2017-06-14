@@ -9,12 +9,12 @@ The CompileInfo class defines part of the interface:
 net.q2ek.compileinfo.CompileInfo;
 ```
 
-A class which is generated has these methods:
+A generated class has these methods:
 ```java
 static LocalDateTime localDateTime();
 static ZonedDateTime zonedDateTime();
 
-static Set<String> keySet();
+static Map<String, String> properties();
 static String get(String key);
 ```
 

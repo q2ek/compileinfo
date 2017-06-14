@@ -49,9 +49,21 @@ class Base64PropertyWriter implements PropertyWriter {
 		append("    private static final Map<String, String> PROPERTIES = createMap();\n\n");
 	}
 
+	private void writeGetMethod() {
+		append("    static String get(String key) {\n");
+		append("        return PROPERTIES.get(key);\n");
+		methodEnd();
+	}
+
+	private void writeKeySetMethod() {
+		append("    static Map<String, String> properties() {\n");
+		append("    	return PROPERTIES;\n");
+		methodEnd();
+	}
+
 	private void writePropertiesMapCreater() {
 		append("    private static Map<String, String> createMap() {\n");
-		append("    	MapBuilder builder = MapBuilder.builder();\n");
+		append("    	UnmodifiableMapBuilder builder = UnmodifiableMapBuilder.builder();\n");
 		for (Entry<String, String> entry : this.properties.entrySet()) {
 			put(entry.getKey(), entry.getValue());
 		}
@@ -66,34 +78,22 @@ class Base64PropertyWriter implements PropertyWriter {
 	}
 
 	private void mapBuilder() {
-		append("    private static class MapBuilder {\n");
+		append("    private static class UnmodifiableMapBuilder {\n");
 		append("    	private final java.util.Base64.Decoder decoder = java.util.Base64.getDecoder();\n");
-		append("    	private final Map<String, String> result = new java.util.HashMap<>();\n");
+		append("    	private final Map<String, String> map = new java.util.HashMap<>();\n");
 		append("    	\n");
-		append("    	static MapBuilder builder() {\n");
-		append("    		return new MapBuilder();\n");
+		append("    	static UnmodifiableMapBuilder builder() {\n");
+		append("    		return new UnmodifiableMapBuilder();\n");
 		append("    	}\n");
 		append("    	\n");
 		append("    	private void put(String key, String value) {\n");
-		append("    		result.put(new String(decoder.decode(key)), new String(decoder.decode(value)));\n");
+		append("    		map.put(new String(decoder.decode(key)), new String(decoder.decode(value)));\n");
 		append("    	}\n");
 		append("    	\n");
 		append("    	Map<String, String> build() {\n");
-		append("    		return result;\n");
+		append("    		return java.util.Collections.unmodifiableMap(map);\n");
 		append("    	};\n");
 		append("    }\n");
-	}
-
-	private void writeGetMethod() {
-		append("    static String get(String key) {\n");
-		append("        return PROPERTIES.get(key);\n");
-		methodEnd();
-	}
-
-	private void writeKeySetMethod() {
-		append("    static java.util.Set<String> keySet() {\n");
-		append("        return PROPERTIES.keySet();\n");
-		methodEnd();
 	}
 
 	private String base64(String value) {
