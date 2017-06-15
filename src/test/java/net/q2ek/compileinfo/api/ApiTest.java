@@ -1,4 +1,4 @@
-package net.q2ek.compileinfo.api_0_15_0;
+package net.q2ek.compileinfo.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -9,18 +9,23 @@ import org.junit.Test;
 
 import net.q2ek.compileinfo.CompileInfo;
 
-@CompileInfo(classname = "%sGeneratedApi", regex = "java\\.version", includeSystemProperties = true)
-public class ApiDescriptionTest {
+/**
+ * This test describes the API for net.q2ek.compileinfo
+ *
+ * @author Edze Kruizinga
+ */
+@CompileInfo(classname = "%sCompileInfo", regex = ".*", includeSystemProperties = true)
+public class ApiTest {
 	@Test
 	public void zonedDateTime_returnsZonedDateTime() {
-		ZonedDateTime actual = ApiDescriptionTestGeneratedApi.zonedDateTime();
+		ZonedDateTime actual = ApiTestCompileInfo.zonedDateTime();
 
 		assertThat(actual).isNotNull();
 	}
 
 	@Test
 	public void staticProperties_returnsMapStringString() {
-		Map<String, String> actual = ApiDescriptionTestGeneratedApi.properties();
+		Map<String, String> actual = ApiTestCompileInfo.properties();
 
 		assertThat(actual).containsKey("java.version");
 	}

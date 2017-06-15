@@ -4,10 +4,7 @@ See also: [README.md](README.md)
 
 ## API
 
-The CompileInfo class defines part of the interface:
-```java
-net.q2ek.compileinfo.CompileInfo;
-```
+The first part of the interface is the [net.q2ek.compileinfo.CompileInfo](src/main/java/net/q2ek/compileinfo/CompileInfo.java) annotation.
 
 A generated class has these methods:
 ```java
@@ -15,6 +12,9 @@ static ZonedDateTime zonedDateTime();
 
 static Map<String, String> properties();
 ```
+
+Java unit test for the API: [ApiTest.java](src/test/java/net/q2ek/compileinfo/apitest/ApiTest.java)
+
 
 ## Versioning
 
