@@ -7,7 +7,6 @@ import net.q2ek.compileinfo.CompileInfo;
 import net.q2ek.compileinfo.implementation.basics.Appender;
 import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
 import net.q2ek.compileinfo.implementation.basics.PropertyMapCodeGenerator;
-import net.q2ek.compileinfo.implementation.basics.PropertyWriterFactory;
 import net.q2ek.compileinfo.implementation.basics.SourceCodeGenerator;
 
 /**
@@ -21,17 +20,17 @@ class ClassSourceCodeGenerator implements SourceCodeGenerator {
 	private final Class<?> annotationProcessorClass;
 	private final ClassAttributes attributes;
 	private final Appender appender;
-	private final PropertyMapCodeGenerator propertyWriter;
+	private final PropertyMapCodeGenerator propertyMapper;
 
 	ClassSourceCodeGenerator(
 		Class<?> annotationProcessor,
 		ClassAttributes attributes,
 		Appender appender,
-		PropertyWriterFactory factory) {
+		PropertyMapCodeGenerator propertyMapper) {
 		this.annotationProcessorClass = annotationProcessor;
 		this.attributes = attributes;
 		this.appender = appender;
-		this.propertyWriter = factory.apply(appender);
+		this.propertyMapper = propertyMapper;
 	}
 
 	private void append(CharSequence value) {
@@ -42,14 +41,14 @@ class ClassSourceCodeGenerator implements SourceCodeGenerator {
 	public void write() {
 		ZonedDateTime now = ZonedDateTime.now();
 		packageDeclaration(this.attributes.packagename());
-		imports(this.propertyWriter.needsMapImport());
+		imports();
 		classJavaDoc();
 		suppressWarnings();
 		generatedAnnotation(now);
 		classDeclaration(this.attributes.classname());
 		isoZonedDateTimeConstant(now);
 		writeZonedDateTime();
-		this.propertyWriter.write();
+		this.propertyMapper.write(this.appender);
 		classEnd();
 	}
 
@@ -57,12 +56,11 @@ class ClassSourceCodeGenerator implements SourceCodeGenerator {
 		append("package " + packagename + ";\n\n");
 	}
 
-	private void imports(boolean propertiesMap) {
-		append("import javax.annotation.Generated;\n");
+	private void imports() {
 		append("import java.time.ZonedDateTime;\n");
-		if (propertiesMap) {
-			append("import java.util.Map;\n");
-		}
+		this.propertyMapper.imports(this.appender);
+		append("\n");
+		append("import javax.annotation.Generated;\n");
 		append("\n");
 	}
 

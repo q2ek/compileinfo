@@ -1,7 +1,9 @@
 package net.q2ek.compileinfo.implementation.basics;
 
-public interface PropertyMapCodeGenerator {
-	void write();
+import java.util.function.Consumer;
 
-	boolean needsMapImport();
+public interface PropertyMapCodeGenerator {
+	void write(Consumer<CharSequence> consumer);
+
+	void imports(Consumer<CharSequence> consumer);
 }

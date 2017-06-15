@@ -6,7 +6,7 @@ import java.util.Properties;
 import java.util.SortedMap;
 
 import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
-import net.q2ek.compileinfo.implementation.basics.PropertyWriterFactory;
+import net.q2ek.compileinfo.implementation.basics.PropertyMapCodeGenerator;
 import net.q2ek.compileinfo.implementation.basics.SourceCodeGeneratorFactory;
 
 public class SourceCodeTestHelper {
@@ -47,16 +47,16 @@ public class SourceCodeTestHelper {
 		assertThat(actual).contains("ZonedDateTime zonedDateTime()");
 	}
 
-	static PropertyWriterFactory propertyWriterFactory() {
-		return appender -> new Base64PropertyMapCodeGenerator(appender, SourceCodeTestHelper.properties());
+	static PropertyMapCodeGenerator propertyMapGenerator() {
+		return new Base64PropertyMapCodeGenerator(SourceCodeTestHelper.properties());
 	}
 
 	SourceCodeGeneratorFactory scgFactory() {
-		return scgFactory(propertyWriterFactory());
+		return scgFactory(propertyMapGenerator());
 	}
 
-	SourceCodeGeneratorFactory scgFactory(PropertyWriterFactory propertyWriterFactory) {
+	SourceCodeGeneratorFactory scgFactory(PropertyMapCodeGenerator propertyMapGenerator) {
 		return appender -> new ClassSourceCodeGenerator(
-				this.annotationProcessor, this.classAttributes, appender, propertyWriterFactory);
+				this.annotationProcessor, this.classAttributes, appender, propertyMapGenerator);
 	}
 }

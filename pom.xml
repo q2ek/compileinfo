@@ -102,7 +102,20 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
+<!-- 			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>3.3.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Export-Package>net.q2ek.compileinfo</Export-Package>
+						<Private-Package>net.q2ek.compileinfo.*</Private-Package>
+					</instructions>
+					<niceManifest>true</niceManifest>
+				</configuration>
+			</plugin>
+ -->			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
 				<version>1.6</version>

@@ -8,7 +8,7 @@ import javax.lang.model.element.TypeElement;
 
 import net.q2ek.compileinfo.CompileInfo;
 import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
-import net.q2ek.compileinfo.implementation.basics.PropertyWriterFactory;
+import net.q2ek.compileinfo.implementation.basics.PropertyMapCodeGenerator;
 import net.q2ek.compileinfo.implementation.basics.SourceCodeGeneratorFactory;
 
 class TypeElementProcessor {
@@ -37,21 +37,21 @@ class TypeElementProcessor {
 
 	public SourceCodeGeneratorFactory sourceCodeGeneratorFactory() {
 		if (this.sourceCodeGeneratorFactory == null) {
-			PropertyWriterFactory propertyWriterFactory = propertyWriterFactory();
+			PropertyMapCodeGenerator propertyMapGenerator = propertyMapGenerator();
 			this.sourceCodeGeneratorFactory = appender -> new ClassSourceCodeGenerator(
 					this.annotationProcessorClass,
 					this.classAttributes,
 					appender,
-					propertyWriterFactory);
+					propertyMapGenerator);
 		}
 		return this.sourceCodeGeneratorFactory;
 	}
 
-	private PropertyWriterFactory propertyWriterFactory() {
+	private PropertyMapCodeGenerator propertyMapGenerator() {
 		if (this.annotation.includeSystemProperties()) {
-			return appender -> new Base64PropertyMapCodeGenerator(appender, properties());
+			return new Base64PropertyMapCodeGenerator(properties());
 		} else {
-			return unused -> new NoopPropertyMapCodeGenerator();
+			return new NoopPropertyMapCodeGenerator();
 		}
 	}
 

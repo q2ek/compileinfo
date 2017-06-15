@@ -12,7 +12,6 @@ import org.junit.Test;
 
 import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
 import net.q2ek.compileinfo.implementation.basics.PropertyMapCodeGenerator;
-import net.q2ek.compileinfo.implementation.basics.PropertyWriterFactory;
 import net.q2ek.compileinfo.implementation.basics.SourceCodeGeneratorFactory;
 
 public class IOAppenderTest {
@@ -54,16 +53,16 @@ public class IOAppenderTest {
 		IOAppender.writeFile(resource, factory);
 	}
 
-	private PropertyWriterFactory explodingPropertyWriterFactory() {
-		return appender -> new PropertyMapCodeGenerator() {
+	private PropertyMapCodeGenerator explodingPropertyWriterFactory() {
+		return new PropertyMapCodeGenerator() {
 			@Override
-			public void write() {
-				throw new UnsupportedOperationException("Boom");
+			public void imports(Consumer<CharSequence> consumer) {
+				// no imports needed
 			}
 
 			@Override
-			public boolean needsMapImport() {
-				return false;
+			public void write(Consumer<CharSequence> consumer) {
+				throw new UnsupportedOperationException("Boom");
 			}
 		};
 	}
