@@ -91,14 +91,13 @@ The project is a standard Maven project.
 ## Releases
 
 Available at Maven Central:
-* 0.11.0 is available at Maven Central
 * 0.12.0 Uses base64 encoding to prevent code injection
 * 0.13.0 Adds some options to the CompileInfo annotation
 * 0.14.0 Renames most of the options for the CompileInfo annotation and system properties are only read when needed.
 
 ### Planned work
 
-* 0.15.0-SNAPSHOT Add @Generated and regex filtering of properties
+* 0.15.0-SNAPSHOT Adds @Generated, @Suppresswarnings, regex property filter, and classname as a format string.
 * Maybe release 1.0.0 or 1.0.0-rc1
 
 ## Authors

@@ -19,8 +19,7 @@ import java.util.Map;
 @Generated(
     value = { "net.q2ek.compileinfo.implementation.CompileInfoAnnotationProcessor" },
     date = "2017-06-15T01:08:49.689+02:00")
-public class FirstExampleCompileInfo
-{
+class FirstExampleCompileInfo {
     private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse(
             "2017-06-15T01:08:49.737+02:00[Europe/Amsterdam]");
 
@@ -83,8 +82,7 @@ import java.util.Map;
 @Generated(
     value = { "net.q2ek.compileinfo.implementation.CompileInfoAnnotationProcessor" },
     date = "2017-06-15T01:08:50.022+02:00")
-public class DevOpsData
-{
+class DevOpsData {
     private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse(
             "2017-06-15T01:08:50.022+02:00[Europe/Amsterdam]");
 
@@ -146,8 +144,7 @@ import java.time.ZonedDateTime;
 @Generated(
     value = { "net.q2ek.compileinfo.implementation.CompileInfoAnnotationProcessor" },
     date = "2017-06-15T00:51:09.177+02:00")
-public class ThirdExample_Gen
-{
+class ThirdExample_Gen {
     private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse(
             "2017-06-15T00:51:09.177+02:00[Europe/Amsterdam]");
     

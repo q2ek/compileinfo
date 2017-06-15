@@ -40,11 +40,14 @@ class ClassSourceCodeGenerator implements SourceCodeGenerator {
 
 	@Override
 	public void write() {
+		ZonedDateTime now = ZonedDateTime.now();
 		packageDeclaration(this.attributes.packagename());
 		imports(this.propertyWriter.needsMapImport());
 		classJavaDoc();
+		suppressWarnings();
+		generatedAnnotation(now);
 		classDeclaration(this.attributes.classname());
-		isoZonedDateTimeConstant();
+		isoZonedDateTimeConstant(now);
 		writeZonedDateTime();
 		this.propertyWriter.write();
 		classEnd();
@@ -70,30 +73,29 @@ class ClassSourceCodeGenerator implements SourceCodeGenerator {
 	}
 
 	private void classDeclaration(CharSequence classname) {
-		String now = ZonedDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-		append("@SuppressWarnings({ \"all\" })\n");
-		generatedAnnotation(now);
-		append("public class " + classname + "\n");
-		append("{\n");
+		append("class " + classname + " {\n");
 	}
 
-	private void generatedAnnotation(String now) {
+	private void suppressWarnings() {
+		append("@SuppressWarnings({ \"all\" })\n");
+	}
+
+	private void generatedAnnotation(ZonedDateTime now) {
 		String canonicalName = this.annotationProcessorClass.getCanonicalName();
+		String nowFormatted = now.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 		append("@Generated(\n");
 		append("    value = { \"" + canonicalName + "\" },\n");
-		append("    date = \"" + now + "\")\n");
+		append("    date = \"" + nowFormatted + "\")\n");
 	}
 
 	private void classEnd() {
 		append("}\n");
 	}
 
-	private void isoZonedDateTimeConstant() {
+	private void isoZonedDateTimeConstant(ZonedDateTime now) {
+		String nowFormatted = now.format(DateTimeFormatter.ISO_DATE_TIME);
 		append("    private static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.parse(\n");
-		append("            \"");
-		append(ZonedDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
-		append("\");\n");
-		append("    \n");
+		append("            \"" + nowFormatted + "\");\n\n");
 	}
 
 	private void writeZonedDateTime() {
