@@ -92,16 +92,16 @@ The project is a standard Maven project.
 
 Available at Maven Central:
 * 0.12.0
-    Uses base64 encoding to prevent code injection
+    - Uses base64 encoding to prevent code injection
 * 0.13.0
-    Adds some options to the CompileInfo annotation
+    - Adds some options to the CompileInfo annotation
 * 0.14.0
-    Renames most of the options for the CompileInfo annotation and system properties are only read when needed.
+    - Renames most of the options for the CompileInfo annotation and system properties are only read when needed.
 * 0.15.0
-    Adds @Generated, @Suppresswarnings to the generated class
-    The API has changed:
-    - The CompileTime annotation now has a regex property filter, and classname as a format string.
-    - The generated class has fewer methods and is no longer public
+    - Adds @Generated and @SuppressWarnings to the generated class and the generated class is package private
+    - The CompileTime annotation now uses RetentionPolicy.SOURCE instead of CLASS
+    - The CompileTime annotation now has a regex property filter, and classname as a format string which replace previous options.
+    - The generated class has fewer methods it only has a method for the ZonedDateTime and a map op properties.
 
 ### Planned work
 
