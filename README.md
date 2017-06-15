@@ -11,21 +11,21 @@ To use in a Maven project:
 In order to activate metadata generation you will need to include 
 `compileinfo-${version}.jar` in your build at compile time.
 
-In a Maven project, one would include the `net.q2ek:compileinfo` artifact as a "compile" dependency:
+In a Maven project, one would include the `net.q2ek:compileinfo` artifact as a "provided" dependency:
 
 ```xml
 <dependency>
 	<groupId>net.q2ek</groupId>
 	<artifactId>compileinfo</artifactId>
-	<version>0.14.0</version>
-	<scope>compile</scope>
+	<version>0.15.0</version>
+	<scope>provided</scope>
 </dependency>
 ```
 
 To support annotation processing in your IDE see:
 https://immutables.github.io/apt.html
 
-### Examples for 0.15.0-SNAPSHOT
+### Examples for 0.15.0
 
 Example of typical basic usage:
 ```java
@@ -91,13 +91,20 @@ The project is a standard Maven project.
 ## Releases
 
 Available at Maven Central:
-* 0.12.0 Uses base64 encoding to prevent code injection
-* 0.13.0 Adds some options to the CompileInfo annotation
-* 0.14.0 Renames most of the options for the CompileInfo annotation and system properties are only read when needed.
+* 0.12.0
+    Uses base64 encoding to prevent code injection
+* 0.13.0
+    Adds some options to the CompileInfo annotation
+* 0.14.0
+    Renames most of the options for the CompileInfo annotation and system properties are only read when needed.
+* 0.15.0
+    Adds @Generated, @Suppresswarnings to the generated class
+    The API has changed:
+    - The CompileTime annotation now has a regex property filter, and classname as a format string.
+    - The generated class has fewer methods and is no longer public
 
 ### Planned work
 
-* 0.15.0-SNAPSHOT Adds @Generated, @Suppresswarnings, regex property filter, and classname as a format string.
 * Maybe release 1.0.0 or 1.0.0-rc1
 
 ## Authors
