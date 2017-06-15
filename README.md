@@ -1,6 +1,6 @@
 # CompileInfo
 
-This library contains the CompileInfo annotation which provides a convenient way to get compile time information in a [Java][java] application.
+This library contains the [CompileInfo](src/main/java/net/q2ek/compileinfo/CompileInfo.java) annotation which provides a convenient way to get compile time information in a [Java][java] application.
 
 More specifically it is an annotation processor that captures the time and system properties at compile time and stores them in a generated Java class. This is helpful for devops purposes or in any delivery pipeline. It allows developers, operations and testers to know exactly when and where an application was built if these properties are exposed by the application at runtime.
 
@@ -25,7 +25,7 @@ In a Maven project, one would include the `net.q2ek:compileinfo` artifact as a "
 To support annotation processing in your IDE see:
 https://immutables.github.io/apt.html
 
-### Examples for 0.15.0
+### Examples
 
 Example of typical basic usage:
 ```java
@@ -43,39 +43,14 @@ class FirstExample {
 }
 ```
 
-Example of use of options for the CompileInfo annotation:
-```java
-import java.time.format.DateTimeFormatter;
+All examples:
+- [FirstExample](src/test/java/net/q2ek/compileinfo/example/FirstExample.java)
 
-import net.q2ek.compileinfo.CompileInfo;
+- [SecondExample](src/test/java/net/q2ek/compileinfo/example/SecondExample.java)
 
-@CompileInfo(classname = "DevOpsData", regex = "env\\..*")
-public class SecondExample {
-	public String compileDateTime() {
-		return DevOpsData.zonedDateTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).toString();
-	}
+- [ThirdExample](src/test/java/net/q2ek/compileinfo/example/ThirdExample.java)
 
-	public String jenkinsBuildUrl() {
-		return DevOpsData.properties().get("env.BUILD_URL");
-	}
-}
-```
-
-Example of some more options for the CompileInfo annotation:
-```java
-import java.time.format.DateTimeFormatter;
-
-import net.q2ek.compileinfo.CompileInfo;
-
-@CompileInfo(classname = "%s_Gen", includeSystemProperties = false)
-public class ThirdExample {
-	public String compileDateTime() {
-		return ThirdExample_Gen.zonedDateTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).toString();
-	}
-}
-```
-
-See [example_output.md](example_output.md) for the generated class for these examples.
+See [example_output.md](example_output.md) for the generated classes for these examples.
 
 ### API
 
@@ -109,7 +84,7 @@ Available at Maven Central:
 
 ## Authors
 
-* [EdzeKruizinga](https://github.com/EdzeKruizinga) - *Initial work*
+* [EdzeKruizinga](https://github.com/EdzeKruizinga)
 
 ## License
 

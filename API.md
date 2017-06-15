@@ -13,8 +13,7 @@ static ZonedDateTime zonedDateTime();
 static Map<String, String> properties();
 ```
 
-Java unit test for the API: [ApiTest.java](src/test/java/net/q2ek/compileinfo/apitest/ApiTest.java)
-
+Java unit test for the API: [ApiTest.java](src/test/java/net/q2ek/compileinfo/api/ApiTest.java)
 
 ## Versioning
 
