@@ -37,6 +37,21 @@ class FirstExampleCompileInfo {
         return PROPERTIES;
     }
 
+    private static Map<String, String> createMap() {
+        MapBuilder builder = MapBuilder.builder();
+        builder.put("ZG91YmxlImhhY2s=",
+                    "aGFja1wiaGFjaw==");
+        builder.put("aGFjaw==",
+                    "XCJoYWNr");
+        builder.put("amF2YS52ZXJzaW9u",
+                    "U291cmNlQ29kZUdlbmVyYXRvclRlc3Q=");
+        builder.put("amF2YWRvYyBoYWNrICovIGV4cGxvc2lvbnM=",
+                    "bm90aGluZyByZWFsbHk=");
+        builder.put("dXNlci5uYW1l",
+                    "U291cmNlQ29kZUdlbmVyYXRvclRlc3Q=");
+        return builder.build();
+    }
+
     private static class MapBuilder {
         private final Base64.Decoder decoder = Base64.getDecoder();
         private final Map<String, String> map = new HashMap<>();
@@ -99,8 +114,6 @@ class DevOpsData {
                     "U291cmNlQ29kZUdlbmVyYXRvclRlc3Q=");
         builder.put("amF2YWRvYyBoYWNrICovIGV4cGxvc2lvbnM=",
                     "bm90aGluZyByZWFsbHk=");
-        builder.put("dXNlci5uYW1l",
-                    "U291cmNlQ29kZUdlbmVyYXRvclRlc3Q=");
         return builder.build();
     }
 
