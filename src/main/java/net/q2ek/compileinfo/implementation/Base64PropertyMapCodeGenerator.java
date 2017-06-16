@@ -2,16 +2,17 @@ package net.q2ek.compileinfo.implementation;
 
 import java.util.Base64;
 import java.util.Base64.Encoder;
+import java.util.Map;
 import java.util.Map.Entry;
-import java.util.SortedMap;
 import java.util.function.Consumer;
 
+import net.q2ek.compileinfo.implementation.basics.MapDefinition;
 import net.q2ek.compileinfo.implementation.basics.PropertyMapCodeGenerator;
 
 class Base64PropertyMapCodeGenerator implements PropertyMapCodeGenerator {
-	private final SortedMap<String, String> properties;
+	private final Map<String, String> properties;
 
-	public Base64PropertyMapCodeGenerator(SortedMap<String, String> properties) {
+	public Base64PropertyMapCodeGenerator(Map<String, String> properties) {
 		this.properties = properties;
 	}
 
@@ -25,22 +26,53 @@ class Base64PropertyMapCodeGenerator implements PropertyMapCodeGenerator {
 
 	@Override
 	public void write(Consumer<CharSequence> consumer) {
-		new MapCodeGenerator(consumer).write(this.properties);
+		MapCodeGenerator mapCodeGenerator = new MapCodeGenerator(
+				consumer,
+				MapDefinition.systemProperties(this.properties));
+		mapCodeGenerator.write();
+		consumer.accept(mapBuilder);
 	}
 
 	private static class MapCodeGenerator {
 		private final Encoder encoder = Base64.getEncoder();
 		private final Consumer<CharSequence> consumer;
+		private final MapDefinition definition;
+		private final CharSequence mapMethodName;
+		private final CharSequence buildMapMethodName;
 
-		private MapCodeGenerator(Consumer<CharSequence> consumer) {
+		private MapCodeGenerator(Consumer<CharSequence> consumer, MapDefinition definition) {
 			this.consumer = consumer;
+			this.definition = definition;
+			String camelCase = camelCase(this.definition.name().toString());
+			this.mapMethodName = lowerCaseFirstChar(camelCase);
+			this.buildMapMethodName = buildMapMethodName(camelCase);
 		}
 
-		void write(SortedMap<String, String> properties) {
+		void write() {
 			writePropertiesMap();
 			writePropertiesMethod();
-			writeCreateMap(properties);
-			mapBuilder();
+			writeCreateMap();
+		}
+
+		private static CharSequence buildMapMethodName(String name) {
+			return "build" + name + "Map";
+		}
+
+		private static String camelCase(String value) {
+			String[] parts = value.split("_");
+			StringBuilder sb = new StringBuilder();
+			for (String part : parts) {
+				sb.append(part.substring(0, 1).toUpperCase());
+				sb.append(part.substring(1, part.length()).toLowerCase());
+			}
+			return sb.toString();
+		}
+
+		private static String lowerCaseFirstChar(String value) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(value.substring(0, 1).toLowerCase());
+			sb.append(value.substring(1, value.length()));
+			return sb.toString();
 		}
 
 		private void append(CharSequence value) {
@@ -52,19 +84,29 @@ class Base64PropertyMapCodeGenerator implements PropertyMapCodeGenerator {
 		}
 
 		private void writePropertiesMap() {
-			append("    private static final Map<String, String> PROPERTIES = createMap();\n\n");
+			append("    private static final Map<String, String> ");
+			append(this.definition.name());
+			append(" = ");
+			append(this.buildMapMethodName);
+			append("();\n\n");
 		}
 
 		private void writePropertiesMethod() {
-			append("    static Map<String, String> properties() {\n");
-			append("        return PROPERTIES;\n");
+			append("    static Map<String, String> ");
+			append(this.mapMethodName);
+			append("() {\n");
+			append("        return ");
+			append(this.definition.name());
+			append(";\n");
 			methodEnd();
 		}
 
-		private void writeCreateMap(SortedMap<String, String> properties) {
-			append("    private static Map<String, String> createMap() {\n");
+		private void writeCreateMap() {
+			append("    private static Map<String, String> ");
+			append(this.buildMapMethodName);
+			append("() {\n");
 			append("        MapBuilder builder = MapBuilder.builder();\n");
-			for (Entry<String, String> entry : properties.entrySet()) {
+			for (Entry<String, String> entry : this.definition.map().entrySet()) {
 				put(entry.getKey(), entry.getValue());
 			}
 			append("        return builder.build();\n");
@@ -77,27 +119,25 @@ class Base64PropertyMapCodeGenerator implements PropertyMapCodeGenerator {
 			append(putCommand);
 		}
 
-		private void mapBuilder() {
-			append("    private static class MapBuilder {\n");
-			append("        private final Base64.Decoder decoder = Base64.getDecoder();\n");
-			append("        private final Map<String, String> map = new HashMap<>();\n");
-			append("        \n");
-			append("        static MapBuilder builder() {\n");
-			append("            return new MapBuilder();\n");
-			append("        }\n");
-			append("        \n");
-			append("        private void put(String key, String value) {\n");
-			append("            map.put(new String(decoder.decode(key)), new String(decoder.decode(value)));\n");
-			append("        }\n");
-			append("        \n");
-			append("        Map<String, String> build() {\n");
-			append("            return Collections.unmodifiableMap(map);\n");
-			append("        };\n");
-			append("    }\n");
-		}
-
 		private String base64(String value) {
 			return this.encoder.encodeToString(value.getBytes());
 		}
 	}
+
+	private static String mapBuilder = "    private static class MapBuilder {\n"
+				+ "        private final Base64.Decoder decoder = Base64.getDecoder();\n"
+				+ "        private final Map<String, String> map = new HashMap<>();\n"
+				+ "        \n"
+				+ "        static MapBuilder builder() {\n"
+				+ "            return new MapBuilder();\n"
+				+ "        }\n"
+				+ "        \n"
+				+ "        private void put(String key, String value) {\n"
+				+ "            map.put(new String(decoder.decode(key)), new String(decoder.decode(value)));\n"
+				+ "        }\n"
+				+ "        \n"
+				+ "        Map<String, String> build() {\n"
+				+ "            return Collections.unmodifiableMap(map);\n"
+				+ "        };\n"
+				+ "    }\n";
 }
