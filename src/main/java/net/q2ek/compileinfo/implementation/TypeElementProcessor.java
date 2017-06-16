@@ -1,6 +1,8 @@
 package net.q2ek.compileinfo.implementation;
 
-import java.util.SortedMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.lang.model.element.PackageElement;
@@ -8,6 +10,7 @@ import javax.lang.model.element.TypeElement;
 
 import net.q2ek.compileinfo.CompileInfo;
 import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
+import net.q2ek.compileinfo.implementation.basics.MapDefinition;
 import net.q2ek.compileinfo.implementation.basics.PropertyMapCodeGenerator;
 import net.q2ek.compileinfo.implementation.basics.SourceCodeGeneratorFactory;
 
@@ -48,14 +51,27 @@ class TypeElementProcessor {
 	}
 
 	private PropertyMapCodeGenerator propertyMapGenerator() {
+		List<MapDefinition> definitions = new ArrayList<>();
 		if (this.annotation.includeSystemProperties()) {
-			return new Base64PropertyMapCodeGenerator(properties());
-		} else {
+			definitions.add(MapDefinition.of(systemProperties(), "PROPERTIES"));
+		}
+		if (this.annotation.includeEnvironmentVariables()) {
+			definitions.add(MapDefinition.of(environmentVariables(), "GETENV"));
+		}
+		if (definitions.isEmpty()) {
 			return new NoopPropertyMapCodeGenerator();
+		} else {
+			return new Base64PropertyMapCodeGenerator(definitions);
 		}
 	}
 
-	private SortedMap<String, String> properties() {
+	private Map<String, String> environmentVariables() {
+		PropertiesProcessor properties = PropertiesProcessor.of(System.getenv());
+		Pattern pattern = Pattern.compile(this.annotation.regex());
+		return properties.filtered(pattern.asPredicate());
+	}
+
+	private Map<String, String> systemProperties() {
 		PropertiesProcessor properties = PropertiesProcessor.of(System.getProperties());
 		Pattern pattern = Pattern.compile(this.annotation.regex());
 		return properties.filtered(pattern.asPredicate());

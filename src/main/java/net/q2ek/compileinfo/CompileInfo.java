@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotate a class to generate {@code <AnnotatedClassNamex>CompileInfo.java}
+ * Annotate a class to generate {@code <AnnotatedClassNamex>CompileInfo.java}.
  * <br/>
  *
  * Example: <br/>
@@ -44,7 +44,14 @@ public @interface CompileInfo {
 	boolean includeSystemProperties() default true;
 
 	/**
-	 * System properties will be filtered using this regex.
+	 * If set to false no environment variables will be read and the generated
+	 * class will not contain a map of environment variables.
+	 */
+	boolean includeEnvironmentVariables() default true;
+
+	/**
+	 * System properties and environment variables keys will be filtered using
+	 * this regex.
 	 */
 	String regex() default ".*";
 }

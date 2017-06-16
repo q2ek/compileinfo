@@ -8,7 +8,11 @@ class FirstExample {
 		return FirstExampleCompileInfo.zonedDateTime().toString();
 	}
 
+	public String javaVersion() {
+		return FirstExampleCompileInfo.properties().get("java.version");
+	}
+
 	public String jenkinsBuildUrl() {
-		return FirstExampleCompileInfo.properties().get("env.BUILD_URL");
+		return FirstExampleCompileInfo.getenv().get("env.BUILD_URL");
 	}
 }

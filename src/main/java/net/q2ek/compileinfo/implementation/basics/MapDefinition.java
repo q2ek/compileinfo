@@ -21,8 +21,4 @@ public interface MapDefinition {
 			}
 		};
 	}
-
-	static MapDefinition systemProperties(Map<String, String> properties) {
-		return of(properties, "PROPERTIES");
-	}
 }

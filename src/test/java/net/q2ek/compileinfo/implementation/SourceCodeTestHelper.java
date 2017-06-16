@@ -2,10 +2,11 @@ package net.q2ek.compileinfo.implementation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Map;
 import java.util.Properties;
-import java.util.SortedMap;
 
 import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
+import net.q2ek.compileinfo.implementation.basics.MapDefinition;
 import net.q2ek.compileinfo.implementation.basics.PropertyMapCodeGenerator;
 import net.q2ek.compileinfo.implementation.basics.SourceCodeGeneratorFactory;
 
@@ -32,7 +33,7 @@ public class SourceCodeTestHelper {
 		return result;
 	}
 
-	static SortedMap<String, String> properties() {
+	static Map<String, String> properties() {
 		return PropertiesProcessor.of(testSystemProperties()).unfiltered();
 	}
 
@@ -48,7 +49,9 @@ public class SourceCodeTestHelper {
 	}
 
 	static PropertyMapCodeGenerator propertyMapGenerator() {
-		return new Base64PropertyMapCodeGenerator(SourceCodeTestHelper.properties());
+		return new Base64PropertyMapCodeGenerator(
+				MapDefinition.of(SourceCodeTestHelper.properties(), "TEST_PROPERTIES"),
+				MapDefinition.of(SourceCodeTestHelper.properties(), "MORE_PROPERTIES"));
 	}
 
 	SourceCodeGeneratorFactory scgFactory() {

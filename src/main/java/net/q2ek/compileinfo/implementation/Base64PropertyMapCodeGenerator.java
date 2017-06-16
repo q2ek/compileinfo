@@ -1,8 +1,8 @@
 package net.q2ek.compileinfo.implementation;
 
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Base64.Encoder;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 
@@ -10,10 +10,14 @@ import net.q2ek.compileinfo.implementation.basics.MapDefinition;
 import net.q2ek.compileinfo.implementation.basics.PropertyMapCodeGenerator;
 
 class Base64PropertyMapCodeGenerator implements PropertyMapCodeGenerator {
-	private final Map<String, String> properties;
+	private final Iterable<MapDefinition> mapDefinitions;
 
-	public Base64PropertyMapCodeGenerator(Map<String, String> properties) {
-		this.properties = properties;
+	Base64PropertyMapCodeGenerator(MapDefinition... mapDefinitions) {
+		this(Arrays.asList(mapDefinitions));
+	}
+
+	Base64PropertyMapCodeGenerator(Iterable<MapDefinition> mapDefinitions) {
+		this.mapDefinitions = mapDefinitions;
 	}
 
 	@Override
@@ -26,10 +30,10 @@ class Base64PropertyMapCodeGenerator implements PropertyMapCodeGenerator {
 
 	@Override
 	public void write(Consumer<CharSequence> consumer) {
-		MapCodeGenerator mapCodeGenerator = new MapCodeGenerator(
-				consumer,
-				MapDefinition.systemProperties(this.properties));
-		mapCodeGenerator.write();
+		for (MapDefinition mapDefinition : this.mapDefinitions) {
+			MapCodeGenerator mapCodeGenerator = new MapCodeGenerator(consumer, mapDefinition);
+			mapCodeGenerator.write();
+		}
 		consumer.accept(mapBuilder);
 	}
 
