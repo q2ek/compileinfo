@@ -17,7 +17,7 @@ In a Maven project, one would include the `net.q2ek:compileinfo` artifact as a "
 <dependency>
 	<groupId>net.q2ek</groupId>
 	<artifactId>compileinfo</artifactId>
-	<version>0.15.0</version>
+	<version>0.16.0</version>
 	<scope>provided</scope>
 </dependency>
 ```
@@ -77,6 +77,8 @@ Available at Maven Central:
     - The CompileTime annotation now uses RetentionPolicy.SOURCE instead of CLASS
     - The CompileTime annotation now has a regex property filter, and classname as a format string which replace previous options.
     - The generated class has fewer methods it only has a method for the ZonedDateTime and a map op properties.
+* 0.16.0
+    - Add incluseEnvironmentVariables option to the CompileInfo annotation.
 
 ### Planned work
 
