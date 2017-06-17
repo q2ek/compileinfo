@@ -11,8 +11,4 @@ class FirstExample {
 	public String javaVersion() {
 		return FirstExampleCompileInfo.properties().get("java.version");
 	}
-
-	public String jenkinsBuildUrl() {
-		return FirstExampleCompileInfo.getenv().get("env.BUILD_URL");
-	}
 }

@@ -14,7 +14,11 @@ import net.q2ek.compileinfo.CompileInfo;
  *
  * @author Edze Kruizinga
  */
-@CompileInfo(classname = "%sCompileInfo", regex = ".*", includeSystemProperties = true)
+@CompileInfo(
+	classname = "%sCompileInfo",
+	regex = ".*",
+	includeSystemProperties = true,
+	includeEnvironmentVariables = true)
 public class ApiTest {
 	@Test
 	public void zonedDateTime_returnsZonedDateTime() {
@@ -28,5 +32,12 @@ public class ApiTest {
 		Map<String, String> actual = ApiTestCompileInfo.properties();
 
 		assertThat(actual).containsKey("java.version");
+	}
+
+	@Test
+	public void staticGetenv_returnsMapStringString() {
+		Map<String, String> actual = ApiTestCompileInfo.getenv();
+
+		assertThat(actual).containsKey("JAVA_HOME");
 	}
 }

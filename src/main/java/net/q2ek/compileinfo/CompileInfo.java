@@ -32,26 +32,32 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface CompileInfo {
 	/**
-	 * This will be used as the format string for the generated classname
-	 * instead of "%sCompileInfo"
+	 * This will be used as the format string for the generated classname. The
+	 * default setting is {@code "%sCompileInfo"}.
 	 */
 	String classname() default "%sCompileInfo";
 
 	/**
-	 * If set to false no system properties will be read and the generated class
-	 * will not contain a map of system properties.
+	 * Determines whether or not system properties will be read and put into the
+	 * generated class. The default setting is {@code true}. <br/>
+	 *
+	 * If {@code true} the generated class will contain:
+	 * {@code static Map<String, String> properties();}
 	 */
 	boolean includeSystemProperties() default true;
 
 	/**
-	 * If set to false no environment variables will be read and the generated
-	 * class will not contain a map of environment variables.
+	 * Determines whether or not environment variables will be read and put into
+	 * the generated class. The default setting is {@code false}. <br/>
+	 *
+	 * If {@code true} the generated class will contain:
+	 * {@code static Map<String, String> getenv();}
 	 */
-	boolean includeEnvironmentVariables() default true;
+	boolean includeEnvironmentVariables() default false;
 
 	/**
 	 * System properties and environment variables keys will be filtered using
-	 * this regex.
+	 * this regex. The default setting is {@code ".*"}.
 	 */
 	String regex() default ".*";
 }
