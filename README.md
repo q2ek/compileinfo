@@ -73,12 +73,12 @@ Available at Maven Central:
 * 0.14.0
     - Renames most of the options for the CompileInfo annotation and system properties are only read when needed.
 * 0.15.0
-    - Adds @Generated and @SuppressWarnings to the generated class and the generated class is package private
-    - The CompileTime annotation now uses RetentionPolicy.SOURCE instead of CLASS
+    - Adds '@Generated' and '@SuppressWarnings' to the generated class and the generated class is package private
+    - The CompileTime annotation now uses 'RetentionPolicy.SOURCE' instead of 'RetentionPolicy.CLASS'
     - The CompileTime annotation now has a regex property filter, and classname as a format string which replace previous options.
     - The generated class has fewer methods it only has a method for the ZonedDateTime and a map op properties.
 * 0.16.0
-    - Add incluseEnvironmentVariables option to the CompileInfo annotation.
+    - Added 'includeEnvironmentVariables' option to the CompileInfo annotation.
 
 ### Planned work
 
