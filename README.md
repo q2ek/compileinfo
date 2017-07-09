@@ -67,7 +67,7 @@ See [RELEASES.md](RELEASES.md) for a list of the release history.
 
 ## Authors
 
-* [EdzeKruizinga](https://github.com/EdzeKruizinga)
+* [Edze Kruizinga](https://github.com/EdzeKruizinga)
 
 ## License
 
