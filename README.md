@@ -1,15 +1,14 @@
 # CompileInfo
 
-This library contains the [CompileInfo](src/main/java/net/q2ek/compileinfo/CompileInfo.java) annotation which provides a convenient way to get compile time information in a [Java][java] application.
+This [Java][java] library contains the [CompileInfo](src/main/java/net/q2ek/compileinfo/CompileInfo.java) annotation which provides a convenient way to get access to information that was available at compile-time.
 
-More specifically it is an annotation processor that captures the time and system properties at compile time and stores them in a generated Java class. This is helpful for devops purposes or in any delivery pipeline. It allows developers, operations and testers to know exactly when and where an application was built if these properties are exposed by the application at runtime.
+More specifically it is an annotation processor that captures the time and system properties at compile time and stores them in a generated Java class. This is helpful for devops purposes, like in a delivery pipeline. It allows developers, operations and testers to know exactly when and where an application was built, if these properties are exposed by the application at runtime.
 
 ## Usage
 
-To use in a Maven project:
+You will need to include `compileinfo-${version}.jar` in your build.
 
-In order to activate metadata generation you will need to include 
-`compileinfo-${version}.jar` in your build at compile time.
+### Usage with Maven:
 
 In a Maven project, one would include the `net.q2ek:compileinfo` artifact as a "provided" dependency:
 
@@ -22,8 +21,9 @@ In a Maven project, one would include the `net.q2ek:compileinfo` artifact as a "
 </dependency>
 ```
 
-To support annotation processing in your IDE see:
-https://immutables.github.io/apt.html
+### IDE support
+
+To support annotation processing in your IDE see: https://immutables.github.io/apt.html
 
 ### Examples
 
@@ -56,12 +56,10 @@ See [example_output.md](example_output.md) for the generated classes for these e
 
 See [API.md](API.md) for the API description.
 
-## Built With
+## Built with
 
 * [AutoService](https://github.com/google/auto/tree/master/service) - Google Auto Service
-* [Maven](https://maven.apache.org/) - Dependency Management
-
-The project is a standard Maven project.
+* [Maven](https://maven.apache.org/) - Dependency Management and the project is a standard Maven project.
 
 ## Releases
 
@@ -71,12 +69,13 @@ Available at Maven Central:
 * 0.13.0
     - Adds some options to the CompileInfo annotation
 * 0.14.0
-    - Renames most of the options for the CompileInfo annotation and system properties are only read when needed.
+    - Renames most of the options for the CompileInfo annotation
+    - Only reads system properties when needed.
 * 0.15.0
-    - Adds '@Generated' and '@SuppressWarnings' to the generated class and the generated class is package private
-    - The CompileTime annotation now uses 'RetentionPolicy.SOURCE' instead of 'RetentionPolicy.CLASS'
-    - The CompileTime annotation now has a regex property filter, and classname as a format string which replace previous options.
-    - The generated class has fewer methods it only has a method for the ZonedDateTime and a map op properties.
+    - Adds '@Generated' and '@SuppressWarnings' to the generated class and the generated class is package private.
+    - The '@CompileTime' annotation now uses 'RetentionPolicy.SOURCE' instead of 'RetentionPolicy.CLASS'.
+    - The '@CompileTime' annotation now has a 'regex' property filter, and 'classname' as a format string both of which replace previous options.
+    - The generated class has fewer methods: it only has a method for the ZonedDateTime and a map of properties.
 * 0.16.0
     - Added 'includeEnvironmentVariables' option to the CompileInfo annotation.
 
@@ -90,6 +89,6 @@ Available at Maven Central:
 
 ## License
 
-This project is licensed under the Apache 2.0 License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the Apache 2.0 License - see the [LICENSE.md](LICENSE.md) file for details.
 
 [java]: https://en.wikipedia.org/wiki/Java_(programming_language)
