@@ -10,7 +10,7 @@ You will need to include `compileinfo-${version}.jar` in your build.
 
 ### Usage with Maven:
 
-In a Maven project, one would include the `net.q2ek:compileinfo` artifact as a "provided" dependency:
+In a Maven project, one would include the `net.q2ek:compileinfo` artifact as a `provided` dependency:
 
 ```xml
 <dependency>
