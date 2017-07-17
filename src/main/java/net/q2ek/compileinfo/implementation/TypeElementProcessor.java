@@ -41,10 +41,9 @@ class TypeElementProcessor {
 	public SourceCodeGeneratorFactory sourceCodeGeneratorFactory() {
 		if (this.sourceCodeGeneratorFactory == null) {
 			PropertyMapCodeGenerator propertyMapGenerator = propertyMapGenerator();
-			this.sourceCodeGeneratorFactory = appender -> new ClassSourceCodeGenerator(
+			this.sourceCodeGeneratorFactory = ClassSourceCodeGenerator.factory(
 					this.annotationProcessorClass,
 					this.classAttributes,
-					appender,
 					propertyMapGenerator);
 		}
 		return this.sourceCodeGeneratorFactory;

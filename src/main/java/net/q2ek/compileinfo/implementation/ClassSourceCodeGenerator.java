@@ -8,6 +8,7 @@ import net.q2ek.compileinfo.implementation.basics.Appender;
 import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
 import net.q2ek.compileinfo.implementation.basics.PropertyMapCodeGenerator;
 import net.q2ek.compileinfo.implementation.basics.SourceCodeGenerator;
+import net.q2ek.compileinfo.implementation.basics.SourceCodeGeneratorFactory;
 
 /**
  * Generates the java class source code.
@@ -17,10 +18,10 @@ import net.q2ek.compileinfo.implementation.basics.SourceCodeGenerator;
  * @author Edze Kruizinga
  */
 class ClassSourceCodeGenerator implements SourceCodeGenerator {
-	private final Class<?> annotationProcessorClass;
-	private final ClassAttributes attributes;
-	private final Appender appender;
-	private final PropertyMapCodeGenerator propertyMapper;
+	private final Class<?>					annotationProcessorClass;
+	private final ClassAttributes			attributes;
+	private final Appender					appender;
+	private final PropertyMapCodeGenerator	propertyMapper;
 
 	ClassSourceCodeGenerator(
 		Class<?> annotationProcessor,
@@ -104,5 +105,11 @@ class ClassSourceCodeGenerator implements SourceCodeGenerator {
 
 	private void methodEnd() {
 		append("    }\n\n");
+	}
+
+	public static SourceCodeGeneratorFactory factory(Class<?> annotationProcessor,
+			ClassAttributes classAttributes, PropertyMapCodeGenerator propertyMapGenerator) {
+		return appender -> new ClassSourceCodeGenerator(annotationProcessor, classAttributes,
+				appender, propertyMapGenerator);
 	}
 }

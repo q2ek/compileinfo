@@ -38,7 +38,7 @@ class FirstExample {
 	}
 
 	public String jenkinsBuildUrl() {
-		return FirstExampleCompileInfo.properties().get("env.BUILD_URL");
+		return FirstExampleCompileInfo.getenv().get("BUILD_URL");
 	}
 }
 ```
