@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
  * 	}
  *
  * 	public String jenkinsBuildUrl() {
- * 		return MyClassCompileInfo.properties().get("env.BUILD_URL");
+ * 		return MyClassCompileInfo.getenv().get("BUILD_URL");
  * 	}
  * }
  * </code>
@@ -53,7 +53,7 @@ public @interface CompileInfo {
 	 * If {@code true} the generated class will contain:
 	 * {@code static Map<String, String> getenv();}
 	 */
-	boolean includeEnvironmentVariables() default false;
+	boolean includeEnvironmentVariables() default true;
 
 	/**
 	 * System properties and environment variables keys will be filtered using

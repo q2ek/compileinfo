@@ -1,10 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>net.q2ek</groupId>
 	<artifactId>compileinfo</artifactId>
-	<version>0.16.0</version>
+	<version>0.17.0-SNAPSHOT</version>
 	<name>CompileInfo</name>
 	<description>
 		This library contains the CompileInfo annotation which provides a convenient way to get compile time information in a Java application.
@@ -45,7 +47,7 @@
 			<groupId>com.google.auto.service</groupId>
 			<artifactId>auto-service</artifactId>
 			<version>1.0-rc3</version>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- test scoped -->
@@ -102,20 +104,7 @@
 					</execution>
 				</executions>
 			</plugin>
-<!-- 			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-bundle-plugin</artifactId>
-				<version>3.3.0</version>
-				<extensions>true</extensions>
-				<configuration>
-					<instructions>
-						<Export-Package>net.q2ek.compileinfo</Export-Package>
-						<Private-Package>net.q2ek.compileinfo.*</Private-Package>
-					</instructions>
-					<niceManifest>true</niceManifest>
-				</configuration>
-			</plugin>
- -->			<plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
 				<version>1.6</version>
