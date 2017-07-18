@@ -5,10 +5,18 @@ public interface ClassAttributes {
 
 	CharSequence classname();
 
+	CharSequence name();
+
 	static ClassAttributes of(
 			CharSequence packagename,
 			CharSequence classname) {
 		return new ClassAttributes() {
+			final String name = new StringBuilder()
+					.append(packagename)
+					.append(".")
+					.append(classname)
+					.toString();
+
 			@Override
 			public CharSequence packagename() {
 				return packagename;
@@ -17,6 +25,11 @@ public interface ClassAttributes {
 			@Override
 			public CharSequence classname() {
 				return classname;
+			}
+
+			@Override
+			public CharSequence name() {
+				return name;
 			}
 
 			@Override
