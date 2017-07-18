@@ -29,6 +29,7 @@ import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
  */
 @AutoService(Processor.class)
 public class CompileInfoAnnotationProcessor extends AbstractProcessor {
+	private static final boolean	CLAIM_ANNOTATION	= true;
 	private Filer filer;
 	private Messager messager;
 
@@ -58,7 +59,7 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 		for (Element element : roundEnv.getElementsAnnotatedWith(CompileInfo.class)) {
 			process((TypeElement) element);
 		}
-		return false;
+		return CLAIM_ANNOTATION;
 	}
 
 	private void process(TypeElement value) {
