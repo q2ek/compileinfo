@@ -1,11 +1,14 @@
 package net.q2ek.compileinfo.implementation;
 
-import java.io.IOException;
+import static javax.tools.Diagnostic.Kind.ERROR;
+import static javax.tools.Diagnostic.Kind.WARNING;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Collections;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
@@ -13,14 +16,10 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
-import javax.tools.Diagnostic.Kind;
-import javax.tools.FileObject;
-import javax.tools.StandardLocation;
 
 import com.google.auto.service.AutoService;
 
 import net.q2ek.compileinfo.CompileInfo;
-import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
 
 /**
  * This is the annotation processor for the {@link CompileInfo} annotation.
@@ -29,9 +28,8 @@ import net.q2ek.compileinfo.implementation.basics.ClassAttributes;
  */
 @AutoService(Processor.class)
 public class CompileInfoAnnotationProcessor extends AbstractProcessor {
-	private static final boolean	CLAIM_ANNOTATION	= true;
-	private Filer filer;
-	private Messager messager;
+	private Messager			messager;
+	private SourceFileWriter	sourceFileWriter;
 
 	public CompileInfoAnnotationProcessor() {
 		super();
@@ -40,8 +38,8 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 	@Override
 	public synchronized void init(ProcessingEnvironment processingEnvironment) {
 		super.init(processingEnvironment);
-		this.filer = processingEnvironment.getFiler();
 		this.messager = processingEnvironment.getMessager();
+		this.sourceFileWriter = new SourceFileWriter(processingEnvironment.getFiler());
 	}
 
 	@Override
@@ -59,31 +57,45 @@ public class CompileInfoAnnotationProcessor extends AbstractProcessor {
 		for (Element element : roundEnv.getElementsAnnotatedWith(CompileInfo.class)) {
 			process((TypeElement) element);
 		}
-		return CLAIM_ANNOTATION;
+		return false;
 	}
 
-	private void process(TypeElement value) {
+	private void process(TypeElement annotatedClass) {
 		try {
-			processUnsafe(value);
-		} catch (IOException | RuntimeException e) { // One of wich is IOProblem
+			processUnsafe(annotatedClass);
+		} catch (IOProblem e) {
+			String stackTrace = stackTrace(e);
 			String message = "CompileInfo processing failed due to: "
-					+ e.getClass().getCanonicalName() + ": " + e.getLocalizedMessage();
-			this.messager.printMessage(Kind.ERROR, message, value);
+					+ e.getClass().getCanonicalName()
+					+ ": "
+					+ stackTrace;
+			this.messager.printMessage(WARNING, message, annotatedClass);
+		} catch (RuntimeException e) { // One of wich is IOProblem
+			String stackTrace = stackTrace(e);
+			String message = "CompileInfo processing failed due to: "
+					+ e.getClass().getCanonicalName()
+					+ ": "
+					+ stackTrace;
+			this.messager.printMessage(ERROR, message, annotatedClass);
 		}
 	}
 
-	private void processUnsafe(TypeElement value) throws IOException {
-		TypeElementProcessor processor = TypeElementProcessor.of(CompileInfoAnnotationProcessor.class, value);
-		FileObject resource = resourceFor(processor.classAttributes());
-		IOAppender.writeFile(resource, processor.sourceCodeGeneratorFactory());
+	private String stackTrace(Exception e) {
+		StringWriter sw = new StringWriter();
+		e.printStackTrace(new PrintWriter(sw));
+		return sw.toString();
 	}
 
-	private FileObject resourceFor(ClassAttributes packageAndClassName) throws IOException {
-		FileObject resource = this.filer.createResource(
-				StandardLocation.SOURCE_OUTPUT,
-				packageAndClassName.packagename(),
-				packageAndClassName.classname() + ".java");
-		return resource;
+	private void processUnsafe(TypeElement annotatedClass) {
+		TypeElementProcessor processor =
+				TypeElementProcessor.of(CompileInfoAnnotationProcessor.class, annotatedClass);
+		String content = generateSourceCodeWith(processor);
+		this.sourceFileWriter.write(processor.classAttributes(), annotatedClass, content);
 	}
 
+	private String generateSourceCodeWith(TypeElementProcessor processor) {
+		StringAppender appender = new StringAppender();
+		processor.sourceCodeGeneratorFactory().apply(appender).write();
+		return appender.content();
+	}
 }
