@@ -19,6 +19,8 @@ Available at Maven Central:
     - The generated class has fewer methods: it only has a method for the ZonedDateTime and a map of properties.
 * 0.16.0
     - Added `includeEnvironmentVariables` option to the `@CompileInfo` annotation.
+* 0.17.0
+    - Write each generated file all at once.
 
 ### Planned work
 

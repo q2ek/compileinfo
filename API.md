@@ -11,7 +11,7 @@ A generated class has this method:
 static ZonedDateTime zonedDateTime();
 ```
 
-A generated class may have any over these methods:
+A generated class may have any of these methods:
 ```java
 static Map<String, String> properties();
 

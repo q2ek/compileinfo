@@ -75,6 +75,7 @@ public class TypeElementProcessorTest {
 			throw new UnsupportedOperationException("Not implemented.");
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public <A extends Annotation> A getAnnotation(Class<A> annotationType) {
 			CompileInfo info = compileInfo(annotationType);
