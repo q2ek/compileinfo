@@ -18,13 +18,14 @@ class TypeElementProcessor {
 	private final Class<?> annotationProcessorClass;
 	private final TypeElement value;
 	private final CompileInfo annotation;
-	private ClassAttributes classAttributes;
+	private final ClassAttributes classAttributes;
 	private SourceCodeGeneratorFactory sourceCodeGeneratorFactory;
 
 	private TypeElementProcessor(Class<?> annotationProcessorClass, TypeElement value) {
 		this.annotationProcessorClass = annotationProcessorClass;
 		this.value = value;
 		this.annotation = value.getAnnotation(CompileInfo.class);
+		this.classAttributes = ClassAttributes.of(packagename(), classname());
 	}
 
 	static TypeElementProcessor of(Class<?> annotationProcessorClass, TypeElement value) {
@@ -32,9 +33,6 @@ class TypeElementProcessor {
 	}
 
 	public ClassAttributes classAttributes() {
-		if (this.classAttributes == null) {
-			this.classAttributes = ClassAttributes.of(packagename(), classname());
-		}
 		return this.classAttributes;
 	}
 
