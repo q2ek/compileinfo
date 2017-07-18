@@ -1,8 +1,6 @@
 package net.q2ek.compileinfo.implementation;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 import javax.tools.FileObject;
@@ -30,14 +28,13 @@ class IOAppender implements Appender {
 	 * @throws IOProblem
 	 *             when an {@link IOException} happens
 	 */
-	static void writeFile(FileObject resource, SourceCodeGeneratorFactory factory) {
-		try (OutputStream stream = resource.openOutputStream();
-				OutputStreamWriter writer = new OutputStreamWriter(stream)) {
+	static void writeFile(FileObject fileObject, SourceCodeGeneratorFactory factory) {
+		try (Writer writer = fileObject.openWriter()) {
 			Appender appender = new IOAppender(writer);
 			factory.apply(appender).write();
 			writer.flush();
 		} catch (IOException e) {
-			throw new IOProblem("Could not write: " + resource.getName(), e);
+			throw new IOProblem("Could not write: " + fileObject.getName(), e);
 		}
 	}
 
