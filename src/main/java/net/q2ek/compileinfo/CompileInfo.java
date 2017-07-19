@@ -48,7 +48,7 @@ public @interface CompileInfo {
 
 	/**
 	 * Determines whether or not environment variables will be read and put into
-	 * the generated class. The default setting is {@code false}. <br/>
+	 * the generated class. The default setting is {@code true}. <br/>
 	 *
 	 * If {@code true} the generated class will contain:
 	 * {@code static Map<String, String> getenv();}
