@@ -8,13 +8,13 @@ import net.q2ek.compileinfo.CompileInfo;
 	classname = "%s_Gen",
 	includeSystemProperties = false,
 	includeEnvironmentVariables = true,
-	regex = "env\\..*")
+	regex = "BUILD.*")
 public class ThirdExample {
 	public String compileDateTime() {
 		return ThirdExample_Gen.zonedDateTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).toString();
 	}
 
 	public String jenkinsBuildUrl() {
-		return ThirdExample_Gen.getenv().get("env.BUILD_URL");
+		return ThirdExample_Gen.getenv().get("BUILD_URL");
 	}
 }
