@@ -20,7 +20,7 @@ Available at Maven Central:
 * 0.16.0
     - Added `includeEnvironmentVariables` option to the `@CompileInfo` annotation.
 * 0.17.0
-    - Write each generated file all at once.
+    - Write each generated file all at once. This should solve problems in Windows that were not present in Linux.
 
 ### Planned work
 
