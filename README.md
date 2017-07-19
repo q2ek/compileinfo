@@ -16,7 +16,7 @@ In a Maven project, one would include the `net.q2ek:compileinfo` artifact as a `
 <dependency>
 	<groupId>net.q2ek</groupId>
 	<artifactId>compileinfo</artifactId>
-	<version>0.17.0</version>
+	<version>1.0.0-rc1</version>
 	<scope>provided</scope>
 </dependency>
 ```
