@@ -60,7 +60,7 @@ See [API.md](API.md) for the API description.
 
 * [AutoService](https://github.com/google/auto/tree/master/service) - Google Auto Service
 * [Maven](https://maven.apache.org/) - Dependency Management and the project is a standard Maven project.
-* [BCH compliance](https://bettercodehub.com/edge/badge/q2ek/compileinfo?branch=master)](https://bettercodehub.com/)
+* [![BCH compliance](https://bettercodehub.com/edge/badge/q2ek/compileinfo?branch=master)](https://bettercodehub.com/)
 
 ## Releases
 
